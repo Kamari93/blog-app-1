@@ -9,7 +9,8 @@ function Post() {
   const { id } = useParams(); //extract the id from url
   const [post, setPost] = useState({});
   const navigate = useNavigate();
-  const user = useContext(userContext);
+  // const user = useContext(userContext);
+  const { user, setUser } = useContext(userContext); // Destructure user & setUser at once
 
   axios.defaults.withCredentials = true;
 
