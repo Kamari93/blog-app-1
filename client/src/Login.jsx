@@ -22,7 +22,7 @@ function Login() {
         if (res.data === "Login successful") {
           // window.location.reload(); // Force re-render
           // window.location.href = "/"; // reload the page
-          setUser(res.data.user); // update the user state after login
+          setUser(res.data); // update the user state after login
           console.log(res.data);
           // console.log(user);
           navigate("/");
