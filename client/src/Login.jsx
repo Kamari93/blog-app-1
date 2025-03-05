@@ -18,8 +18,8 @@ function Login() {
       .then((res) => {
         console.log(res);
         if (res.data === "Login successful") {
-          window.location.reload(); // Force re-render
-          // navigate("/");
+          // window.location.reload(); // Force re-render
+          navigate("/");
           // window.location.href = "/"; // reload the page
         }
       })
