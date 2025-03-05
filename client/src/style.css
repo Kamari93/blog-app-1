@@ -1,0 +1,214 @@
+* {
+  padding: 0px;
+  margin: 0px;
+  box-sizing: border-box;
+}
+
+.navbar-header {
+  width: 100%;
+  height: 40px;
+  padding: 15px 25px;
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  /* background-color: black; */
+  background: linear-gradient(79deg, #1ea775, #f59919);
+}
+
+.link {
+  color: white;
+  text-decoration: none;
+  margin: 0 10px;
+}
+
+.signup_container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 90vh;
+}
+
+.signup_form {
+  border: 1px solid gray;
+  padding: 20px;
+  border-radius: 10px;
+  width: 30%;
+}
+
+.signup_form form input {
+  padding: 8px;
+  border-radius: 5px;
+  margin-top: 2px;
+  width: 100%;
+  border: 1px solid gray;
+}
+
+.signup_form form button,
+.signup_form button {
+  width: 100%;
+  padding: 8px;
+  border-radius: 5px;
+  border: 1px solid gray;
+}
+
+.signup_form form button {
+  background-color: #1ea775;
+  color: white;
+}
+
+.signup_form button {
+  background-color: #f59919;
+  color: white;
+}
+
+.signup_btn {
+  margin-top: 8px;
+}
+
+.btn_input {
+  background-color: transparent;
+  border: none;
+  color: #1ea775;
+  cursor: pointer;
+  font-weight: bolder;
+}
+
+.post_form {
+  width: 50%;
+  border: 1px solid gray;
+  padding: 20px;
+  border-radius: 10px;
+  margin: 20px auto;
+}
+
+.post_form input,
+.post_form textarea,
+.post_form button {
+  width: 100%;
+  margin: 10px 0px;
+  padding: 8px;
+}
+
+.post_form .file {
+  border: 3px solid #f59919;
+}
+
+.post_form button {
+  cursor: pointer;
+  background-color: #1ea775;
+  color: white;
+}
+
+.posts_container {
+  display: flex;
+  margin-top: 20px;
+  flex-direction: column;
+  align-items: center;
+}
+
+.post {
+  width: 80%;
+  margin: 10px;
+  border: 1px solid #f59919;
+  border-radius: 8px;
+  padding: 10px;
+  display: flex;
+  text-decoration: none;
+  color: black;
+}
+.post img {
+  width: 200px;
+  height: 200px;
+  border-radius: 8px;
+}
+.post .post_text {
+  margin-left: 10px;
+}
+
+.post_post {
+  display: flex;
+  flex-direction: column;
+  width: 70%;
+  margin: 20px 0px;
+}
+
+.post_post img {
+  width: 100%;
+  height: 450px;
+}
+
+.post_post button {
+  width: 10%;
+}
+
+.post_actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  /* margin: 10px 0px; */
+  width: 100%;
+  display: flex;
+  /* justify-content: space-between; */
+}
+
+.post_action_edit {
+  border: 1px solid gray;
+  border-radius: 8px;
+  padding: 7px;
+  background-color: #f59919;
+  color: white;
+  flex: 1;
+  text-align: center;
+  text-decoration: none;
+  margin-right: 5px;
+}
+
+.post_action_delete {
+  border: 1px solid gray;
+  border-radius: 8px;
+  padding: 7px;
+  background-color: #1ea775;
+  color: white;
+  flex: 1;
+}
+
+.contact_container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 80vh;
+  /* background: linear-gradient(79deg, #1ea775, #f59919); */
+}
+
+.contact_card {
+  background-color: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  max-width: 300px;
+}
+
+.contact_card h2 {
+  color: #1ea775;
+}
+
+.contact_card p {
+  color: #333;
+}
+
+.contact_link {
+  display: inline-block;
+  padding: 10px 15px;
+  background-color: #1ea775;
+  color: white;
+  text-decoration: none;
+  border-radius: 5px;
+  margin-top: 10px;
+  font-weight: bold;
+}
+
+.contact_link:hover {
+  background-color: #f59919;
+}
