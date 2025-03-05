@@ -11,6 +11,8 @@ function Login() {
   const user = useContext(userContext); // Import the context
 
   axios.defaults.withCredentials = true;
+
+  const { setUser } = useContext(userContext); // Get setUser from context
   const handleLogin = (e) => {
     e.preventDefault();
     axios
@@ -19,8 +21,9 @@ function Login() {
         console.log(res);
         if (res.data === "Login successful") {
           // window.location.reload(); // Force re-render
-          // navigate("/");
-          window.location.href = "/"; // reload the page
+          // window.location.href = "/"; // reload the page
+          setUser(res.data); // update the user state after login
+          navigate("/");
         }
       })
       .catch((err) => console.log(err));

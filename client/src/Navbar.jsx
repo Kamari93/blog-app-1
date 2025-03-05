@@ -8,13 +8,19 @@ function Navbar() {
   const user = useContext(userContext); // get user from context
   const navigate = useNavigate();
 
+  axios.defaults.withCredentials = true;
+
+  const { setUser } = useContext(userContext); // Get setUser from context
+
   const handleLogout = () => {
     axios
       .get("https://blog-app-1-server.vercel.app/logout")
       .then((res) => {
         if (res.data === "Logout successful") {
           // navigate(0); // reload the page
-          window.location.reload(); // Force Navbar to reset
+          // window.location.reload(); // Force Navbar to reset
+          setUser({}); // Reset user state
+          navigate("/");
         }
       })
       .catch((err) => console.log(err));

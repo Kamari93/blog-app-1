@@ -17,16 +17,6 @@ function App() {
 
   axios.defaults.withCredentials = true;
 
-  // useEffect(() => {
-  //   axios
-  //     .get("https://blog-app-1-server.vercel.app/")
-  //     .then((user) => {
-  //       // console.log(user);
-  //       setUser(user.data);
-  //     })
-  //     .catch((err) => console.log(err));
-  // }, []);
-
   useEffect(() => {
     axios
       .get("https://blog-app-1-server.vercel.app/")
@@ -41,7 +31,7 @@ function App() {
   }, []);
 
   return (
-    <userContext.Provider value={user}>
+    <userContext.Provider value={{ user, setUser }}>
       <BrowserRouter>
         <Navbar />
         <Routes>
