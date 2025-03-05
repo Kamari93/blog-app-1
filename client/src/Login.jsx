@@ -19,7 +19,7 @@ function Login() {
       .post("https://blog-app-1-server.vercel.app/login", { email, password })
       .then((res) => {
         console.log(res);
-        if (res.data === "Login successful") {
+        if (res.data.message === "Login successful") {
           // window.location.reload(); // Force re-render
           // window.location.href = "/"; // reload the page
           setUser(res.data); // update the user state after login

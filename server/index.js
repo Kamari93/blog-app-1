@@ -77,7 +77,12 @@ app.post("/login", (req, res) => {
           );
           // store cookie with name "token"
           res.cookie("token", token);
-          return res.json("Login successful");
+          // return res.json("Login successful");
+          return res.json({
+            message: "Login successful",
+            username: user.username,
+            email: user.email,
+          });
         } else {
           res.json("Password is incorrect");
         }
