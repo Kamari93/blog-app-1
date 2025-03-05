@@ -7,6 +7,8 @@ function Login() {
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
   const navigate = useNavigate();
+  const user = useContext(userContext); // Import the context
+
   axios.defaults.withCredentials = true;
   const handleLogin = (e) => {
     e.preventDefault();
@@ -15,7 +17,8 @@ function Login() {
       .then((res) => {
         console.log(res);
         if (res.data === "Login successful") {
-          navigate("/");
+          window.location.reload(); // Force re-render
+          // navigate("/");
           // window.location.href = "/"; // reload the page
         }
       })

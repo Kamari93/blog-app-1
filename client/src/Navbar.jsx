@@ -13,7 +13,8 @@ function Navbar() {
       .get("https://blog-app-1-server.vercel.app/logout")
       .then((res) => {
         if (res.data === "Logout successful") {
-          navigate(0); // reload the page
+          // navigate(0); // reload the page
+          window.location.reload(); // Force Navbar to reset
         }
       })
       .catch((err) => console.log(err));

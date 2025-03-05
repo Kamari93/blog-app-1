@@ -16,12 +16,26 @@ function App() {
   const [user, setUser] = useState({});
 
   axios.defaults.withCredentials = true;
+
+  // useEffect(() => {
+  //   axios
+  //     .get("https://blog-app-1-server.vercel.app/")
+  //     .then((user) => {
+  //       // console.log(user);
+  //       setUser(user.data);
+  //     })
+  //     .catch((err) => console.log(err));
+  // }, []);
+
   useEffect(() => {
     axios
       .get("https://blog-app-1-server.vercel.app/")
-      .then((user) => {
-        // console.log(user);
-        setUser(user.data);
+      .then((res) => {
+        if (res.data.username) {
+          setUser(res.data); // Only set the user if username exists
+        } else {
+          setUser({}); // Reset user if token is invalid
+        }
       })
       .catch((err) => console.log(err));
   }, []);
