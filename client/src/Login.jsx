@@ -19,8 +19,8 @@ function Login() {
         console.log(res);
         if (res.data === "Login successful") {
           // window.location.reload(); // Force re-render
-          navigate("/");
-          // window.location.href = "/"; // reload the page
+          // navigate("/");
+          window.location.href = "/"; // reload the page
         }
       })
       .catch((err) => console.log(err));
