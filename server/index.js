@@ -16,7 +16,7 @@ const app = express();
 app.use(express.json());
 app.use(
   cors({
-    origin: "http://localhost:5173",
+    origin: "https://blog-app-1-client.vercel.app",
     methods: ["GET", "POST", "PUT", "DELETE"],
     credentials: true,
   })
@@ -171,6 +171,7 @@ app.delete("/deletepost/:id", (req, res) => {
 });
 
 // start server
-app.listen(5000, () => {
-  console.log("Server started on port 5000");
+const port = process.env.PORT || 5000;
+app.listen(port, () => {
+  console.log(`Server started on port ${port}`);
 });

@@ -7,7 +7,7 @@ function Home() {
   // in this context useEffect is used to get the data from the backend...useEffect is useful for fetching data
   useEffect(() => {
     axios
-      .get("http://localhost:5000/getposts")
+      .get("https://blog-app-1-server.vercel.app/getposts")
       .then((posts) => {
         setPosts(posts.data);
       })
@@ -20,7 +20,10 @@ function Home() {
       {posts.map((post) => {
         return (
           <Link to={`/post/${post._id}`} key={post._id} className="post">
-            <img src={`http://localhost:5000/Images/${post.file}`} alt=""></img>
+            <img
+              src={`https://blog-app-1-server.vercel.app/Images/${post.file}`}
+              alt=""
+            ></img>
             <div className="post_text">
               <h2>{post.title}</h2>
               <p>{post.description}</p>

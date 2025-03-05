@@ -10,7 +10,7 @@ function Login() {
   const handleLogin = (e) => {
     e.preventDefault();
     axios
-      .post("http://localhost:5000/login", { email, password })
+      .post("https://blog-app-1-server.vercel.app/login", { email, password })
       .then((res) => {
         console.log(res);
         if (res.data === "Login successful") {

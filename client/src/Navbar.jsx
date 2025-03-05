@@ -10,7 +10,7 @@ function Navbar() {
 
   const handleLogout = () => {
     axios
-      .get("http://localhost:5000/logout")
+      .get("https://blog-app-1-server.vercel.app/logout")
       .then((res) => {
         if (res.data === "Logout successful") {
           navigate(0); // reload the page

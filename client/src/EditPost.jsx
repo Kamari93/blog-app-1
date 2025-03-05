@@ -25,7 +25,7 @@ function EditPost() {
   // use useEffect to fetch the post record
   useEffect(() => {
     axios
-      .get("http://localhost:5000/getpostbyid/" + id)
+      .get("https://blog-app-1-server.vercel.app/getpostbyid/" + id)
       .then((result) => {
         setTitle(result.data.title);
         setDescription(result.data.description);

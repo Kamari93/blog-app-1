@@ -13,7 +13,7 @@ function Post() {
 
   useEffect(() => {
     axios
-      .get("http://localhost:5000/getpostbyid/" + id)
+      .get("https://blog-app-1-server.vercel.app/getpostbyid/" + id)
       .then((result) => {
         setPost(result.data);
       })
@@ -22,7 +22,7 @@ function Post() {
 
   const handleDelete = (id) => {
     axios
-      .delete("http://localhost:5000/deletepost/" + id)
+      .delete("https://blog-app-1-server.vercel.app/deletepost/" + id)
       .then((result) => {
         // window.location.reload();
         navigate("/");
@@ -34,7 +34,10 @@ function Post() {
   return (
     <div className="posts_container">
       <div className="post_post">
-        <img src={`http://localhost:5000/Images/${post.file}`} alt=""></img>
+        <img
+          src={`https://blog-app-1-server.vercel.app/Images/${post.file}`}
+          alt=""
+        ></img>
         <h1>{post.title}</h1>
         <p>{post.description}</p>
         <div className="post_actions">

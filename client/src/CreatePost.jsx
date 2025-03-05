@@ -16,7 +16,7 @@ function CreatePost() {
     formData.append("email", user.email);
     formData.append("file", file);
     axios
-      .post("http://localhost:5000/create", formData)
+      .post("https://blog-app-1-server.vercel.app/create", formData)
       .then((res) => {
         console.log(res);
         if (res.data === "Post created successfully") {

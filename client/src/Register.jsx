@@ -11,7 +11,11 @@ function Register() {
   const handleSubmit = (e) => {
     e.preventDefault();
     axios
-      .post("http://localhost:5000/register", { username, email, password })
+      .post("https://blog-app-1-server.vercel.app/register", {
+        username,
+        email,
+        password,
+      })
       .then((res) => {
         console.log(res);
         navigate("/login");
