@@ -23,6 +23,7 @@ function Login() {
           // window.location.reload(); // Force re-render
           // window.location.href = "/"; // reload the page
           setUser(res.data); // update the user state after login
+          console.log(res.data);
           navigate("/");
         }
       })
