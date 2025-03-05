@@ -14,7 +14,10 @@ function EditPost() {
   const handleSubmit = (e) => {
     e.preventDefault();
     axios
-      .put("http://localhost:5000/editpost/" + id, { title, description })
+      .put("https://blog-app-1-server.vercel.app/editpost/" + id, {
+        title,
+        description,
+      })
       .then((res) => {
         console.log(res);
         if (res.data === "Post updated successfully") {
