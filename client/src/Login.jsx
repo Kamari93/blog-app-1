@@ -24,6 +24,7 @@ function Login() {
           // window.location.href = "/"; // reload the page
           setUser(res.data); // update the user state after login
           console.log(res.data);
+          console.log(user);
           navigate("/");
         }
       })
