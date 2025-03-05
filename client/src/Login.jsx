@@ -15,7 +15,7 @@ function Login() {
       .then((res) => {
         console.log(res);
         if (res.data === "Login successful") {
-          //   navigate("/");
+          navigate("/");
           // window.location.href = "/"; // reload the page
         }
       })
