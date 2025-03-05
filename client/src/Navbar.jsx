@@ -5,12 +5,13 @@ import { userContext } from "./App";
 import axios from "axios";
 
 function Navbar() {
-  const user = useContext(userContext); // get user from context
+  // const user = useContext(userContext); // get user from context
+  const { user, setUser } = useContext(userContext); // Destructure user & setUser at once
   const navigate = useNavigate();
 
   axios.defaults.withCredentials = true;
 
-  const { setUser } = useContext(userContext); // Get setUser from context
+  // const { setUser } = useContext(userContext); // Get setUser from context
 
   const handleLogout = () => {
     axios
