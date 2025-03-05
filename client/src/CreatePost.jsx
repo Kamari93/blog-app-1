@@ -7,6 +7,7 @@ function CreatePost() {
   const [description, setDescription] = useState();
   const [file, setFile] = useState();
   const user = useContext(userContext); // get user from context
+  axios.defaults.withCredentials = true;
 
   const handleSubmit = (e) => {
     e.preventDefault();

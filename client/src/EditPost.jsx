@@ -9,6 +9,8 @@ function EditPost() {
   const { id } = useParams();
   const navigate = useNavigate();
 
+  axios.defaults.withCredentials = true;
+
   const handleSubmit = (e) => {
     e.preventDefault();
     axios

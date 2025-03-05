@@ -11,6 +11,8 @@ function Post() {
   const navigate = useNavigate();
   const user = useContext(userContext);
 
+  axios.defaults.withCredentials = true;
+
   useEffect(() => {
     axios
       .get("https://blog-app-1-server.vercel.app/getpostbyid/" + id)
