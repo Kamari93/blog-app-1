@@ -17,7 +17,7 @@ function Navbar() {
     axios
       .get("https://blog-app-1-server.vercel.app/logout")
       .then((res) => {
-        if (res.data.message === "Logout successful") {
+        if (res.data === "Logout successful") {
           // navigate(0); // reload the page
           // window.location.reload(); // Force Navbar to reset
           setUser({}); // Reset user state
