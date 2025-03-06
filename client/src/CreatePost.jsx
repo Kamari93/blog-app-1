@@ -6,7 +6,8 @@ function CreatePost() {
   const [title, setTitle] = useState();
   const [description, setDescription] = useState();
   const [file, setFile] = useState();
-  const user = useContext(userContext); // get user from context
+  // const user = useContext(userContext); // get user from context
+  const { user, setUser } = useContext(userContext); // Destructure user & setUser at once
   axios.defaults.withCredentials = true;
 
   const handleSubmit = (e) => {
