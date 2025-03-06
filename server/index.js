@@ -76,7 +76,12 @@ app.post("/login", (req, res) => {
             { expiresIn: "1d" }
           );
           // store cookie with name "token"
-          res.cookie("token", token);
+          // res.cookie("token", token);
+          res.cookie("token", token, {
+            httpOnly: true,
+            secure: true, // This makes the cookie only work on HTTPS
+            sameSite: "None", // Allows cross-origin cookies
+          });
           // return res.json("Login successful");
           return res.json({
             message: "Login successful",
