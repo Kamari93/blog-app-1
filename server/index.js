@@ -22,7 +22,6 @@ cloudinary.config({
 const app = express();
 
 // Middleware
-app.use(express.json());
 app.use(
   cors({
     origin: "https://blog-app-1-client.vercel.app",
@@ -30,6 +29,9 @@ app.use(
     credentials: true,
   })
 );
+
+app.use(express.json());
+
 app.use(cookieParser());
 app.use(express.static("Public")); // for serving static files...gives us access to the public folder in all our routes
 
@@ -129,10 +131,12 @@ const storage = new CloudinaryStorage({
   cloudinary: cloudinary,
   params: {
     folder: "blog_app1_images", // Folder name in Cloudinary
-    format: async (req, file) => "jpg", // Set file format
+    allowed_formats: ["jpg", "jpeg", "png"], // Allow only image formats
+    transformation: [{ width: 500, height: 500, crop: "limit" }], // Optional resize
     public_id: (req, file) => Date.now() + "-" + file.originalname, // Unique filename
   },
 });
+
 const upload = multer({ storage: storage });
 
 // app.post("/create", verifyUser, upload.single("file"), (req, res) => {
