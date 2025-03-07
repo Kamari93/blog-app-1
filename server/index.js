@@ -10,6 +10,15 @@ const UserModel = require("./models/UserModel");
 const PostModel = require("./models/PostModel");
 require("dotenv").config(); // Load .env variables
 
+const cloudinary = require("cloudinary").v2;
+const { CloudinaryStorage } = require("multer-storage-cloudinary");
+
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET,
+});
+
 const app = express();
 
 // Middleware
@@ -99,34 +108,63 @@ app.post("/login", (req, res) => {
 });
 
 // storage file
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, "Public/Images");
-  },
-  filename: (req, file, cb) => {
-    cb(
-      null,
-      file.fieldname + "_" + Date.now() + path.extname(file.originalname)
-    );
+// const storage = multer.diskStorage({
+//   destination: (req, file, cb) => {
+//     cb(null, "Public/Images");
+//   },
+//   filename: (req, file, cb) => {
+//     cb(
+//       null,
+//       file.fieldname + "_" + Date.now() + path.extname(file.originalname)
+//     );
+//   },
+// });
+
+// const upload = multer({
+//   storage: storage, // storage file
+// });
+
+// storage file
+const storage = new CloudinaryStorage({
+  cloudinary: cloudinary,
+  params: {
+    folder: "blog_app1_images", // Folder name in Cloudinary
+    format: async (req, file) => "jpg", // Set file format
+    public_id: (req, file) => Date.now() + "-" + file.originalname, // Unique filename
   },
 });
+const upload = multer({ storage: storage });
 
-const upload = multer({
-  storage: storage, // storage file
-});
+// app.post("/create", verifyUser, upload.single("file"), (req, res) => {
+//   //   console.log(req.file);
+//   PostModel.create({
+//     title: req.body.title,
+//     description: req.body.description,
+//     file: req.file.filename,
+//     email: req.body.email,
+//   })
+//     .then((result) => {
+//       res.json("Post created successfully");
+//     })
+//     .catch((err) => res.json(err));
+// });
 
-app.post("/create", verifyUser, upload.single("file"), (req, res) => {
-  //   console.log(req.file);
-  PostModel.create({
-    title: req.body.title,
-    description: req.body.description,
-    file: req.file.filename,
-    email: req.body.email,
-  })
-    .then((result) => {
-      res.json("Post created successfully");
-    })
-    .catch((err) => res.json(err));
+app.post("/create", verifyUser, upload.single("file"), async (req, res) => {
+  try {
+    const fileUrl = req.file ? req.file.path : ""; // If file is optional, return empty string if no file
+    await PostModel.create({
+      title: req.body.title,
+      description: req.body.description,
+      file: fileUrl,
+      email: req.body.email,
+    });
+    res.json("Post created successfully");
+  } catch (err) {
+    console.log("Server Error:", err);
+    res
+      .status(500)
+      .json({ message: "Something went wrong", error: err.message });
+  }
 });
 
 app.put("/editpost/:id", (req, res) => {
