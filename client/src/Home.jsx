@@ -18,12 +18,10 @@ function Home() {
   return (
     <div className="posts_container">
       {posts.map((post) => {
+        console.log(post.file); // Check if you're receiving the full Cloudinary URL
         return (
           <Link to={`/post/${post._id}`} key={post._id} className="post">
-            <img
-              src={`https://blog-app-1-server.vercel.app/Images/${post.file}`}
-              alt=""
-            ></img>
+            {post.file && <img src={post.file} alt={post.title} />}
             <div className="post_text">
               <h2>{post.title}</h2>
               <p>{post.description}</p>
