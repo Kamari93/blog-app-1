@@ -213,15 +213,31 @@ app.get("/getpostbyid/:id", (req, res) => {
     });
 });
 
-app.delete("/deletepost/:id", (req, res) => {
-  const id = req.params.id;
-  PostModel.findByIdAndDelete({ _id: id })
-    .then((result) => {
-      res.json("Post deleted successfully");
-    })
-    .catch((err) => {
-      res.json(err);
-    });
+// app.delete("/deletepost/:id", (req, res) => {
+//   const id = req.params.id;
+//   PostModel.findByIdAndDelete({ _id: id })
+//     .then((result) => {
+//       res.json("Post deleted successfully");
+//     })
+//     .catch((err) => {
+//       res.json(err);
+//     });
+// });
+
+// auto delete images from cloudinary when post is deleted
+app.delete("/deletepost/:id", async (req, res) => {
+  try {
+    const post = await PostModel.findById(req.params.id);
+    if (post.file) {
+      const publicId = post.file.split("/").pop().split(".")[0]; // Extract public ID from URL
+      await cloudinary.uploader.destroy(publicId);
+    }
+    await PostModel.findByIdAndDelete(req.params.id);
+    res.json("Post deleted successfully");
+  } catch (err) {
+    console.log(err);
+    res.status(500).json("Something went wrong");
+  }
 });
 
 // start server
