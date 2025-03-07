@@ -170,6 +170,7 @@ app.post("/create", verifyUser, upload.single("file"), async (req, res) => {
       .status(500)
       .json({ message: "Something went wrong", error: err.message });
   }
+  console.log("Uploaded File:", req.file);
 });
 
 app.put("/editpost/:id", (req, res) => {
