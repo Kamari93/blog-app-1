@@ -87,6 +87,7 @@ function CreatePost() {
           <input
             className="file"
             type="file"
+            accept="image/*"
             placeholder="Select file"
             onChange={(e) => setFile(e.target.files[0])}
           />

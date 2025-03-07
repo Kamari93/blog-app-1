@@ -155,7 +155,8 @@ const upload = multer({ storage: storage });
 
 app.post("/create", verifyUser, upload.single("file"), async (req, res) => {
   try {
-    const fileUrl = req.file ? req.file.path : ""; // If file is optional, return empty string if no file
+    // const fileUrl = req.file ? req.file.path : ""; // If file is optional, return empty string if no file
+    const fileUrl = req.file ? req.file.path || req.file.url : ""; // If file is optional, return empty string if no file
     await PostModel.create({
       title: req.body.title,
       description: req.body.description,
