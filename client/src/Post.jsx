@@ -37,10 +37,11 @@ function Post() {
   return (
     <div className="posts_container">
       <div className="post_post">
-        <img
+        {/* <img
           src={`https://blog-app-1-server.vercel.app/Images/${post.file}`}
           alt=""
-        ></img>
+        ></img> */}
+        {post.file && <img src={post.file} alt={post.title} />}
         <h1>{post.title}</h1>
         <p>{post.description}</p>
         <div className="post_actions">
