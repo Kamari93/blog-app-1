@@ -228,24 +228,21 @@ app.get("/getpostbyid/:id", (req, res) => {
 app.delete("/deletepost/:id", async (req, res) => {
   try {
     const post = await PostModel.findById(req.params.id);
-    if (post.file) {
-      let publicId = post.publicId; // If publicId is stored in DB
-      // if (!publicId) {
-      //   const parts = post.file.split("/");
-      //   publicId = parts.slice(-2).join("/").split(".")[0];
-      // }
-      if (!publicId) {
-        const urlParts = post.file.split("/");
-        const filename = urlParts[urlParts.length - 1].split(".")[0];
-        publicId = `blog_app1_images/${filename}`; // Folder + Filename without extension
-      }
+    if (post && post.file) {
+      // Extract publicId from Cloudinary URL
+      const urlParts = post.file.split("/");
+      const filenameWithExtension = urlParts[urlParts.length - 1]; // e.g., "1741309410122-flow.png.png"
+      const filename = filenameWithExtension.split(".").slice(0, -1).join("."); // Remove extension
+      const publicId = `blog_app1_images/${filename}`; // Ensure it matches how Cloudinary saves it
+
       console.log("Deleting Image with Public ID:", publicId);
       await cloudinary.uploader.destroy(publicId);
     }
+
     await PostModel.findByIdAndDelete(req.params.id);
     res.json("Post deleted successfully");
   } catch (err) {
-    console.log(err);
+    console.error("Error deleting post:", err);
     res.status(500).json("Something went wrong");
   }
 });
