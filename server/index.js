@@ -230,9 +230,14 @@ app.delete("/deletepost/:id", async (req, res) => {
     const post = await PostModel.findById(req.params.id);
     if (post.file) {
       let publicId = post.publicId; // If publicId is stored in DB
+      // if (!publicId) {
+      //   const parts = post.file.split("/");
+      //   publicId = parts.slice(-2).join("/").split(".")[0];
+      // }
       if (!publicId) {
-        const parts = post.file.split("/");
-        publicId = parts.slice(-2).join("/").split(".")[0];
+        const urlParts = post.file.split("/");
+        const filename = urlParts[urlParts.length - 1].split(".")[0];
+        publicId = `blog_app1_images/${filename}`; // Folder + Filename without extension
       }
       console.log("Deleting Image with Public ID:", publicId);
       await cloudinary.uploader.destroy(publicId);
