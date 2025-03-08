@@ -229,7 +229,12 @@ app.delete("/deletepost/:id", async (req, res) => {
   try {
     const post = await PostModel.findById(req.params.id);
     if (post.file) {
-      const publicId = post.file.split("/").pop().split(".")[0]; // Extract public ID from URL
+      let publicId = post.publicId; // If publicId is stored in DB
+      if (!publicId) {
+        const parts = post.file.split("/");
+        publicId = parts.slice(-2).join("/").split(".")[0];
+      }
+      console.log("Deleting Image with Public ID:", publicId);
       await cloudinary.uploader.destroy(publicId);
     }
     await PostModel.findByIdAndDelete(req.params.id);
