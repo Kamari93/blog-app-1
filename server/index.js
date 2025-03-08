@@ -173,19 +173,76 @@ app.post("/create", verifyUser, upload.single("file"), async (req, res) => {
   console.log("Uploaded File:", req.file);
 });
 
-app.put("/editpost/:id", (req, res) => {
-  const id = req.params.id;
-  PostModel.findByIdAndUpdate(
-    { _id: id },
-    { title: req.body.title, description: req.body.description }
-  )
-    .then((result) => {
-      res.json("Post updated successfully");
-    })
-    .catch((err) => {
-      res.json(err);
-    });
-});
+// app.put("/editpost/:id", (req, res) => {
+//   const id = req.params.id;
+//   PostModel.findByIdAndUpdate(
+//     { _id: id },
+//     { title: req.body.title, description: req.body.description }
+//   )
+//     .then((result) => {
+//       res.json("Post updated successfully");
+//     })
+//     .catch((err) => {
+//       res.json(err);
+//     });
+// });
+
+app.put(
+  "/editpost/:id",
+  verifyUser,
+  upload.single("file"),
+  async (req, res) => {
+    try {
+      const postId = req.params.id;
+      const existingPost = await PostModel.findById(postId);
+
+      if (!existingPost) {
+        return res.status(404).json({ message: "Post not found" });
+      }
+
+      let newFileUrl = existingPost.file; // Retains old image (if any), otherwise remains undefined/null
+
+      if (req.file) {
+        newFileUrl = req.file.path || req.file.url; // Assigns new image if uploaded
+
+        // Only delete the old Cloudinary image if it exists
+        if (
+          existingPost.file &&
+          existingPost.file.includes("res.cloudinary.com")
+        ) {
+          const urlParts = existingPost.file.split("/");
+          const filenameWithExtension = urlParts[urlParts.length - 1];
+          const filename = filenameWithExtension
+            .split(".")
+            .slice(0, -1)
+            .join(".");
+          const publicId = `blog_app1_images/${filename}`;
+
+          console.log("Deleting old image from Cloudinary:", publicId);
+          await cloudinary.uploader.destroy(publicId);
+        }
+      }
+
+      // Updates the post, keeping the old image if no new file is uploaded
+      const updatedPost = await PostModel.findByIdAndUpdate(
+        postId,
+        {
+          title: req.body.title,
+          description: req.body.description,
+          file: newFileUrl, // This could be unchanged, updated, or set to undefined/null
+        },
+        { new: true }
+      );
+
+      res.json({ message: "Post updated successfully", post: updatedPost });
+    } catch (err) {
+      console.error("Error updating post:", err);
+      res
+        .status(500)
+        .json({ message: "Something went wrong", error: err.message });
+    }
+  }
+);
 
 app.get("/logout", (req, res) => {
   res.clearCookie("token");
