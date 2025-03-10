@@ -38,6 +38,43 @@ app.use(express.static("Public")); // for serving static files...gives us access
 // Connect to MongoDB
 mongoose.connect(process.env.MONGO_URL);
 
+// Update function for old posts
+const updateOldPosts = async () => {
+  try {
+    // await PostModel.updateMany(
+    //   { username: { $exists: false } },
+    //   { $set: { username: "Unknown" } }
+    // );
+
+    await PostModel.updateMany(
+      { createdAt: { $exists: false } },
+      { $set: { createdAt: new Date(Date.now() - 3 * 24 * 60 * 60 * 1000) } }
+    );
+
+    await PostModel.updateMany(
+      { email: "brucelee1@gmail.com", username: { $exists: false } },
+      { $set: { username: "Bruce Lee" } }
+    );
+
+    await PostModel.updateMany(
+      { email: "jblake123@gmail.com", username: { $exists: false } },
+      { $set: { username: "James Blake" } }
+    );
+
+    console.log("Old posts updated successfully.");
+  } catch (error) {
+    console.error("Error updating old posts:", error);
+  }
+};
+
+// Run the update function once the database is connected
+mongoose.connection.once("open", () => {
+  console.log("Connected to MongoDB");
+
+  // Call the update function when the server starts
+  updateOldPosts();
+});
+
 //middleware
 const verifyUser = (req, res, next) => {
   const token = req.cookies.token;
