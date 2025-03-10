@@ -162,6 +162,7 @@ app.post("/create", verifyUser, upload.single("file"), async (req, res) => {
       description: req.body.description,
       file: fileUrl,
       email: req.body.email,
+      username: req.username, // Store the username from verifyUser middleware
     });
     res.json("Post created successfully");
   } catch (err) {
@@ -170,7 +171,7 @@ app.post("/create", verifyUser, upload.single("file"), async (req, res) => {
       .status(500)
       .json({ message: "Something went wrong", error: err.message });
   }
-  console.log("Uploaded File:", req.file);
+  // console.log("Uploaded File:", req.file);
 });
 
 // app.put("/editpost/:id", (req, res) => {
@@ -249,14 +250,24 @@ app.get("/logout", (req, res) => {
   return res.json("Logout successful");
 });
 
-app.get("/getposts", (req, res) => {
-  PostModel.find()
-    .then((posts) => {
-      res.json(posts);
-    })
-    .catch((err) => {
-      res.json(err);
-    });
+// app.get("/getposts", (req, res) => {
+//   PostModel.find()
+//     .then((posts) => {
+//       res.json(posts);
+//     })
+//     .catch((err) => {
+//       res.json(err);
+//     });
+// });
+
+app.get("/getposts", async (req, res) => {
+  try {
+    const posts = await PostModel.find().sort({ createdAt: -1 }); // Sort by newest first
+    res.json(posts);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json("Something went wrong");
+  }
 });
 
 app.get("/getpostbyid/:id", (req, res) => {
