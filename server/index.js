@@ -260,9 +260,22 @@ app.get("/logout", (req, res) => {
 //     });
 // });
 
+// app.get("/getposts", async (req, res) => {
+//   try {
+//     const posts = await PostModel.find().sort({ createdAt: -1 }); // Sort by newest first
+//     res.json(posts);
+//   } catch (err) {
+//     console.error(err);
+//     res.status(500).json("Something went wrong");
+//   }
+// });
+
 app.get("/getposts", async (req, res) => {
   try {
-    const posts = await PostModel.find().sort({ createdAt: -1 }); // Sort by newest first
+    const posts = await PostModel.find()
+      .sort({ createdAt: -1 })
+      .select("title description file email username createdAt"); // Include username
+
     res.json(posts);
   } catch (err) {
     console.error(err);
