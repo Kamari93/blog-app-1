@@ -77,7 +77,7 @@ mongoose.connection.once("open", () => {
   console.log("Connected to MongoDB");
 
   // Call the update function when the server starts
-  updateOldPosts();
+  // updateOldPosts();
 });
 
 //middleware
