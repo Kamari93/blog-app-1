@@ -61,9 +61,9 @@ function Home() {
                 {currentUser === post.username ? "You" : post.username}
               </p>
               <p className="timestamp">{moment(post.createdAt).fromNow()}</p>
-              <p className="timestamp">
+              {/* <p className="timestamp">
                 Created: {getDuration(post.createdAt)}
-              </p>
+              </p> */}
             </div>
           </Link>
         );
