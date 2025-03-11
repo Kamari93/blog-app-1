@@ -33,6 +33,20 @@ function Home() {
       .catch((err) => console.log(err));
   }, []);
 
+  const getDuration = (createdAt) => {
+    if (!createdAt) return "Unknown";
+    const createdDate = new Date(createdAt);
+    const now = new Date();
+    const diffInSeconds = Math.floor((now - createdDate) / 1000);
+
+    if (diffInSeconds < 60) return `${diffInSeconds} seconds ago`;
+    if (diffInSeconds < 3600)
+      return `${Math.floor(diffInSeconds / 60)} minutes ago`;
+    if (diffInSeconds < 86400)
+      return `${Math.floor(diffInSeconds / 3600)} hours ago`;
+    return `${Math.floor(diffInSeconds / 86400)} days ago`;
+  };
+
   return (
     <div className="posts_container">
       {posts.map((post) => {
@@ -46,7 +60,8 @@ function Home() {
                 Posted by{" "}
                 {currentUser === post.username ? "You" : post.username}
               </p>
-              <p className="timestamp">{moment(post.createdAt).fromNow()}</p>
+              {/* <p className="timestamp">{moment(post.createdAt).fromNow()}</p> */}
+              <p className="timestamp">Posted: {getDuration(post.createdAt)}</p>
             </div>
           </Link>
         );
