@@ -61,7 +61,15 @@ function Home() {
                 {currentUser === post.username ? "You" : post.username}
               </p>
               {/* <p className="timestamp">{moment(post.createdAt).fromNow()}</p> */}
-              <p className="timestamp">Posted: {getDuration(post.createdAt)}</p>
+              {/* <p className="timestamp">Posted: {getDuration(post.createdAt)}</p> */}
+              //if createdAt is missing, use updatedAt instead with getDuration
+              using ternary operator on p class
+              <p className="timestamp">
+                Updated:{" "}
+                {post.updatedAt
+                  ? getDuration(post.updatedAt)
+                  : getDuration(post.createdAt)}
+              </p>
             </div>
           </Link>
         );
