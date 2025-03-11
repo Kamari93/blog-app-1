@@ -65,10 +65,10 @@ function Home() {
               //if createdAt is missing, use updatedAt instead with getDuration
               using ternary operator on p class
               <p className="timestamp">
-                Updated:{" "}
-                {post.updatedAt
-                  ? getDuration(post.updatedAt)
-                  : getDuration(post.createdAt)}
+                Created:{" "}
+                {post.createdAt
+                  ? getDuration(post.createdAt)
+                  : getDuration(post.updatedAt)}
               </p>
             </div>
           </Link>
