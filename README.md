@@ -2,6 +2,8 @@
 
 This is a Blog App built using the MERN stack. The app allows users to register, login, create posts, edit posts, delete posts, and view all posts with image uploads.
 
+Live App: blog-app-1-client.vercel.app
+
 ## Features
 
 - User Registration & Login (with JWT Authentication)
