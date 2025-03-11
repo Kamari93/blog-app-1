@@ -38,40 +38,6 @@ app.use(express.static("Public")); // for serving static files...gives us access
 // Connect to MongoDB
 mongoose.connect(process.env.MONGO_URL);
 
-// Update function for old posts
-// const updateOldPosts = async () => {
-//   try {
-//     // await PostModel.updateMany(
-//     //   { username: { $exists: false } },
-//     //   { $set: { username: "Unknown" } }
-//     // );
-
-//     // await PostModel.updateMany(
-//     //   { createdAt: { $exists: false } },
-//     //   { $set: { createdAt: new Date(Date.now() - 3 * 24 * 60 * 60 * 1000) } }
-//     // );
-
-//     await PostModel.updateMany(
-//       { createdAt: { $exists: false } },
-//       { $set: { createdAt: new Date() } }
-//     );
-
-//     await PostModel.updateMany(
-//       { email: "brucelee1@gmail.com", username: { $exists: false } },
-//       { $set: { username: "Bruce Lee" } }
-//     );
-
-//     await PostModel.updateMany(
-//       { email: "jblake123@gmail.com", username: { $exists: false } },
-//       { $set: { username: "James Blake" } }
-//     );
-
-//     console.log("Old posts updated successfully.");
-//   } catch (error) {
-//     console.error("Error updating old posts:", error);
-//   }
-// };
-
 const updateOldPosts = async () => {
   try {
     // Find posts missing createdAt
@@ -89,6 +55,16 @@ const updateOldPosts = async () => {
       await post.save({ validateBeforeSave: false }); // Avoid validation issues
     }
 
+    // await PostModel.updateMany(
+    //       { email: "brucelee1@gmail.com", username: { $exists: false } },
+    //       { $set: { username: "Bruce Lee" } }
+    //     );
+
+    //     await PostModel.updateMany(
+    //       { email: "jblake123@gmail.com", username: { $exists: false } },
+    //       { $set: { username: "James Blake" } }
+    //     );
+
     console.log("Old posts updated successfully.");
   } catch (error) {
     console.error("Error updating old posts:", error);
@@ -96,12 +72,12 @@ const updateOldPosts = async () => {
 };
 
 // Run the update function once the database is connected
-mongoose.connection.once("open", () => {
-  console.log("Connected to MongoDB");
+// mongoose.connection.once("open", () => {
+//   console.log("Connected to MongoDB");
 
-  // Call the update function when the server starts
-  updateOldPosts();
-});
+//   // Call the update function when the server starts
+//   updateOldPosts();
+// });
 
 //middleware
 const verifyUser = (req, res, next) => {
@@ -175,23 +151,6 @@ app.post("/login", (req, res) => {
 });
 
 // storage file
-// const storage = multer.diskStorage({
-//   destination: (req, file, cb) => {
-//     cb(null, "Public/Images");
-//   },
-//   filename: (req, file, cb) => {
-//     cb(
-//       null,
-//       file.fieldname + "_" + Date.now() + path.extname(file.originalname)
-//     );
-//   },
-// });
-
-// const upload = multer({
-//   storage: storage, // storage file
-// });
-
-// storage file
 const storage = new CloudinaryStorage({
   cloudinary: cloudinary,
   params: {
@@ -203,20 +162,6 @@ const storage = new CloudinaryStorage({
 });
 
 const upload = multer({ storage: storage });
-
-// app.post("/create", verifyUser, upload.single("file"), (req, res) => {
-//   //   console.log(req.file);
-//   PostModel.create({
-//     title: req.body.title,
-//     description: req.body.description,
-//     file: req.file.filename,
-//     email: req.body.email,
-//   })
-//     .then((result) => {
-//       res.json("Post created successfully");
-//     })
-//     .catch((err) => res.json(err));
-// });
 
 app.post("/create", verifyUser, upload.single("file"), async (req, res) => {
   try {
@@ -238,20 +183,6 @@ app.post("/create", verifyUser, upload.single("file"), async (req, res) => {
   }
   // console.log("Uploaded File:", req.file);
 });
-
-// app.put("/editpost/:id", (req, res) => {
-//   const id = req.params.id;
-//   PostModel.findByIdAndUpdate(
-//     { _id: id },
-//     { title: req.body.title, description: req.body.description }
-//   )
-//     .then((result) => {
-//       res.json("Post updated successfully");
-//     })
-//     .catch((err) => {
-//       res.json(err);
-//     });
-// });
 
 app.put(
   "/editpost/:id",
@@ -315,26 +246,6 @@ app.get("/logout", (req, res) => {
   return res.json("Logout successful");
 });
 
-// app.get("/getposts", (req, res) => {
-//   PostModel.find()
-//     .then((posts) => {
-//       res.json(posts);
-//     })
-//     .catch((err) => {
-//       res.json(err);
-//     });
-// });
-
-// app.get("/getposts", async (req, res) => {
-//   try {
-//     const posts = await PostModel.find().sort({ createdAt: -1 }); // Sort by newest first
-//     res.json(posts);
-//   } catch (err) {
-//     console.error(err);
-//     res.status(500).json("Something went wrong");
-//   }
-// });
-
 app.get("/getposts", async (req, res) => {
   try {
     const posts = await PostModel.find()
@@ -358,17 +269,6 @@ app.get("/getpostbyid/:id", (req, res) => {
       console.log(err);
     });
 });
-
-// app.delete("/deletepost/:id", (req, res) => {
-//   const id = req.params.id;
-//   PostModel.findByIdAndDelete({ _id: id })
-//     .then((result) => {
-//       res.json("Post deleted successfully");
-//     })
-//     .catch((err) => {
-//       res.json(err);
-//     });
-// });
 
 // auto delete images from cloudinary when post is deleted
 app.delete("/deletepost/:id", async (req, res) => {
