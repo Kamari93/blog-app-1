@@ -46,10 +46,10 @@ const updateOldPosts = async () => {
     //   { $set: { username: "Unknown" } }
     // );
 
-    await PostModel.updateMany(
-      { createdAt: { $exists: false } },
-      { $set: { createdAt: new Date(Date.now() - 3 * 24 * 60 * 60 * 1000) } }
-    );
+    // await PostModel.updateMany(
+    //   { createdAt: { $exists: false } },
+    //   { $set: { createdAt: new Date(Date.now() - 3 * 24 * 60 * 60 * 1000) } }
+    // );
 
     await PostModel.updateMany(
       { email: "brucelee1@gmail.com", username: { $exists: false } },

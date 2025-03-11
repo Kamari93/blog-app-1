@@ -9,17 +9,22 @@ function Home() {
 
   // Fetch posts and current user
   useEffect(() => {
+    axios;
+    // .get("https://blog-app-1-server.vercel.app/getposts")
+    // .then((res) => {
+    //   const updatedPosts = res.data.map((post) => ({
+    //     ...post,
+    //     createdAt:
+    //       post.createdAt ||
+    //       new Date(Date.now() - 3 * 24 * 60 * 60 * 1000).toISOString(), // Default to 3 days ago if missing
+    //   }));
+    //   setPosts(updatedPosts);
+    // })
+    // .catch((err) => console.log(err));
+
     axios
       .get("https://blog-app-1-server.vercel.app/getposts")
-      .then((res) => {
-        const updatedPosts = res.data.map((post) => ({
-          ...post,
-          createdAt:
-            post.createdAt ||
-            new Date(Date.now() - 3 * 24 * 60 * 60 * 1000).toISOString(), // Default to 3 days ago if missing
-        }));
-        setPosts(updatedPosts);
-      })
+      .then((res) => setPosts(res.data))
       .catch((err) => console.log(err));
 
     axios
