@@ -80,8 +80,13 @@ const updateOldPosts = async () => {
     });
 
     for (const post of postsWithoutCreatedAt) {
-      post.createdAt = post.updatedAt ? new Date(post.updatedAt) : new Date(); // Use updatedAt if available, otherwise use now
-      await post.save(); // Save each document
+      // post.createdAt = post.updatedAt ? new Date(post.updatedAt) : new Date(); // Use updatedAt if available, otherwise use now
+      // await post.save(); // Save each document
+      post.set(
+        "createdAt",
+        post.updatedAt ? new Date(post.updatedAt) : new Date()
+      );
+      await post.save({ validateBeforeSave: false }); // Avoid validation issues
     }
 
     console.log("Old posts updated successfully.");
