@@ -9,7 +9,7 @@ function Home() {
 
   // Fetch posts and current user
   useEffect(() => {
-    axios;
+    // axios
     // .get("https://blog-app-1-server.vercel.app/getposts")
     // .then((res) => {
     //   const updatedPosts = res.data.map((post) => ({
