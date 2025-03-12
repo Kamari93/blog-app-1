@@ -37,10 +37,10 @@ function Home() {
         if (res.data.username) {
           setCurrentUser(res.data.username);
         } else {
-          setCurrentUser(null);
+          setCurrentUser({});
         }
       })
-      .catch(() => setCurrentUser(null)); // Ensure it resets on failure
+      .catch(() => setCurrentUser({})); // Ensure it resets on failure
   }, []);
 
   const getDuration = (createdAt) => {
