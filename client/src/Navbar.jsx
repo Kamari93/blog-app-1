@@ -22,6 +22,8 @@ function Navbar() {
           // window.location.reload(); // Force Navbar to reset
           setUser({}); // Reset user state
           navigate("/");
+          console.log(res.data);
+          console.log(user);
         }
       })
       .catch((err) => console.log(err));
