@@ -40,7 +40,7 @@ function Navbar() {
           // window.location.reload();
           setUser({}); // Ensure user state is fully cleared
           navigate("/"); // Navigate to home
-          window.location.reload(); // Force refresh to reset navbar state
+          // window.location.reload(); // Force refresh to reset navbar state
         }
       })
       .catch((err) => console.log(err));
