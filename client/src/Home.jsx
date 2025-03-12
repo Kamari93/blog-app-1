@@ -5,7 +5,7 @@ import moment from "moment";
 
 function Home() {
   const [posts, setPosts] = useState([]);
-  const [currentUser, setCurrentUser] = useState(null);
+  const [currentUser, setCurrentUser] = useState("");
 
   // Fetch posts and current user
   useEffect(() => {
@@ -68,7 +68,10 @@ function Home() {
               <p>{post.description}</p>
               <p className="posted_by">
                 Posted by{" "}
-                {currentUser === post.username ? "You" : post.username}
+                {/* {currentUser === post.username ? "You" : post.username} */}
+                {currentUser && currentUser === post.username
+                  ? "You"
+                  : post.username}
               </p>
               <p className="timestamp">{moment(post.createdAt).fromNow()}</p>
               {/* <p className="timestamp">
