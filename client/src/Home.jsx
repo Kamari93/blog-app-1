@@ -8,7 +8,8 @@ import { useContext } from "react";
 function Home() {
   const [posts, setPosts] = useState([]);
   // const [currentUser, setCurrentUser] = useState("");
-  const { user: currentUser } = useContext(userContext);
+  // const { user: currentUser } = useContext(userContext);
+  const { user, setUser } = useContext(userContext);
 
   // Fetch posts and current user
   useEffect(() => {
@@ -74,9 +75,7 @@ function Home() {
               <p className="posted_by">
                 Posted by{" "}
                 {/* {currentUser === post.username ? "You" : post.username} */}
-                {currentUser && currentUser === post.username
-                  ? "You"
-                  : post.username}
+                {user && user === post.username ? "You" : post.username}
               </p>
               <p className="timestamp">{moment(post.createdAt).fromNow()}</p>
               {/* <p className="timestamp">
