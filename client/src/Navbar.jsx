@@ -36,6 +36,7 @@ function Navbar() {
         if (res.data === "Logout successful") {
           setUser(null); // Ensures user state is completely reset
           navigate(0); // Reloads the app to clear any cached user data
+          navigate("/");
         }
       })
       .catch((err) => console.log(err));
