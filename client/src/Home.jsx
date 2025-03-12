@@ -47,7 +47,7 @@ function Home() {
         }
       })
       .catch(() => setCurrentUser({})); // Ensure it resets on failure
-  }, []);
+  }, [user]);
 
   const getDuration = (createdAt) => {
     if (!createdAt) return "Unknown";
