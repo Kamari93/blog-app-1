@@ -40,7 +40,7 @@ function Home() {
       .then((res) => {
         if (res.data.username) {
           // setCurrentUser(res.data.username);
-          setUser(res.data.username);
+          setUser({ username: res.data.username });
         } else {
           // setCurrentUser({});
           setUser({});
