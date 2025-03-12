@@ -2,10 +2,13 @@ import { React, useEffect, useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import moment from "moment";
+import { userContext } from "./App";
+import { useContext } from "react";
 
 function Home() {
   const [posts, setPosts] = useState([]);
-  const [currentUser, setCurrentUser] = useState("");
+  // const [currentUser, setCurrentUser] = useState("");
+  const { user: currentUser } = useContext(userContext);
 
   // Fetch posts and current user
   useEffect(() => {
