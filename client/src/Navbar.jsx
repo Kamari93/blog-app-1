@@ -38,7 +38,7 @@ function Navbar() {
           // navigate(0); // Reloads the app to clear any cached user data
           // navigate("/");
           // window.location.reload();
-          setUser(null); // Ensure user state is fully cleared
+          setUser({}); // Ensure user state is fully cleared
           navigate("/"); // Navigate to home
           window.location.reload(); // Force refresh to reset navbar state
         }
