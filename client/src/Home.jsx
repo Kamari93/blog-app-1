@@ -38,9 +38,11 @@ function Home() {
       .get("https://blog-app-1-server.vercel.app/", { withCredentials: true })
       .then((res) => {
         if (res.data.username) {
-          setCurrentUser(res.data.username);
+          // setCurrentUser(res.data.username);
+          setUser(res.data.username);
         } else {
-          setCurrentUser({});
+          // setCurrentUser({});
+          setUser({});
         }
       })
       .catch(() => setCurrentUser({})); // Ensure it resets on failure
