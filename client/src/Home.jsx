@@ -7,9 +7,9 @@ import { useContext } from "react";
 
 function Home() {
   const [posts, setPosts] = useState([]);
-  // const [currentUser, setCurrentUser] = useState("");
+  const [currentUser, setCurrentUser] = useState("");
   // const { user: currentUser } = useContext(userContext);
-  const { user, setUser } = useContext(userContext);
+  // const { user, setUser } = useContext(userContext);
 
   // Fetch posts and current user
   useEffect(() => {
@@ -31,22 +31,22 @@ function Home() {
       .then((res) => setPosts(res.data))
       .catch((err) => console.log(err));
 
-    // axios
-    //   .get("https://blog-app-1-server.vercel.app/", { withCredentials: true })
-    //   .then((res) => setCurrentUser(res.data.username))
-    //   .catch((err) => console.log(err));
     axios
       .get("https://blog-app-1-server.vercel.app/", { withCredentials: true })
-      .then((res) => {
-        if (res.data.username) {
-          // setCurrentUser(res.data.username);
-          setUser({ username: res.data.username });
-        } else {
-          // setCurrentUser({});
-          setUser({});
-        }
-      })
-      .catch(() => setCurrentUser({})); // Ensure it resets on failure
+      .then((res) => setCurrentUser(res.data.username))
+      .catch((err) => console.log(err));
+    // axios
+    //   .get("https://blog-app-1-server.vercel.app/", { withCredentials: true })
+    //   .then((res) => {
+    //     if (res.data.username) {
+    //       // setCurrentUser(res.data.username);
+    //       setUser({ username: res.data.username });
+    //     } else {
+    //       // setCurrentUser({});
+    //       setUser({});
+    //     }
+    //   })
+    //   .catch(() => setCurrentUser({})); // Ensure it resets on failure
   }, []);
 
   const getDuration = (createdAt) => {
@@ -74,8 +74,8 @@ function Home() {
               <p>{post.description}</p>
               <p className="posted_by">
                 Posted by{" "}
-                {/* {currentUser === post.username ? "You" : post.username} */}
-                {user && user === post.username ? "You" : post.username}
+                {currentUser === post.username ? "You" : post.username}
+                {/* {user && user === post.username ? "You" : post.username} */}
               </p>
               <p className="timestamp">{moment(post.createdAt).fromNow()}</p>
               {/* <p className="timestamp">

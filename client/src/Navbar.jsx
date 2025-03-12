@@ -9,42 +9,42 @@ function Navbar() {
   const { user, setUser } = useContext(userContext); // Destructure user & setUser at once
   const navigate = useNavigate();
 
-  // axios.defaults.withCredentials = true;
+  axios.defaults.withCredentials = true;
 
   // const { setUser } = useContext(userContext); // Get setUser from context
 
-  // const handleLogout = () => {
-  //   axios
-  //     .get("https://blog-app-1-server.vercel.app/logout")
-  //     .then((res) => {
-  //       if (res.data === "Logout successful") {
-  //         // navigate(0); // reload the page
-  //         // window.location.reload(); // Force Navbar to reset
-  //         setUser({}); // Reset user state
-  //         navigate("/");
-  //       }
-  //     })
-  //     .catch((err) => console.log(err));
-  // };
-
   const handleLogout = () => {
     axios
-      .get("https://blog-app-1-server.vercel.app/logout", {
-        withCredentials: true,
-      })
+      .get("https://blog-app-1-server.vercel.app/logout")
       .then((res) => {
         if (res.data === "Logout successful") {
-          // setUser({}); // Ensures user state is completely reset
-          // navigate(0); // Reloads the app to clear any cached user data
-          // navigate("/");
-          // window.location.reload();
-          setUser({}); // Ensure user state is fully cleared
-          navigate("/"); // Navigate to home
-          // window.location.reload(); // Force refresh to reset navbar state
+          // navigate(0); // reload the page
+          // window.location.reload(); // Force Navbar to reset
+          setUser({}); // Reset user state
+          navigate("/");
         }
       })
       .catch((err) => console.log(err));
   };
+
+  // const handleLogout = () => {
+  //   axios
+  //     .get("https://blog-app-1-server.vercel.app/logout", {
+  //       withCredentials: true,
+  //     })
+  //     .then((res) => {
+  //       if (res.data === "Logout successful") {
+  //         // setUser({}); // Ensures user state is completely reset
+  //         // navigate(0); // Reloads the app to clear any cached user data
+  //         // navigate("/");
+  //         // window.location.reload();
+  //         setUser({}); // Ensure user state is fully cleared
+  //         navigate("/"); // Navigate to home
+  //         // window.location.reload(); // Force refresh to reset navbar state
+  //       }
+  //     })
+  //     .catch((err) => console.log(err));
+  // };
 
   return (
     <div className="navbar-header">
