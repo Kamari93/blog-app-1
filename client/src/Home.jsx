@@ -27,10 +27,20 @@ function Home() {
       .then((res) => setPosts(res.data))
       .catch((err) => console.log(err));
 
+    // axios
+    //   .get("https://blog-app-1-server.vercel.app/", { withCredentials: true })
+    //   .then((res) => setCurrentUser(res.data.username))
+    //   .catch((err) => console.log(err));
     axios
       .get("https://blog-app-1-server.vercel.app/", { withCredentials: true })
-      .then((res) => setCurrentUser(res.data.username))
-      .catch((err) => console.log(err));
+      .then((res) => {
+        if (res.data.username) {
+          setCurrentUser(res.data.username);
+        } else {
+          setCurrentUser(null);
+        }
+      })
+      .catch(() => setCurrentUser(null)); // Ensure it resets on failure
   }, []);
 
   const getDuration = (createdAt) => {
