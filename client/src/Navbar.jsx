@@ -13,19 +13,34 @@ function Navbar() {
 
   // const { setUser } = useContext(userContext); // Get setUser from context
 
+  // const handleLogout = () => {
+  //   axios
+  //     .get("https://blog-app-1-server.vercel.app/logout")
+  //     .then((res) => {
+  //       if (res.data === "Logout successful") {
+  //         // navigate(0); // reload the page
+  //         // window.location.reload(); // Force Navbar to reset
+  //         setUser({}); // Reset user state
+  //         navigate("/");
+  //       }
+  //     })
+  //     .catch((err) => console.log(err));
+  // };
+
   const handleLogout = () => {
     axios
-      .get("https://blog-app-1-server.vercel.app/logout")
+      .get("https://blog-app-1-server.vercel.app/logout", {
+        withCredentials: true,
+      })
       .then((res) => {
         if (res.data === "Logout successful") {
-          // navigate(0); // reload the page
-          // window.location.reload(); // Force Navbar to reset
-          setUser({}); // Reset user state
-          navigate("/");
+          setUser(null); // Ensures user state is completely reset
+          navigate(0); // Reloads the app to clear any cached user data
         }
       })
       .catch((err) => console.log(err));
   };
+
   return (
     <div className="navbar-header">
       <div>

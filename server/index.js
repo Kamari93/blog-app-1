@@ -241,8 +241,17 @@ app.put(
   }
 );
 
+// app.get("/logout", (req, res) => {
+//   res.clearCookie("token");
+//   return res.json("Logout successful");
+// });
+
 app.get("/logout", (req, res) => {
-  res.clearCookie("token");
+  res.clearCookie("token", {
+    httpOnly: true,
+    secure: true,
+    sameSite: "None",
+  });
   return res.json("Logout successful");
 });
 
