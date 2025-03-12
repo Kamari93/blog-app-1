@@ -20,7 +20,7 @@ function Navbar() {
         if (res.data === "Logout successful") {
           // navigate(0); // reload the page
           // window.location.reload(); // Force Navbar to reset
-          setUser({}); // Reset user state
+          // setUser({}); // Reset user state
           navigate("/");
         }
       })
