@@ -38,10 +38,11 @@ function Navbar() {
       .then(() => {
         localStorage.removeItem("token");
         sessionStorage.removeItem("token");
-        setUser({}); // Clear user state
+        // setUser({}); // Clear user state
         setUser(null);
         setCookie("token", "", { expires: new Date(0) });
         navigate("/"); // Redirect home
+        window.location.reload(); // Force Navbar to reset
       })
       .catch((err) => console.log(err));
   };
