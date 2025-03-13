@@ -37,9 +37,9 @@ function Navbar() {
       .then(() => {
         localStorage.removeItem("token");
         sessionStorage.removeItem("token");
-        // setUser({}); // Clear user state
-        setUser(null);
+        setUser({}); // Clear user state
         navigate("/"); // Redirect home
+        console.log(res.data);
       })
       .catch((err) => console.log(err));
   };
