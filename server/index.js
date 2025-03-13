@@ -133,6 +133,8 @@ app.post("/login", (req, res) => {
             httpOnly: true,
             secure: true, // This makes the cookie only work on HTTPS
             sameSite: "None", // Allows cross-origin cookies
+            maxAge: 10 * 60 * 1000, // 10 minutes in milliseconds
+            // maxAge: 60 * 60 * 1000 // 1 hour in milliseconds
           });
           // return res.json("Login successful");
           return res.json({
