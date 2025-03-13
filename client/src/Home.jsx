@@ -46,15 +46,16 @@ function Home() {
 
   return (
     <div className="posts_container">
-      <div className="controls">
-        <button
-          onClick={() =>
-            setSortOrder(sortOrder === "newest" ? "oldest" : "newest")
-          }
-        >
-          Sort: {sortOrder === "newest" ? "Oldest First" : "Newest First"}
-        </button>
-      </div>
+      <label for="sort">Sort By:</label>
+      <select
+        id="sort"
+        class="sort-dropdown"
+        onChange={(e) => setSortOrder(e.target.value)}
+      >
+        <option value="newest">Newest</option>
+        <option value="oldest">Oldest</option>
+        <option value="popular">Most Popular</option>
+      </select>
 
       {currentPosts.map((post) => (
         <Link to={`/post/${post._id}`} key={post._id} className="post">
