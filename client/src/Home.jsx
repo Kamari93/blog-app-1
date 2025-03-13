@@ -1,3 +1,43 @@
+import { React, useEffect, useState, useContext } from "react";
+import axios from "axios";
+import { Link } from "react-router-dom";
+import moment from "moment";
+import { userContext } from "./App";
+
+function Home() {
+  const [posts, setPosts] = useState([]);
+  const { user } = useContext(userContext); // Get user from global context
+
+  // Fetch posts when user logs in/out
+  useEffect(() => {
+    axios
+      .get("https://blog-app-1-server.vercel.app/getposts")
+      .then((res) => setPosts(res.data))
+      .catch((err) => console.log(err));
+  }, [user]); // Re-fetch posts when `user` changes
+
+  return (
+    <div className="posts_container">
+      {posts.map((post) => (
+        <Link to={`/post/${post._id}`} key={post._id} className="post">
+          {post.file && <img src={post.file} alt={post.title} />}
+          <div className="post_text">
+            <h2>{post.title}</h2>
+            <p>{post.description}</p>
+            <p className="posted_by">
+              Posted by{" "}
+              {user?.username === post.username ? "You" : post.username}
+            </p>
+            <p className="timestamp">{moment(post.createdAt).fromNow()}</p>
+          </div>
+        </Link>
+      ))}
+    </div>
+  );
+}
+
+export default Home;
+
 // import { React, useEffect, useState } from "react";
 // import axios from "axios";
 // import { Link } from "react-router-dom";
@@ -90,43 +130,3 @@
 // }
 
 // export default Home;
-
-import { React, useEffect, useState, useContext } from "react";
-import axios from "axios";
-import { Link } from "react-router-dom";
-import moment from "moment";
-import { userContext } from "./App";
-
-function Home() {
-  const [posts, setPosts] = useState([]);
-  const { user } = useContext(userContext); // Get user from global context
-
-  // Fetch posts when user logs in/out
-  useEffect(() => {
-    axios
-      .get("https://blog-app-1-server.vercel.app/getposts")
-      .then((res) => setPosts(res.data))
-      .catch((err) => console.log(err));
-  }, [user]); // Re-fetch posts when `user` changes
-
-  return (
-    <div className="posts_container">
-      {posts.map((post) => (
-        <Link to={`/post/${post._id}`} key={post._id} className="post">
-          {post.file && <img src={post.file} alt={post.title} />}
-          <div className="post_text">
-            <h2>{post.title}</h2>
-            <p>{post.description}</p>
-            <p className="posted_by">
-              Posted by{" "}
-              {user?.username === post.username ? "You" : post.username}
-            </p>
-            <p className="timestamp">{moment(post.createdAt).fromNow()}</p>
-          </div>
-        </Link>
-      ))}
-    </div>
-  );
-}
-
-export default Home;
