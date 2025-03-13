@@ -3,7 +3,6 @@ import { Link, useNavigate } from "react-router-dom";
 import "./style.css";
 import { userContext } from "./App";
 import axios from "axios";
-import { set } from "mongoose";
 
 function Navbar() {
   // const user = useContext(userContext); // get user from context
@@ -38,8 +37,7 @@ function Navbar() {
       .then(() => {
         localStorage.removeItem("token");
         sessionStorage.removeItem("token");
-        // setUser({}); // Clear user state
-        setUser(null);
+        setUser({}); // Clear user state
         navigate("/"); // Redirect home
         window.location.reload(); // Force Navbar to reset
       })
