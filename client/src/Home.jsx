@@ -7,7 +7,7 @@ import { userContext } from "./App";
 function Home() {
   const [posts, setPosts] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const [postsPerPage] = useState(5); // Adjust number of posts per page
+  const [postsPerPage] = useState(4); // Adjust number of posts per page
   const [sortOrder, setSortOrder] = useState("newest"); // Sorting state
 
   const { user } = useContext(userContext); // Get user from global context
