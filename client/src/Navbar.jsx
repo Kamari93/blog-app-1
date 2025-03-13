@@ -38,6 +38,7 @@ function Navbar() {
         localStorage.removeItem("token");
         sessionStorage.removeItem("token");
         setUser({}); // Clear user state
+        setUser(null);
         navigate("/"); // Redirect home
         window.location.reload(); // Force Navbar to reset
       })
