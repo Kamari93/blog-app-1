@@ -214,10 +214,17 @@
 }
 
 .sort-dropdown {
-  padding: 8px;
+  padding: 5px;
   border-radius: 5px;
   border: 1px solid #f59919;
   background-color: #1ea775;
   color: white;
   cursor: pointer;
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 20px;
 }
