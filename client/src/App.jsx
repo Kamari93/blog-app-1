@@ -15,33 +15,33 @@ export const userContext = createContext(); // create a global state
 function App() {
   const [user, setUser] = useState({});
 
-  // axios.defaults.withCredentials = true;
-
-  // useEffect(() => {
-  //   axios
-  //     .get("https://blog-app-1-server.vercel.app/")
-  //     .then((res) => {
-  //       if (res.data.username) {
-  //         setUser(res.data); // Only set the user if username exists
-  //       } else {
-  //         setUser({}); // Reset user if token is invalid
-  //       }
-  //     })
-  //     .catch((err) => console.log(err));
-  // }, []);
+  axios.defaults.withCredentials = true;
 
   useEffect(() => {
     axios
-      .get("https://blog-app-1-server.vercel.app/", { withCredentials: true })
+      .get("https://blog-app-1-server.vercel.app/")
       .then((res) => {
         if (res.data.username) {
-          setUser({ username: res.data.username });
+          setUser(res.data); // Only set the user if username exists
         } else {
-          setUser(null); // Set user to null if not logged in
+          setUser({}); // Reset user if token is invalid
         }
       })
-      .catch(() => setUser(null));
+      .catch((err) => console.log(err));
   }, []);
+
+  // useEffect(() => {
+  //   axios
+  //     .get("https://blog-app-1-server.vercel.app/", { withCredentials: true })
+  //     .then((res) => {
+  //       if (res.data.username) {
+  //         setUser({ username: res.data.username });
+  //       } else {
+  //         setUser(null); // Set user to null if not logged in
+  //       }
+  //     })
+  //     .catch(() => setUser(null));
+  // }, []);
 
   return (
     <userContext.Provider value={{ user, setUser }}>
