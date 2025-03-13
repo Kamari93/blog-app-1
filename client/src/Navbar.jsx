@@ -35,7 +35,7 @@ function Navbar() {
         withCredentials: true,
       })
       .then(() => {
-        setUser(null); // Clear user state
+        setUser({}); // Clear user state
         navigate("/"); // Redirect home
       })
       .catch((err) => console.log(err));
