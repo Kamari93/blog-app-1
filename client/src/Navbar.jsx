@@ -34,7 +34,7 @@ function Navbar() {
       .get("https://blog-app-1-server.vercel.app/logout", {
         withCredentials: true,
       })
-      .then(() => {
+      .then((res) => {
         localStorage.removeItem("token");
         sessionStorage.removeItem("token");
         setUser({}); // Clear user state
