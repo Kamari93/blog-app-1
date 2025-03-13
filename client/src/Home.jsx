@@ -6,6 +6,10 @@ import { userContext } from "./App";
 
 function Home() {
   const [posts, setPosts] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [postsPerPage] = useState(5); // Adjust number of posts per page
+  const [sortOrder, setSortOrder] = useState("newest"); // Sorting state
+
   const { user } = useContext(userContext); // Get user from global context
 
   // Fetch posts when user logs in/out
@@ -16,9 +20,43 @@ function Home() {
       .catch((err) => console.log(err));
   }, [user]); // Re-fetch posts when `user` changes
 
+  // Sort posts by createdAt
+  const sortedPosts = [...posts].sort((a, b) => {
+    return sortOrder === "newest"
+      ? new Date(b.createdAt) - new Date(a.createdAt)
+      : new Date(a.createdAt) - new Date(b.createdAt);
+  });
+
+  // Pagination logic
+  const indexOfLastPost = currentPage * postsPerPage;
+  const indexOfFirstPost = indexOfLastPost - postsPerPage;
+  const currentPosts = sortedPosts.slice(indexOfFirstPost, indexOfLastPost);
+
+  const nextPage = () => {
+    if (currentPage < Math.ceil(posts.length / postsPerPage)) {
+      setCurrentPage(currentPage + 1);
+    }
+  };
+
+  const prevPage = () => {
+    if (currentPage > 1) {
+      setCurrentPage(currentPage - 1);
+    }
+  };
+
   return (
     <div className="posts_container">
-      {posts.map((post) => (
+      <div className="controls">
+        <button
+          onClick={() =>
+            setSortOrder(sortOrder === "newest" ? "oldest" : "newest")
+          }
+        >
+          Sort: {sortOrder === "newest" ? "Oldest First" : "Newest First"}
+        </button>
+      </div>
+
+      {currentPosts.map((post) => (
         <Link to={`/post/${post._id}`} key={post._id} className="post">
           {post.file && <img src={post.file} alt={post.title} />}
           <div className="post_text">
@@ -32,6 +70,19 @@ function Home() {
           </div>
         </Link>
       ))}
+
+      <div className="pagination">
+        <button onClick={prevPage} disabled={currentPage === 1}>
+          Previous
+        </button>
+        <span> Page {currentPage} </span>
+        <button
+          onClick={nextPage}
+          disabled={currentPage >= Math.ceil(posts.length / postsPerPage)}
+        >
+          Next
+        </button>
+      </div>
     </div>
   );
 }
