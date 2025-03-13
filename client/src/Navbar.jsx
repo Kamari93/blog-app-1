@@ -35,6 +35,8 @@ function Navbar() {
         withCredentials: true,
       })
       .then(() => {
+        localStorage.removeItem("token");
+        sessionStorage.removeItem("token");
         setUser({}); // Clear user state
         navigate("/"); // Redirect home
       })
