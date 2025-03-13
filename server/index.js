@@ -83,7 +83,7 @@ const updateOldPosts = async () => {
 const verifyUser = (req, res, next) => {
   const token = req.cookies.token;
   if (!token) {
-    res.json("Token is missing, please login");
+    return res.json("Token is missing, please login");
   } else {
     jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
       if (err) {
@@ -125,7 +125,7 @@ app.post("/login", (req, res) => {
           const token = jwt.sign(
             { email: user.email, username: user.username },
             process.env.JWT_SECRET,
-            { expiresIn: "1d" }
+            { expiresIn: "1h" }
           );
           // store cookie with name "token"
           // res.cookie("token", token);
