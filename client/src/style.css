@@ -212,3 +212,12 @@
 .contact_link:hover {
   background-color: #f59919;
 }
+
+.sort-dropdown {
+  padding: 8px;
+  border-radius: 5px;
+  border: 1px solid #f59919;
+  background-color: #1ea775;
+  color: white;
+  cursor: pointer;
+}
