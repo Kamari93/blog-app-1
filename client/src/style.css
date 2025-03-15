@@ -113,7 +113,7 @@
   align-items: center;
   gap: 20px;
   /* max-width: 800px; */
-  width: 80%;
+  /* width: 80%; */
   margin: 0 auto;
   padding: 20px;
 }
@@ -132,14 +132,8 @@
   text-align: center;
 }
 
-/* .post_card img {
-  width: 100%;
-  height: auto;
-  border-radius: 10px;
-} */
-
 .post {
-  width: 80%;
+  /* width: 80%; */
   margin: 10px;
   border: 1px solid #f59919;
   border-radius: 8px;
