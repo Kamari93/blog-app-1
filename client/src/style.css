@@ -239,14 +239,15 @@
   cursor: pointer;
 }
 
-.pagination button.active {
+/* .pagination button.active {
   background-color: #f59919;
   color: white;
-}
+} */
 
 .login_register {
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: right;
+
   /* height: 80vh; */
 }
