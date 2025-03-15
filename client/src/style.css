@@ -108,7 +108,7 @@
 }
 
 .post-link {
-  width: 80%;
+  /* width: 80%; */
   margin: 10px;
   border: 1px solid #f59919;
   border-radius: 8px;
@@ -117,6 +117,7 @@
   align-items: center;
   text-decoration: none;
   color: black;
+  flex-direction: row;
 }
 
 .post {
