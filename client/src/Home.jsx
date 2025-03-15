@@ -79,7 +79,7 @@ function Home() {
 
       {currentPosts.map((post) => (
         <div key={post._id} className="post">
-          <Link to={`/post/${post._id}`}>
+          <Link to={`/post/${post._id}`} className="post_link">
             {post.file && <img src={post.file} alt={post.title} />}
             <div className="post_text">
               <h2>{post.title}</h2>

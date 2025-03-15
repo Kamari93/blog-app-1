@@ -107,7 +107,7 @@
   align-items: center;
 }
 
-/* .post {
+.post-link {
   width: 80%;
   margin: 10px;
   border: 1px solid #f59919;
@@ -117,7 +117,7 @@
   align-items: center;
   text-decoration: none;
   color: black;
-} */
+}
 
 .post {
   background-color: #fff;
