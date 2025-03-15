@@ -11,6 +11,7 @@ function Home() {
   const [sortOrder, setSortOrder] = useState("newest"); // Sorting state
 
   const { user } = useContext(userContext); // Get user from global context
+  console.log(user);
 
   // Fetch posts when user logs in/out
   useEffect(() => {
@@ -93,24 +94,14 @@ function Home() {
           </Link>
 
           {/* only show button if user is logged in */}
-          {user && (
-            <button
-              onClick={() => toggleLike(post._id)}
-              disabled={!user}
-              className="upvote"
-            >
-              {post.likes?.includes(user?._id) ? "Unlike" : "Like"} (
-              {post.likes?.length || 0})
-            </button>
-          )}
-          {/* <button
+          <button
             onClick={() => toggleLike(post._id)}
             disabled={!user}
             className="upvote"
           >
             {post.likes?.includes(user?._id) ? "Unlike" : "Like"} (
             {post.likes?.length || 0})
-          </button> */}
+          </button>
         </div>
       ))}
 
