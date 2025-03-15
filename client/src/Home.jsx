@@ -91,14 +91,26 @@ function Home() {
               <p className="timestamp">{moment(post.createdAt).fromNow()}</p>
             </div>
           </Link>
-          <button
+
+          {/* only show button if user is logged in */}
+          {user && (
+            <button
+              onClick={() => toggleLike(post._id)}
+              disabled={!user}
+              className="upvote"
+            >
+              {post.likes?.includes(user?._id) ? "Unlike" : "Like"} (
+              {post.likes?.length || 0})
+            </button>
+          )}
+          {/* <button
             onClick={() => toggleLike(post._id)}
             disabled={!user}
             className="upvote"
           >
             {post.likes?.includes(user?._id) ? "Unlike" : "Like"} (
             {post.likes?.length || 0})
-          </button>
+          </button> */}
         </div>
       ))}
 
