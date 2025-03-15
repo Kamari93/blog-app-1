@@ -107,8 +107,8 @@
   align-items: center;
 }
 
-.post-link {
-  /* width: 80%; */
+.post {
+  width: 80%;
   margin: 10px;
   border: 1px solid #f59919;
   border-radius: 8px;
@@ -117,27 +117,14 @@
   align-items: center;
   text-decoration: none;
   color: black;
-  flex-direction: row;
 }
 
-.post {
-  background-color: #fff;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  box-shadow: 2px 4px 6px rgba(0, 0, 0, 0.1);
-  overflow: hidden;
-  transition: box-shadow 0.3s ease-in-out;
-  margin-bottom: 20px;
-  padding: 16px;
-  display: flex;
-  flex-direction: column; /* Ensures children stack vertically */
-}
-.post-link img {
+.post img {
   width: 200px;
   height: 200px;
   border-radius: 8px;
 }
-.post-link .post_text {
+.post .post_text {
   margin-left: 10px;
 }
 
