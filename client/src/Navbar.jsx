@@ -78,7 +78,7 @@ function Navbar() {
           ></input>
         </div>
       ) : (
-        <div>
+        <div className="login_register">
           <Link to="/register" className="link">
             <h5>Register</h5>
           </Link>
