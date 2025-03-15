@@ -229,3 +229,24 @@
   margin-top: 20px;
   margin-bottom: 20px;
 }
+
+.pagination button {
+  padding: 5px 10px;
+  border-radius: 5px;
+  border: 1px solid #f59919;
+  background-color: #1ea775;
+  color: white;
+  cursor: pointer;
+}
+
+.pagination button.active {
+  background-color: #f59919;
+  color: white;
+}
+
+.login_register {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* height: 80vh; */
+}
