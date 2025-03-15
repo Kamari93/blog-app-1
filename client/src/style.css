@@ -100,17 +100,41 @@
   color: white;
 }
 
-.posts_container {
+/* .posts_container {
   display: flex;
   margin-top: 20px;
   flex-direction: column;
   align-items: center;
+} */
+
+.posts_container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
 }
 
+/* Post card styles */
 .post_card {
   display: flex;
   flex-direction: column;
   align-items: center;
+  background: #fff;
+  padding: 15px;
+  border-radius: 10px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 500px;
+  text-align: center;
+}
+
+.post_card img {
+  width: 100%;
+  height: auto;
+  border-radius: 10px;
 }
 
 .post {
@@ -125,11 +149,12 @@
   color: black;
 }
 
-.post img {
+/* .post img {
   width: 200px;
   height: 200px;
   border-radius: 8px;
-}
+} */
+
 .post .post_text {
   margin-left: 10px;
 }
