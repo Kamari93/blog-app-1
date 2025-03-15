@@ -101,7 +101,7 @@ function Home() {
           >
             {/* {post.likes?.includes(user?._id) ? "Unlike" : "Like"} (
             {post.likes?.length || 0}){console.log(post.likes)} */}
-            {post.likes?.some(
+            {(post.likes || []).some(
               (like) => like.toString() === user?._id.toString()
             )
               ? "Unlike"
