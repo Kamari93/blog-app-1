@@ -11,7 +11,7 @@ function Home() {
   const [sortOrder, setSortOrder] = useState("newest"); // Sorting state
 
   const { user } = useContext(userContext); // Get user from global context
-  console.log(`User: ${user?.name}`);
+  console.log(`User: ${user?.username}`);
 
   // Fetch posts when user logs in/out
   useEffect(() => {
@@ -47,7 +47,7 @@ function Home() {
 
   // Handle like/unlike toggle
   const toggleLike = async (postId) => {
-    if (!user?.name) return alert("You must be logged in to like posts!");
+    if (!user?.username) return alert("You must be logged in to like posts!");
 
     try {
       const res = await axios.put(
@@ -96,7 +96,7 @@ function Home() {
           {/* only show button if user is logged in */}
           <button
             onClick={() => toggleLike(post._id)}
-            disabled={!user?.name}
+            disabled={user?.username}
             className="upvote"
           >
             {post.likes?.includes(user?._id) ? "Unlike" : "Like"} (
