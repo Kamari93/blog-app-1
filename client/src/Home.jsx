@@ -78,7 +78,7 @@ function Home() {
       </select>
 
       {currentPosts.map((post) => (
-        <div key={post._id} className="post-card">
+        <div key={post._id} className="post_card">
           <Link to={`/post/${post._id}`} className="post">
             {post.file && <img src={post.file} alt={post.title} />}
             <div className="post_text">
