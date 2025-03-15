@@ -80,7 +80,10 @@ function Navbar() {
       ) : (
         <div>
           <Link to="/register" className="link">
-            <h5>Register/Login</h5>
+            <h5>Register</h5>
+          </Link>
+          <Link to="/login" className="link">
+            <h5>Login</h5>
           </Link>
         </div>
       )}
