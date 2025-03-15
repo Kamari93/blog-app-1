@@ -101,10 +101,12 @@ function Home() {
           >
             {/* {post.likes?.includes(user?._id) ? "Unlike" : "Like"} (
             {post.likes?.length || 0}) */}
-            {Array.isArray(post.likes) && post.likes.includes(user?._id)
+            {post.likes?.some(
+              (like) => like.toString() === user?._id.toString()
+            )
               ? "Unlike"
-              : "Like"}
-            {post.likes?.length || 0}
+              : "Like"}{" "}
+            ({post.likes?.length || 0})
           </button>
         </div>
       ))}
