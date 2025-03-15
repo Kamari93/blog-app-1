@@ -237,6 +237,7 @@
   background-color: #1ea775;
   color: white;
   cursor: pointer;
+  width: 100px;
 }
 
 /* .pagination button.active {
