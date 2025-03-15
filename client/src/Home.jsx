@@ -47,7 +47,7 @@ function Home() {
 
   // Handle like/unlike toggle
   const toggleLike = async (postId) => {
-    if (!user) return alert("You must be logged in to like posts!");
+    if (!user?.name) return alert("You must be logged in to like posts!");
 
     try {
       const res = await axios.put(
@@ -96,7 +96,7 @@ function Home() {
           {/* only show button if user is logged in */}
           <button
             onClick={() => toggleLike(post._id)}
-            disabled={!user}
+            disabled={!user?.name}
             className="upvote"
           >
             {post.likes?.includes(user?._id) ? "Unlike" : "Like"} (
