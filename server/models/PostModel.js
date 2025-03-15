@@ -8,6 +8,7 @@ const postSchema = new Schema(
     file: String,
     email: String,
     username: String, // Username of the user who created the post
+    likes: [{ type: mongoose.Schema.Types.ObjectId, ref: "users" }], // Array of user IDs
     // createdAt: { type: Date, default: Date.now }, // Automatically sets timestamp
   },
   { timestamps: true } // Automatically adds createdAt and updatedAt

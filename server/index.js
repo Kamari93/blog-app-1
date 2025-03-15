@@ -305,6 +305,29 @@ app.delete("/deletepost/:id", async (req, res) => {
   }
 });
 
+// like/unlike post functionality
+app.put("/togglelike/:postId", async (req, res) => {
+  try {
+    const { userId } = req.body;
+    const { postId } = req.params;
+
+    const post = await PostModel.findById(postId);
+    if (!post) return res.status(404).json({ message: "Post not found" });
+
+    const index = post.likes.indexOf(userId);
+    if (index === -1) {
+      post.likes.push(userId); // Like the post
+    } else {
+      post.likes.splice(index, 1); // Unlike the post
+    }
+
+    await post.save();
+    res.json({ likes: post.likes.length });
+  } catch (error) {
+    res.status(500).json({ message: "Internal server error" });
+  }
+});
+
 // start server
 const port = process.env.PORT || 5000;
 app.listen(port, () => {

@@ -44,6 +44,26 @@ function Home() {
     }
   };
 
+  // Handle like/unlike toggle
+  const toggleLike = async (postId) => {
+    if (!user) return alert("You must be logged in to like posts!");
+
+    try {
+      const res = await axios.put(
+        `https://blog-app-1-server.vercel.app/togglelike/${postId}`,
+        { userId: user._id }
+      );
+
+      setPosts((prevPosts) =>
+        prevPosts.map((post) =>
+          post._id === postId ? { ...post, likes: res.data.likes } : post
+        )
+      );
+    } catch (error) {
+      console.log("Error liking post", error);
+    }
+  };
+
   return (
     <div className="posts_container">
       <label for="sort">Sort By:</label>
@@ -58,18 +78,24 @@ function Home() {
       </select>
 
       {currentPosts.map((post) => (
-        <Link to={`/post/${post._id}`} key={post._id} className="post">
-          {post.file && <img src={post.file} alt={post.title} />}
-          <div className="post_text">
-            <h2>{post.title}</h2>
-            <p>{post.description}</p>
-            <p className="posted_by">
-              Posted by{" "}
-              {user?.username === post.username ? "You" : post.username}
-            </p>
-            <p className="timestamp">{moment(post.createdAt).fromNow()}</p>
-          </div>
-        </Link>
+        <div key={post._id} className="post">
+          <Link to={`/post/${post._id}`}>
+            {post.file && <img src={post.file} alt={post.title} />}
+            <div className="post_text">
+              <h2>{post.title}</h2>
+              <p>{post.description}</p>
+              <p className="posted_by">
+                Posted by{" "}
+                {user?.username === post.username ? "You" : post.username}
+              </p>
+              <p className="timestamp">{moment(post.createdAt).fromNow()}</p>
+            </div>
+          </Link>
+          <button onClick={() => toggleLike(post._id)} disabled={!user}>
+            {post.likes?.includes(user?._id) ? "Unlike" : "Like"} (
+            {post.likes?.length || 0})
+          </button>
+        </div>
       ))}
 
       <div className="pagination">
