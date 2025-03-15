@@ -106,7 +106,7 @@ function Home() {
             )
               ? "Unlike"
               : "Like"}
-            {post.likes?.length || 0}){console.log(post.likes)}
+            ({post.likes?.length || 0}){console.log(post.likes)}
           </button>
         </div>
       ))}
