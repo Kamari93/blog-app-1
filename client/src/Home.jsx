@@ -99,8 +99,12 @@ function Home() {
             disabled={!user?.username}
             className="upvote"
           >
-            {post.likes?.includes(user?._id) ? "Unlike" : "Like"} (
-            {post.likes?.length || 0})
+            {/* {post.likes?.includes(user?._id) ? "Unlike" : "Like"} (
+            {post.likes?.length || 0}) */}
+            {Array.isArray(post.likes) && post.likes.includes(user?._id)
+              ? "Unlike"
+              : "Like"}
+            {post.likes?.length || 0}
           </button>
         </div>
       ))}
