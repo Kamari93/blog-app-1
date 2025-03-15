@@ -11,7 +11,7 @@ function Home() {
   const [sortOrder, setSortOrder] = useState("newest"); // Sorting state
 
   const { user } = useContext(userContext); // Get user from global context
-  console.log(user);
+  console.log(`User: ${user}`);
 
   // Fetch posts when user logs in/out
   useEffect(() => {
