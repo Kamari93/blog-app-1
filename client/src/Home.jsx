@@ -96,7 +96,7 @@ function Home() {
           {/* only show button if user is logged in */}
           <button
             onClick={() => toggleLike(post._id)}
-            disabled={user?.username}
+            disabled={!user?.username}
             className="upvote"
           >
             {post.likes?.includes(user?._id) ? "Unlike" : "Like"} (
