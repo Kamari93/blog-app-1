@@ -105,7 +105,7 @@ function Home() {
               (like) => like.toString() === user?._id.toString()
             )
               ? "Unlike"
-              : "Like"}
+              : "Like"}{" "}
             ({post.likes?.length || 0}){console.log(post.likes)}
           </button>
         </div>
