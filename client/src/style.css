@@ -160,6 +160,26 @@
   text-align: left;
 }
 
+/* Styling for like/unlike button */
+.upvote {
+  background-color: #008cba;
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+.upvote:hover {
+  background-color: #005f73;
+}
+
+.upvote:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
 .post_post {
   display: flex;
   flex-direction: column;
