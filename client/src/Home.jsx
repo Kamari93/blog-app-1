@@ -99,15 +99,14 @@ function Home() {
             disabled={!user?.username}
             className="upvote"
           >
-            {post.likes?.includes(user?._id) ? "Unlike" : "Like"} (
-            {post.likes?.length || 0})
-            {/* {post.likes?.some(
+            {/* {post.likes?.includes(user?._id) ? "Unlike" : "Like"} (
+            {post.likes?.length || 0}){console.log(post.likes)} */}
+            {post.likes?.some(
               (like) => like.toString() === user?._id.toString()
             )
               ? "Unlike"
-              : "Like"}{" "}
-            ({post.likes?.length || 0}) */}
-            {console.log(post.likes)}
+              : "Like"}
+            {post.likes?.length || 0}){console.log(post.likes)}
           </button>
         </div>
       ))}
