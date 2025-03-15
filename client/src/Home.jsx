@@ -96,8 +96,8 @@ function Home() {
             disabled={!user}
             className="upvote"
           >
-            {post.likes.includes(user?._id) ? "Unlike" : "Like"} (
-            {post.likes.length || 0})
+            {post.likes?.includes(user?._id) ? "Unlike" : "Like"} (
+            {post.likes?.length || 0})
           </button>
         </div>
       ))}
