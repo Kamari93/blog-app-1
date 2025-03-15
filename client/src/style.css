@@ -131,11 +131,11 @@
   text-align: center;
 }
 
-.post_card img {
+/* .post_card img {
   width: 100%;
   height: auto;
   border-radius: 10px;
-}
+} */
 
 .post {
   width: 80%;
@@ -149,11 +149,11 @@
   color: black;
 }
 
-/* .post img {
+.post img {
   width: 200px;
   height: 200px;
   border-radius: 8px;
-} */
+}
 
 .post .post_text {
   margin-left: 10px;
