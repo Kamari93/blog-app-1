@@ -12,7 +12,7 @@ function Home() {
 
   const { user } = useContext(userContext); // Get user from global context
   console.log(`User: ${user?.username}`);
-  console.log(`User ID: ${user?._id}`);
+  console.log(`User ID: ${user?._id.toString()}`);
 
   // Fetch posts when user logs in/out
   useEffect(() => {
