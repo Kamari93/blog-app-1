@@ -356,7 +356,7 @@ app.put("/togglelike/:postId", async (req, res) => {
   const { userId } = req.body;
 
   try {
-    const post = await Post.findById(postId);
+    const post = await PostModel.findById(postId);
     if (!post) return res.status(404).json({ error: "Post not found" });
 
     const index = post.likes.indexOf(userId);
