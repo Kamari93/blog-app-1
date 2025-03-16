@@ -74,7 +74,7 @@ function Home() {
     try {
       const res = await axios.put(
         `https://blog-app-1-server.vercel.app/togglelike/${postId}`,
-        { userId: user._id }
+        { userId: user?._id }
       );
 
       setPosts((prevPosts) =>
