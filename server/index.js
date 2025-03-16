@@ -328,26 +328,49 @@ app.delete("/deletepost/:id", async (req, res) => {
 //   }
 // });
 
+// app.put("/togglelike/:postId", async (req, res) => {
+//   const { userId } = req.body;
+//   try {
+//     const post = await PostModel.findById(req.params.postId);
+//     if (!post) return res.status(404).json({ message: "Post not found" });
+
+//     // Ensure likes array exists
+//     if (!post.likes) post.likes = [];
+
+//     const likedIndex = post.likes.indexOf(userId);
+//     if (likedIndex === -1) {
+//       post.likes.push(userId); // Add like
+//     } else {
+//       post.likes.splice(likedIndex, 1); // Remove like (Unlike)
+//     }
+
+//     await post.save();
+//     res.json({ likes: post.likes });
+//   } catch (error) {
+//     res.status(500).json({ message: "Error toggling like", error });
+//   }
+// });
+
 app.put("/togglelike/:postId", async (req, res) => {
+  const { postId } = req.params;
   const { userId } = req.body;
+
   try {
-    const post = await PostModel.findById(req.params.postId);
-    if (!post) return res.status(404).json({ message: "Post not found" });
+    const post = await Post.findById(postId);
+    if (!post) return res.status(404).json({ error: "Post not found" });
 
-    // Ensure likes array exists
-    if (!post.likes) post.likes = [];
-
-    const likedIndex = post.likes.indexOf(userId);
-    if (likedIndex === -1) {
-      post.likes.push(userId); // Add like
+    const index = post.likes.indexOf(userId);
+    if (index === -1) {
+      post.likes.push(userId); // Like the post
     } else {
-      post.likes.splice(likedIndex, 1); // Remove like (Unlike)
+      post.likes.splice(index, 1); // Unlike the post
     }
 
     await post.save();
     res.json({ likes: post.likes });
   } catch (error) {
-    res.status(500).json({ message: "Error toggling like", error });
+    console.error("Error toggling like:", error);
+    res.status(500).json({ error: "Server error" });
   }
 });
 

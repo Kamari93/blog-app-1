@@ -46,6 +46,25 @@ function Home() {
   };
 
   // Handle like/unlike toggle
+  // const toggleLike = async (postId) => {
+  //   if (!user?.username) return alert("You must be logged in to like posts!");
+
+  //   try {
+  //     const res = await axios.put(
+  //       `https://blog-app-1-server.vercel.app/togglelike/${postId}`,
+  //       { userId: user._id }
+  //     );
+
+  //     setPosts((prevPosts) =>
+  //       prevPosts.map((post) =>
+  //         post._id === postId ? { ...post, likes: res.data.likes } : post
+  //       )
+  //     );
+  //   } catch (error) {
+  //     console.log("Error liking post", error);
+  //   }
+  // };
+
   const toggleLike = async (postId) => {
     if (!user?.username) return alert("You must be logged in to like posts!");
 
@@ -57,7 +76,7 @@ function Home() {
 
       setPosts((prevPosts) =>
         prevPosts.map((post) =>
-          post._id === postId ? { ...post, likes: res.data.likes } : post
+          post._id === postId ? { ...post, likes: [...res.data.likes] } : post
         )
       );
     } catch (error) {
@@ -99,14 +118,14 @@ function Home() {
             disabled={!user?.username}
             className="upvote"
           >
-            {post.likes?.includes(user?._id) ? "Unlike" : "Like"} (
-            {post.likes?.length || 0}){console.log(post.likes)}
-            {/* {(post.likes || []).some(
+            {/* {post.likes?.includes(user?._id) ? "Unlike" : "Like"} (
+            {post.likes?.length || 0}){console.log(post.likes)} */}
+            {post.likes?.some(
               (like) => like.toString() === user?._id.toString()
             )
               ? "Unlike"
-              : "Like"}{" "}
-            ({post.likes?.length || 0}){console.log(post.likes)} */}
+              : "Like"}
+            ({post.likes?.length || 0}){console.log(post.likes)}
           </button>
           {console.log(post.likes)}
         </div>
