@@ -368,25 +368,27 @@ app.delete("/deletepost/:id", async (req, res) => {
 // });
 
 app.put("/togglelike/:postId", async (req, res) => {
-  const { postId } = req.params;
-  const { userId } = req.body;
-
   try {
-    const post = await PostModel.findById(postId);
-    if (!post) return res.status(404).json({ error: "Post not found" });
+    const { userId } = req.body;
+    const post = await PostModel.findById(req.params.postId);
 
-    const index = post.likes.indexOf(userId);
-    if (index === -1) {
-      post.likes.push(userId); // Like the post
+    if (!post) return res.status(404).json({ message: "Post not found" });
+
+    // Ensure likes is an array
+    if (!Array.isArray(post.likes)) post.likes = [];
+
+    // Toggle like
+    if (post.likes.includes(userId)) {
+      post.likes = post.likes.filter((id) => id.toString() !== userId);
     } else {
-      post.likes.splice(index, 1); // Unlike the post
+      post.likes.push(userId);
     }
 
     await post.save();
     res.json({ likes: post.likes });
   } catch (error) {
     console.error("Error toggling like:", error);
-    res.status(500).json({ error: "Server error" });
+    res.status(500).json({ message: "Internal Server Error" });
   }
 });
 

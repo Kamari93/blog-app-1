@@ -76,7 +76,14 @@ function Home() {
 
       setPosts((prevPosts) =>
         prevPosts.map((post) =>
-          post._id === postId ? { ...post, likes: [...res.data.likes] } : post
+          post._id === postId
+            ? {
+                ...post,
+                likes: Array.isArray(res.data.likes)
+                  ? res.data.likes.filter((like) => like !== null)
+                  : [],
+              }
+            : post
         )
       );
     } catch (error) {
@@ -120,12 +127,13 @@ function Home() {
           >
             {/* {post.likes?.includes(user?._id) ? "Unlike" : "Like"} (
             {post.likes?.length || 0}){console.log(post.likes)} */}
-            {post.likes?.some(
-              (like) => like.toString() === user?._id.toString()
+            {Array.isArray(post.likes) &&
+            post.likes.some(
+              (like) => like?.toString() === user?._id?.toString()
             )
               ? "Unlike"
-              : "Like"}
-            ({post.likes?.length || 0}){console.log(post.likes)}
+              : "Like"}{" "}
+            ({Array.isArray(post.likes) ? post.likes.length : 0})
           </button>
           {/* {console.log(post.likes)} */}
         </div>
