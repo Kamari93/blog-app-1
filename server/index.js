@@ -71,6 +71,22 @@ const updateOldPosts = async () => {
   }
 };
 
+const updatePosts = async () => {
+  try {
+    await PostModel.updateMany(
+      { likes: { $exists: false } }, // Find posts where likes is missing
+      { $set: { likes: [] } } // Set likes to an empty array
+    );
+    console.log("All existing posts updated with likes: []");
+    mongoose.disconnect();
+  } catch (error) {
+    console.error("Error updating posts:", error);
+    mongoose.disconnect();
+  }
+};
+
+updatePosts();
+
 // Run the update function once the database is connected
 // mongoose.connection.once("open", () => {
 //   console.log("Connected to MongoDB");
