@@ -157,7 +157,7 @@ app.post("/login", (req, res) => {
             message: "Login successful",
             username: user.username,
             email: user.email,
-            _id: user._id,
+            _id: user._id.toString(),
           });
         } else {
           res.json("Password is incorrect");
