@@ -108,6 +108,7 @@ function Home() {
               : "Like"}{" "}
             ({post.likes?.length || 0}){console.log(post.likes)} */}
           </button>
+          {console.log(post.likes)}
         </div>
       ))}
 
