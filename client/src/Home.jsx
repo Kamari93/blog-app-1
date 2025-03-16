@@ -68,6 +68,9 @@ function Home() {
   const toggleLike = async (postId) => {
     if (!user?.username) return alert("You must be logged in to like posts!");
 
+    console.log("Toggling like for:", postId);
+    console.log("User ID:", user?._id);
+
     try {
       const res = await axios.put(
         `https://blog-app-1-server.vercel.app/togglelike/${postId}`,
