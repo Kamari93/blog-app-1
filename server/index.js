@@ -71,7 +71,7 @@ const updateOldPosts = async () => {
   }
 };
 
-const updatePosts = async () => {
+const updatePostsLikes = async () => {
   try {
     await PostModel.updateMany(
       { likes: { $exists: false } }, // Find posts where likes is missing
@@ -85,7 +85,7 @@ const updatePosts = async () => {
   }
 };
 
-updatePosts();
+// updatePostsLikes();
 
 // Run the update function once the database is connected
 // mongoose.connection.once("open", () => {
