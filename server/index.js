@@ -370,7 +370,7 @@ app.delete("/deletepost/:id", async (req, res) => {
 
 app.put("/togglelike/:postId", async (req, res) => {
   try {
-    const { userId } = req.body;
+    const { _id } = req.body;
     const post = await PostModel.findById(req.params.postId);
 
     if (!post) return res.status(404).json({ message: "Post not found" });
@@ -379,10 +379,10 @@ app.put("/togglelike/:postId", async (req, res) => {
     if (!Array.isArray(post.likes)) post.likes = [];
 
     // Toggle like
-    if (post.likes.includes(userId)) {
-      post.likes = post.likes.filter((id) => id.toString() !== userId);
+    if (post.likes.includes(_id)) {
+      post.likes = post.likes.filter((id) => id.toString() !== _id);
     } else {
-      post.likes.push(userId);
+      post.likes.push(_id);
     }
 
     await post.save();
