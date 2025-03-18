@@ -8,7 +8,7 @@ function Login() {
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
   const navigate = useNavigate();
-  const user = useContext(userContext); // Import the context
+  // const user = useContext(userContext); // Import the context
 
   axios.defaults.withCredentials = true;
 
