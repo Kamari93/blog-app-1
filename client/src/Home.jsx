@@ -66,35 +66,6 @@ function Home() {
   //   }
   // };
 
-  // const toggleLike = async (postId) => {
-  //   if (!user?.username) return alert("You must be logged in to like posts!");
-
-  //   console.log("Toggling like for:", postId);
-  //   console.log("User ID:", user?._id);
-
-  //   try {
-  //     const res = await axios.put(
-  //       `https://blog-app-1-server.vercel.app/togglelike/${postId}`,
-  //       { _id: user?._id }
-  //     );
-
-  //     setPosts((prevPosts) =>
-  //       prevPosts.map((post) =>
-  //         post._id === postId
-  //           ? {
-  //               ...post,
-  //               likes: Array.isArray(res.data.likes)
-  //                 ? res.data.likes.filter((like) => like !== null)
-  //                 : [],
-  //             }
-  //           : post
-  //       )
-  //     );
-  //   } catch (error) {
-  //     console.log("Error liking post", error);
-  //   }
-  // };
-
   const toggleLike = async (postId) => {
     if (!user?.username) return alert("You must be logged in to like posts!");
 
@@ -102,20 +73,49 @@ function Home() {
     console.log("User ID:", user?._id);
 
     try {
-      await axios.put(
+      const res = await axios.put(
         `https://blog-app-1-server.vercel.app/togglelike/${postId}`,
         { _id: user?._id }
       );
 
-      // Re-fetch posts to ensure state updates correctly on reload
-      const res = await axios.get(
-        "https://blog-app-1-server.vercel.app/getposts"
+      setPosts((prevPosts) =>
+        prevPosts.map((post) =>
+          post._id === postId
+            ? {
+                ...post,
+                likes: Array.isArray(res.data.likes)
+                  ? res.data.likes.filter((like) => like !== null)
+                  : [],
+              }
+            : post
+        )
       );
-      setPosts(res.data);
     } catch (error) {
       console.log("Error liking post", error);
     }
   };
+
+  // const toggleLike = async (postId) => {
+  //   if (!user?.username) return alert("You must be logged in to like posts!");
+
+  //   console.log("Toggling like for:", postId);
+  //   console.log("User ID:", user?._id);
+
+  //   try {
+  //     await axios.put(
+  //       `https://blog-app-1-server.vercel.app/togglelike/${postId}`,
+  //       { _id: user?._id }
+  //     );
+
+  //     // Re-fetch posts to ensure state updates correctly on reload
+  //     const res = await axios.get(
+  //       "https://blog-app-1-server.vercel.app/getposts"
+  //     );
+  //     setPosts(res.data);
+  //   } catch (error) {
+  //     console.log("Error liking post", error);
+  //   }
+  // };
 
   return (
     <div className="posts_container">
