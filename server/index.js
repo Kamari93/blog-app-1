@@ -139,7 +139,7 @@ app.post("/login", (req, res) => {
         if (result) {
           // create token if password is correct
           const token = jwt.sign(
-            { email: user.email, username: user.username },
+            { email: user.email, username: user.username, _id: user._id },
             process.env.JWT_SECRET,
             { expiresIn: "1h" }
           );
