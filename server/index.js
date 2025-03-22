@@ -279,7 +279,7 @@ app.get("/getposts", async (req, res) => {
   try {
     const posts = await PostModel.find()
       .sort({ createdAt: -1 })
-      .select("title description file email username createdAt"); // Include username
+      .select("title description file email username createdAt likes"); // Include username
 
     res.json(posts);
   } catch (err) {
