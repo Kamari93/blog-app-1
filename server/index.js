@@ -115,7 +115,7 @@ const verifyUser = (req, res, next) => {
 
 // Routes/APIs
 app.get("/", verifyUser, (req, res) => {
-  return res.json({ email: req.email, username: req.username });
+  return res.json({ email: req.email, username: req.username, _id: req._id });
 });
 
 app.post("/register", (req, res) => {
