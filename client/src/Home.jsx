@@ -23,10 +23,22 @@ function Home() {
   }, [user]); // Re-fetch posts when `user` changes
 
   // Sort posts by createdAt
+  // const sortedPosts = [...posts].sort((a, b) => {
+  //   return sortOrder === "newest"
+  //     ? new Date(b.createdAt) - new Date(a.createdAt)
+  //     : new Date(a.createdAt) - new Date(b.createdAt);
+  // });
+
+  // Sort posts by createdAt or number of likes
   const sortedPosts = [...posts].sort((a, b) => {
-    return sortOrder === "newest"
-      ? new Date(b.createdAt) - new Date(a.createdAt)
-      : new Date(a.createdAt) - new Date(b.createdAt);
+    if (sortOrder === "newest") {
+      return new Date(b.createdAt) - new Date(a.createdAt);
+    } else if (sortOrder === "oldest") {
+      return new Date(a.createdAt) - new Date(b.createdAt);
+    } else if (sortOrder === "popular") {
+      return (b.likes?.length || 0) - (a.likes?.length || 0); // Sort by number of likes
+    }
+    return 0;
   });
 
   // Pagination logic
@@ -45,26 +57,6 @@ function Home() {
       setCurrentPage(currentPage - 1);
     }
   };
-
-  // Handle like/unlike toggle
-  // const toggleLike = async (postId) => {
-  //   if (!user?.username) return alert("You must be logged in to like posts!");
-
-  //   try {
-  //     const res = await axios.put(
-  //       `https://blog-app-1-server.vercel.app/togglelike/${postId}`,
-  //       { userId: user._id }
-  //     );
-
-  //     setPosts((prevPosts) =>
-  //       prevPosts.map((post) =>
-  //         post._id === postId ? { ...post, likes: res.data.likes } : post
-  //       )
-  //     );
-  //   } catch (error) {
-  //     console.log("Error liking post", error);
-  //   }
-  // };
 
   const toggleLike = async (postId) => {
     if (!user?.username) return alert("You must be logged in to like posts!");
@@ -94,28 +86,6 @@ function Home() {
       console.log("Error liking post", error);
     }
   };
-
-  // const toggleLike = async (postId) => {
-  //   if (!user?.username) return alert("You must be logged in to like posts!");
-
-  //   console.log("Toggling like for:", postId);
-  //   console.log("User ID:", user?._id);
-
-  //   try {
-  //     await axios.put(
-  //       `https://blog-app-1-server.vercel.app/togglelike/${postId}`,
-  //       { _id: user?._id }
-  //     );
-
-  //     // Re-fetch posts to ensure state updates correctly on reload
-  //     const res = await axios.get(
-  //       "https://blog-app-1-server.vercel.app/getposts"
-  //     );
-  //     setPosts(res.data);
-  //   } catch (error) {
-  //     console.log("Error liking post", error);
-  //   }
-  // };
 
   return (
     <div className="posts_container">
@@ -151,8 +121,6 @@ function Home() {
             disabled={!user?.username}
             className="upvote"
           >
-            {/* {post.likes?.includes(user?._id) ? "Unlike" : "Like"} (
-            {post.likes?.length || 0}){console.log(post.likes)} */}
             {Array.isArray(post.likes) &&
             post.likes.some(
               (like) => like?.toString() === user?._id?.toString()
@@ -182,96 +150,3 @@ function Home() {
 }
 
 export default Home;
-
-// import { React, useEffect, useState } from "react";
-// import axios from "axios";
-// import { Link } from "react-router-dom";
-// import moment from "moment";
-// import { userContext } from "./App";
-// import { useContext } from "react";
-
-// function Home() {
-//   const [posts, setPosts] = useState([]);
-//   const [currentUser, setCurrentUser] = useState("");
-//   // const { user: currentUser } = useContext(userContext);
-//   // const { user, setUser } = useContext(userContext);
-
-//   // Fetch posts and current user
-//   useEffect(() => {
-//     // axios
-//     // .get("https://blog-app-1-server.vercel.app/getposts")
-//     // .then((res) => {
-//     //   const updatedPosts = res.data.map((post) => ({
-//     //     ...post,
-//     //     createdAt:
-//     //       post.createdAt ||
-//     //       new Date(Date.now() - 3 * 24 * 60 * 60 * 1000).toISOString(), // Default to 3 days ago if missing
-//     //   }));
-//     //   setPosts(updatedPosts);
-//     // })
-//     // .catch((err) => console.log(err));
-
-//     axios
-//       .get("https://blog-app-1-server.vercel.app/getposts")
-//       .then((res) => setPosts(res.data))
-//       .catch((err) => console.log(err));
-
-//     axios
-//       .get("https://blog-app-1-server.vercel.app/", { withCredentials: true })
-//       .then((res) => setCurrentUser(res.data.username))
-//       .catch((err) => console.log(err));
-//     // axios
-//     //   .get("https://blog-app-1-server.vercel.app/", { withCredentials: true })
-//     //   .then((res) => {
-//     //     if (res.data.username) {
-//     //       // setCurrentUser(res.data.username);
-//     //       setUser({ username: res.data.username });
-//     //     } else {
-//     //       // setCurrentUser({});
-//     //       setUser({});
-//     //     }
-//     //   })
-//     //   .catch(() => setCurrentUser({})); // Ensure it resets on failure
-//   }, [currentUser]);
-
-//   const getDuration = (createdAt) => {
-//     if (!createdAt) return "Unknown";
-//     const createdDate = new Date(createdAt);
-//     const now = new Date();
-//     const diffInSeconds = Math.floor((now - createdDate) / 1000);
-
-//     if (diffInSeconds < 60) return `${diffInSeconds} seconds ago`;
-//     if (diffInSeconds < 3600)
-//       return `${Math.floor(diffInSeconds / 60)} minutes ago`;
-//     if (diffInSeconds < 86400)
-//       return `${Math.floor(diffInSeconds / 3600)} hours ago`;
-//     return `${Math.floor(diffInSeconds / 86400)} days ago`;
-//   };
-
-//   return (
-//     <div className="posts_container">
-//       {posts.map((post) => {
-//         return (
-//           <Link to={`/post/${post._id}`} key={post._id} className="post">
-//             {post.file && <img src={post.file} alt={post.title} />}
-//             <div className="post_text">
-//               <h2>{post.title}</h2>
-//               <p>{post.description}</p>
-//               <p className="posted_by">
-//                 Posted by{" "}
-//                 {currentUser === post.username ? "You" : post.username}
-//                 {/* {user && user === post.username ? "You" : post.username} */}
-//               </p>
-//               <p className="timestamp">{moment(post.createdAt).fromNow()}</p>
-//               {/* <p className="timestamp">
-//                 Created: {getDuration(post.createdAt)}
-//               </p> */}
-//             </div>
-//           </Link>
-//         );
-//       })}
-//     </div>
-//   );
-// }
-
-// export default Home;
