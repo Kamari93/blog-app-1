@@ -107,6 +107,7 @@ const verifyUser = (req, res, next) => {
       } else {
         req.email = decoded.email;
         req.username = decoded.username;
+        req._id = decoded._id;
         next();
       }
     });
