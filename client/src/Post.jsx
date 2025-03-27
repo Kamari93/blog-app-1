@@ -8,6 +8,8 @@ import "./style.css";
 function Post() {
   const { id } = useParams(); //extract the id from url
   const [post, setPost] = useState({});
+  const [comments, setComments] = useState([]);
+  const [commentText, setCommentText] = useState("");
   const navigate = useNavigate();
   // const user = useContext(userContext);
   const { user, setUser } = useContext(userContext); // Destructure user & setUser at once
@@ -21,6 +23,11 @@ function Post() {
         setPost(result.data);
       })
       .catch((err) => console.log(err));
+
+    axios
+      .get("http://blog-app-1-server.vercel.app/getcomments/" + id)
+      .then((res) => setComments(res.data))
+      .catch((err) => console.log(err));
   }, []);
 
   const handleDelete = (id) => {
@@ -33,6 +40,19 @@ function Post() {
       .catch((err) => {
         console.log(err);
       });
+  };
+
+  const handleAddComment = () => {
+    axios
+      .post("http://blog-app-1-server.vercel.app/addcomment", {
+        text: commentText,
+        postId: id,
+      })
+      .then(() => {
+        setCommentText(""); // Clear input
+        window.location.reload(); // Reload to show new comment
+      })
+      .catch((err) => console.log(err));
   };
   return (
     <div className="posts_container">
@@ -64,6 +84,31 @@ function Post() {
           )}
         </div>
       </div>
+      <div className="comments_section">
+        <h3>Comments</h3>
+        {comments.length > 0 ? (
+          comments.map((comment) => (
+            <div key={comment._id} className="comment">
+              <strong>{comment.user.username}:</strong> {comment.text}
+            </div>
+          ))
+        ) : (
+          <p>No comments yet.</p>
+        )}
+      </div>
+      {user ? (
+        <div className="add_comment">
+          <textarea
+            maxLength={250}
+            value={commentText}
+            onChange={(e) => setCommentText(e.target.value)}
+            placeholder="Leave a comment..."
+          />
+          <button onClick={handleAddComment}>Post</button>
+        </div>
+      ) : (
+        <p>Log in to leave a comment.</p>
+      )}
     </div>
   );
 }

@@ -9,7 +9,12 @@ const postSchema = new Schema(
     email: String,
     username: String, // Username of the user who created the post
     likes: [{ type: mongoose.Schema.Types.ObjectId, ref: "users" }], // Array of user IDs
-    // createdAt: { type: Date, default: Date.now }, // Automatically sets timestamp
+    comments: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "comments", // References CommentModel
+      },
+    ],
   },
   { timestamps: true } // Automatically adds createdAt and updatedAt
 );

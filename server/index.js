@@ -8,6 +8,7 @@ const multer = require("multer"); // for file upload
 const path = require("path"); // for file upload
 const UserModel = require("./models/UserModel");
 const PostModel = require("./models/PostModel");
+const CommentModel = require("./models/CommentModel");
 require("dotenv").config(); // Load .env variables
 
 const cloudinary = require("cloudinary").v2;
@@ -391,6 +392,40 @@ app.put("/togglelike/:postId", async (req, res) => {
   } catch (error) {
     console.error("Error toggling like:", error);
     res.status(500).json({ message: "Internal Server Error" });
+  }
+});
+
+// comment functionality
+
+app.post("/addcomment", verifyUser, async (req, res) => {
+  try {
+    const { text, postId } = req.body;
+    const newComment = await CommentModel.create({
+      text,
+      user: req.email, // Using the email from the verified user
+      post: postId,
+    });
+
+    // Add comment to post's comments array
+    await PostModel.findByIdAndUpdate(postId, {
+      $push: { comments: newComment._id },
+    });
+
+    res.json({ message: "Comment added", comment: newComment });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+app.get("/getcomments/:postId", async (req, res) => {
+  try {
+    const comments = await CommentModel.find({ post: req.params.postId })
+      .populate("user", "username") // Populate with username of commenter
+      .sort({ createdAt: -1 }); // Sort by newest first
+
+    res.json(comments);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
   }
 });
 
