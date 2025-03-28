@@ -104,7 +104,8 @@ function Post() {
             onChange={(e) => setCommentText(e.target.value)}
             placeholder="Leave a comment..."
           />
-          <button onClick={handleAddComment}>Post</button>
+          {/* <button onClick={handleAddComment}>Post</button> */}
+          <button onClick={(e) => handleAddComment(post._id)}>Post</button>
         </div>
       ) : (
         <p>Log in to leave a comment.</p>
