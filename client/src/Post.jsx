@@ -25,7 +25,7 @@ function Post() {
       .catch((err) => console.log(err));
 
     axios
-      .get("http://blog-app-1-server.vercel.app/getcomments/" + id)
+      .get("https://blog-app-1-server.vercel.app/getcomments/" + id)
       .then((res) => setComments(res.data))
       .catch((err) => console.log(err));
   }, []);
@@ -44,7 +44,7 @@ function Post() {
 
   const handleAddComment = () => {
     axios
-      .post("http://blog-app-1-server.vercel.app/addcomment", {
+      .post("https://blog-app-1-server.vercel.app/addcomment", {
         text: commentText,
         postId: id,
       })
