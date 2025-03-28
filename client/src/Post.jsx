@@ -96,7 +96,7 @@ function Post() {
           <p>No comments yet.</p>
         )}
       </div>
-      {user ? (
+      {user.username ? (
         <div className="add_comment">
           <textarea
             maxLength={250}
