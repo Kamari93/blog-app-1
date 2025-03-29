@@ -397,23 +397,44 @@ app.put("/togglelike/:postId", async (req, res) => {
 
 // comment functionality
 
-app.post("/addcomment", verifyUser, async (req, res) => {
+// app.post("/addcomment", verifyUser, async (req, res) => {
+//   try {
+//     const { text, postId } = req.body;
+//     const newComment = await CommentModel.create({
+//       text,
+//       user: req.email, // Using the email from the verified user
+//       post: postId,
+//     });
+
+//     // Add comment to post's comments array
+//     await PostModel.findByIdAndUpdate(postId, {
+//       $push: { comments: newComment._id },
+//     });
+
+//     res.json({ message: "Comment added", comment: newComment });
+//   } catch (err) {
+//     res.status(500).json({ error: err.message });
+//   }
+// });
+
+app.post("/addcomment", async (req, res) => {
   try {
-    const { text, postId } = req.body;
+    const { text, postId, userId, username } = req.body;
+
+    if (!text || !postId || !userId) {
+      return res.status(400).json({ error: "Missing required fields" });
+    }
+
     const newComment = await CommentModel.create({
       text,
-      user: req.email, // Using the email from the verified user
-      post: postId,
+      postId,
+      user: { _id: userId, username: username }, // Ensure user details are included
     });
 
-    // Add comment to post's comments array
-    await PostModel.findByIdAndUpdate(postId, {
-      $push: { comments: newComment._id },
-    });
-
-    res.json({ message: "Comment added", comment: newComment });
-  } catch (err) {
-    res.status(500).json({ error: err.message });
+    res.status(201).json(newComment);
+  } catch (error) {
+    console.error("Error adding comment:", error);
+    res.status(500).json({ error: "Internal server error" });
   }
 });
 

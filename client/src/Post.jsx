@@ -42,18 +42,37 @@ function Post() {
       });
   };
 
+  // const handleAddComment = () => {
+  //   axios
+  //     .post("https://blog-app-1-server.vercel.app/addcomment", {
+  //       text: commentText,
+  //       postId: id,
+  //     })
+  //     .then(() => {
+  //       setComments([...comments, res.data]); // Append new comment
+  //       setCommentText(""); // Clear input
+  //       // window.location.reload(); // Reload to show new comment
+  //     })
+  //     .catch((err) => console.log(err));
+  // };
+
   const handleAddComment = () => {
+    if (!commentText.trim()) return; // Prevent empty comments
+
     axios
       .post("https://blog-app-1-server.vercel.app/addcomment", {
         text: commentText,
         postId: id,
+        userId: user._id, // Ensure user data is sent
+        username: user.username,
       })
-      .then(() => {
-        setCommentText(""); // Clear input
-        window.location.reload(); // Reload to show new comment
+      .then((res) => {
+        setComments([...comments, res.data]); // Append new comment from response
+        setCommentText(""); // Clear input after submission
       })
-      .catch((err) => console.log(err));
+      .catch((err) => console.log("Error adding comment:", err));
   };
+
   return (
     <div className="posts_container">
       <div className="post_post">
