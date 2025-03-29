@@ -56,19 +56,40 @@ function Post() {
   //     .catch((err) => console.log(err));
   // };
 
+  // const handleAddComment = () => {
+  //   if (!commentText.trim()) return; // Prevent empty comments
+
+  //   axios
+  //     .post("https://blog-app-1-server.vercel.app/addcomment", {
+  //       text: commentText,
+  //       postId: id,
+  //       userId: user._id, // Ensure user data is sent
+  //       username: user.username,
+  //     })
+  //     .then((res) => {
+  //       setComments([...comments, res.data]); // Append new comment from response
+  //       setCommentText(""); // Clear input after submission
+  //     })
+  //     .catch((err) => console.log("Error adding comment:", err));
+  // };
+
   const handleAddComment = () => {
     if (!commentText.trim()) return; // Prevent empty comments
+    if (!user || !user._id || !user.username) {
+      console.log("User not logged in or missing required fields.");
+      return;
+    }
 
     axios
       .post("https://blog-app-1-server.vercel.app/addcomment", {
         text: commentText,
-        postId: id,
-        userId: user._id, // Ensure user data is sent
+        postId: id, // `id` is from `useParams()`
+        userId: user._id,
         username: user.username,
       })
       .then((res) => {
-        setComments([...comments, res.data]); // Append new comment from response
-        setCommentText(""); // Clear input after submission
+        setComments([...comments, res.data]); // Append new comment
+        setCommentText(""); // Clear input field
       })
       .catch((err) => console.log("Error adding comment:", err));
   };
@@ -123,8 +144,8 @@ function Post() {
             onChange={(e) => setCommentText(e.target.value)}
             placeholder="Leave a comment..."
           />
-          {/* <button onClick={handleAddComment}>Post</button> */}
-          <button onClick={(e) => handleAddComment(post._id)}>Post</button>
+          <button onClick={handleAddComment}>Post</button>
+          {/* <button onClick={(e) => handleAddComment(post._id)}>Post</button> */}
         </div>
       ) : (
         <p>Log in to leave a comment.</p>
