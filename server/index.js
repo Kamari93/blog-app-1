@@ -417,24 +417,76 @@ app.put("/togglelike/:postId", async (req, res) => {
 //   }
 // });
 
+// app.post("/addcomment", async (req, res) => {
+//   try {
+//     const { text, postId, userId, username } = req.body;
+
+//     if (!text || !postId || !userId) {
+//       return res.status(400).json({ error: "Missing required fields" });
+//     }
+
+//     const newComment = await CommentModel.create({
+//       text,
+//       postId,
+//       user: { _id: userId, username: username }, // Ensure user details are included
+//     });
+
+//     res.status(201).json(newComment);
+//   } catch (error) {
+//     console.error("Error adding comment:", error);
+//     res.status(500).json({ error: "Internal server error" });
+//   }
+// });
+
 app.post("/addcomment", async (req, res) => {
   try {
-    const { text, postId, userId, username } = req.body;
+    console.log("Request Body:", req.body); // Debugging
 
-    if (!text || !postId || !userId) {
-      return res.status(400).json({ error: "Missing required fields" });
+    const { text, user, post } = req.body;
+
+    // Validate input
+    if (!text || !user || !post) {
+      return res.status(400).json({ message: "Missing required fields" });
+    }
+    if (text.length > 250) {
+      return res
+        .status(400)
+        .json({ message: "Comment exceeds character limit" });
     }
 
-    const newComment = await CommentModel.create({
+    // Validate that user exists
+    const existingUser = await UserModel.findById(user);
+    if (!existingUser) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    // Validate that post exists
+    const existingPost = await PostModel.findById(post);
+    if (!existingPost) {
+      return res.status(404).json({ message: "Post not found" });
+    }
+
+    // Create the comment
+    const newComment = new CommentModel({
       text,
-      postId,
-      user: { _id: userId, username: username }, // Ensure user details are included
+      user,
+      post,
     });
 
-    res.status(201).json(newComment);
+    await newComment.save();
+
+    // Add comment ID to post's comment array
+    existingPost.comments.push(newComment._id);
+    await existingPost.save();
+
+    res
+      .status(201)
+      .json({ message: "Comment added successfully", comment: newComment });
   } catch (error) {
     console.error("Error adding comment:", error);
-    res.status(500).json({ error: "Internal server error" });
+    res
+      .status(500)
+      .json({ message: "Internal Server Error", error: error.message });
   }
 });
 
