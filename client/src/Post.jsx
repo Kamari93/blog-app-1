@@ -83,9 +83,11 @@ function Post() {
     axios
       .post("https://blog-app-1-server.vercel.app/addcomment", {
         text: commentText,
-        postId: id, // `id` is from `useParams()`
-        userId: user._id,
-        username: user.username,
+        post: id,
+        user: user._id,
+        // postId: id, // `id` is from `useParams()`
+        // userId: user._id,
+        // username: user.username,
       })
       .then((res) => {
         setComments([...comments, res.data]); // Append new comment
