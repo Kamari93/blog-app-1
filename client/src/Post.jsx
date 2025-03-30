@@ -92,6 +92,7 @@ function Post() {
         setCommentText(""); // Clear input field
       })
       .catch((err) => console.log("Error adding comment:", err));
+    console.log(text, id, user._id, user.username);
   };
 
   return (
