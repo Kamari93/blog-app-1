@@ -84,10 +84,10 @@ function Post() {
       .post("https://blog-app-1-server.vercel.app/addcomment", {
         text: commentText,
         post: id,
-        user: user._id,
+        // user: user._id,
         // postId: id, // `id` is from `useParams()`
         // userId: user._id,
-        // username: user.username,
+        username: user.username,
       })
       .then((res) => {
         setComments([...comments, res.data]); // Append new comment
