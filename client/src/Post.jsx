@@ -128,7 +128,7 @@ function Post() {
         </div>
       </div>
       <div className="comments_section">
-        <h3>Comments</h3>
+        <h3>Comments ({comments.length || ""})</h3>
         {comments.length > 0 ? (
           comments.map((comment) => (
             <div key={comment._id} className="comment">
