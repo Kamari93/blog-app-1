@@ -502,6 +502,52 @@ app.get("/getcomments/:postId", async (req, res) => {
   }
 });
 
+// edit a comment
+app.put("/editcomment/:id", verifyUser, async (req, res) => {
+  try {
+    const { text } = req.body;
+    const commentId = req.params.id;
+    const userId = req._id; // Extract user ID from the token
+
+    const comment = await CommentModel.findById(commentId);
+    if (!comment) return res.status(404).json({ error: "Comment not found" });
+
+    if (comment.user.toString() !== userId) {
+      return res
+        .status(403)
+        .json({ error: "You can only edit your own comments" });
+    }
+
+    comment.text = text;
+    await comment.save();
+    res.json(comment);
+  } catch (error) {
+    res.status(500).json({ error: "Error editing comment" });
+  }
+});
+
+// delete a comment
+app.delete("/deletecomment/:id", verifyUser, async (req, res) => {
+  try {
+    const commentId = req.params.id;
+    const userId = req._id; // Extract user ID from the token
+
+    const comment = await CommentModel.findById(commentId);
+    if (!comment) return res.status(404).json({ error: "Comment not found" });
+
+    if (comment.user.toString() !== userId) {
+      return res
+        .status(403)
+        .json({ error: "You can only delete your own comments" });
+    }
+
+    await CommentModel.findByIdAndDelete(commentId);
+    res.json({ message: "Comment deleted successfully" });
+  } catch (error) {
+    res.status(500).json({ error: "Error deleting comment" });
+  }
+});
+
 // start server
 const port = process.env.PORT || 5000;
 app.listen(port, () => {

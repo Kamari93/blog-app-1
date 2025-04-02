@@ -42,37 +42,6 @@ function Post() {
       });
   };
 
-  // const handleAddComment = () => {
-  //   axios
-  //     .post("https://blog-app-1-server.vercel.app/addcomment", {
-  //       text: commentText,
-  //       postId: id,
-  //     })
-  //     .then(() => {
-  //       setComments([...comments, res.data]); // Append new comment
-  //       setCommentText(""); // Clear input
-  //       // window.location.reload(); // Reload to show new comment
-  //     })
-  //     .catch((err) => console.log(err));
-  // };
-
-  // const handleAddComment = () => {
-  //   if (!commentText.trim()) return; // Prevent empty comments
-
-  //   axios
-  //     .post("https://blog-app-1-server.vercel.app/addcomment", {
-  //       text: commentText,
-  //       postId: id,
-  //       userId: user._id, // Ensure user data is sent
-  //       username: user.username,
-  //     })
-  //     .then((res) => {
-  //       setComments([...comments, res.data]); // Append new comment from response
-  //       setCommentText(""); // Clear input after submission
-  //     })
-  //     .catch((err) => console.log("Error adding comment:", err));
-  // };
-
   const handleAddComment = () => {
     if (!commentText.trim()) return; // Prevent empty comments
     if (!user || !user._id || !user.username) {
@@ -95,6 +64,26 @@ function Post() {
       })
       .catch((err) => console.log("Error adding comment:", err));
     console.log(commentText, id, user._id, user.username);
+  };
+
+  const handleEditComment = (commentId, newText) => {
+    axios
+      .put(`https://blog-app-1-server.vercel.app/editcomment/${commentId}`, {
+        text: newText,
+      })
+      .then((res) => {
+        setComments(comments.map((c) => (c._id === commentId ? res.data : c)));
+      })
+      .catch((err) => console.log("Error editing comment:", err));
+  };
+
+  const handleDeleteComment = (commentId) => {
+    axios
+      .delete(`https://blog-app-1-server.vercel.app/deletecomment/${commentId}`)
+      .then(() => {
+        setComments(comments.filter((c) => c._id !== commentId));
+      })
+      .catch((err) => console.log("Error deleting comment:", err));
   };
 
   return (
@@ -133,6 +122,23 @@ function Post() {
           comments.map((comment) => (
             <div key={comment._id} className="comment">
               <strong>{comment.user.username}:</strong> {comment.text}
+              {user._id === comment.user._id && ( // Only show options if user owns comment
+                <div>
+                  <button
+                    onClick={() =>
+                      handleEditComment(
+                        comment._id,
+                        prompt("Edit comment:", comment.text)
+                      )
+                    }
+                  >
+                    Edit
+                  </button>
+                  <button onClick={() => handleDeleteComment(comment._id)}>
+                    Delete
+                  </button>
+                </div>
+              )}
             </div>
           ))
         ) : (
