@@ -163,7 +163,7 @@ function Post() {
                     }
                   }}
                 >
-                  👍 {comment.upvotes.length}
+                  ⬆ {comment.upvotes.length}
                 </button>
 
                 <button
@@ -175,7 +175,7 @@ function Post() {
                     }
                   }}
                 >
-                  👎 {comment.downvotes.length}
+                  ⬇ {comment.downvotes.length}
                 </button>
               </div>
             </div>
