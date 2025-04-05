@@ -405,10 +405,11 @@
 }
 
 .comment_text {
-  border: 1px solid rgb(122, 164, 137);
+  /* border: 1px solid rgb(122, 164, 137); */
   padding: 10px;
   height: 60px;
   border-radius: 5px;
   overflow-y: auto;
   margin-bottom: 3px;
+  background-color: white;
 }
