@@ -11,6 +11,7 @@ function Post() {
   const [post, setPost] = useState({});
   const [comments, setComments] = useState([]);
   const [commentText, setCommentText] = useState("");
+  const [sortOrder, setSortOrder] = useState("oldest");
   const navigate = useNavigate();
   // const user = useContext(userContext);
   const { user, setUser } = useContext(userContext); // Destructure user & setUser at once
@@ -130,59 +131,76 @@ function Post() {
         </div>
       </div>
       <div className="comments_section">
-        <h3>Comments {comments.length > 0 && `(${comments.length})`}</h3>
+        {/* <h3>Comments {comments.length > 0 && `(${comments.length})`}</h3> */}
+        <div className="comments_header">
+          <h3>Comments {comments.length > 0 && `(${comments.length})`}</h3>
+          <select
+            value={sortOrder}
+            onChange={(e) => setSortOrder(e.target.value)}
+            style={{ marginLeft: "10px" }}
+          >
+            <option value="newest">Newest</option>
+            <option value="oldest">Oldest</option>
+          </select>
+        </div>
         <div className="comments_scroll">
           {comments.length > 0 ? (
-            comments.map((comment) => (
-              <div key={comment._id} className="comment">
-                <strong>{comment.user.username}:</strong> {comment.text}
-                {user._id === comment.user._id && ( // Only show options if user owns comment
+            [...comments]
+              .sort((a, b) => {
+                const timeA = new Date(a.createdAt);
+                const timeB = new Date(b.createdAt);
+                return sortOrder === "newest" ? timeB - timeA : timeA - timeB;
+              })
+              .map((comment) => (
+                <div key={comment._id} className="comment">
+                  <strong>{comment.user.username}:</strong> {comment.text}
+                  {user._id === comment.user._id && ( // Only show options if user owns comment
+                    <div>
+                      <button
+                        onClick={() =>
+                          handleEditComment(
+                            comment._id,
+                            prompt("Edit comment:", comment.text)
+                          )
+                        }
+                      >
+                        Edit
+                      </button>
+                      <button onClick={() => handleDeleteComment(comment._id)}>
+                        Delete
+                      </button>
+                    </div>
+                  )}
                   <div>
                     <button
-                      onClick={() =>
-                        handleEditComment(
-                          comment._id,
-                          prompt("Edit comment:", comment.text)
-                        )
-                      }
+                      onClick={() => {
+                        if (user.username) {
+                          handleVote(comment._id, "upvote");
+                        } else {
+                          alert("Please log in to upvote.");
+                        }
+                      }}
                     >
-                      Edit
+                      ⬆ {comment.upvotes.length}
                     </button>
-                    <button onClick={() => handleDeleteComment(comment._id)}>
-                      Delete
+
+                    <button
+                      onClick={() => {
+                        if (user.username) {
+                          handleVote(comment._id, "downvote");
+                        } else {
+                          alert("Please log in to downvote.");
+                        }
+                      }}
+                    >
+                      ⬇ {comment.downvotes.length}
                     </button>
                   </div>
-                )}
-                <div>
-                  <button
-                    onClick={() => {
-                      if (user.username) {
-                        handleVote(comment._id, "upvote");
-                      } else {
-                        alert("Please log in to upvote.");
-                      }
-                    }}
-                  >
-                    ⬆ {comment.upvotes.length}
-                  </button>
-
-                  <button
-                    onClick={() => {
-                      if (user.username) {
-                        handleVote(comment._id, "downvote");
-                      } else {
-                        alert("Please log in to downvote.");
-                      }
-                    }}
-                  >
-                    ⬇ {comment.downvotes.length}
-                  </button>
+                  <p className="timestamp">
+                    {moment(comment.createdAt).fromNow()}
+                  </p>
                 </div>
-                <p className="timestamp">
-                  {moment(comment.createdAt).fromNow()}
-                </p>
-              </div>
-            ))
+              ))
           ) : (
             <p>No comments yet.</p>
           )}
