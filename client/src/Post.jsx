@@ -86,6 +86,20 @@ function Post() {
       .catch((err) => console.log("Error deleting comment:", err));
   };
 
+  const handleVote = async (commentId, type) => {
+    if (!user) {
+      alert("You must be logged in to vote.");
+      return;
+    }
+
+    axios
+      .put(`https://blog-app-1-server.vercel.app/${type}-comment/${commentId}`)
+      .then((res) => {
+        setComments(comments.map((c) => (c._id === commentId ? res.data : c)));
+      })
+      .catch((err) => console.log("Error voting:", err));
+  };
+
   return (
     <div className="posts_container">
       <div className="post_post">
@@ -139,6 +153,31 @@ function Post() {
                   </button>
                 </div>
               )}
+              <div>
+                <button
+                  onClick={() => {
+                    if (user) {
+                      handleVote(comment._id, "upvote");
+                    } else {
+                      alert("Please log in to upvote.");
+                    }
+                  }}
+                >
+                  👍 {comment.upvotes.length}
+                </button>
+
+                <button
+                  onClick={() => {
+                    if (user) {
+                      handleVote(comment._id, "downvote");
+                    } else {
+                      alert("Please log in to downvote.");
+                    }
+                  }}
+                >
+                  👎 {comment.downvotes.length}
+                </button>
+              </div>
             </div>
           ))
         ) : (

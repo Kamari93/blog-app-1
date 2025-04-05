@@ -548,6 +548,57 @@ app.delete("/deletecomment/:id", verifyUser, async (req, res) => {
   }
 });
 
+// upvote/downvote a comment
+app.put("/upvote-comment/:id", verifyUser, async (req, res) => {
+  try {
+    const comment = await CommentModel.findById(req.params.id);
+    if (!comment) return res.status(404).json({ message: "Comment not found" });
+
+    // Remove user from downvotes if present
+    comment.downvotes = comment.downvotes.filter(
+      (id) => id.toString() !== req._id
+    );
+
+    // Toggle upvote
+    if (comment.upvotes.includes(req._id)) {
+      comment.upvotes = comment.upvotes.filter(
+        (id) => id.toString() !== req._id
+      );
+    } else {
+      comment.upvotes.push(req._id);
+    }
+
+    await comment.save();
+    res.json(comment);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
+
+app.put("/downvote-comment/:id", verifyUser, async (req, res) => {
+  try {
+    const comment = await CommentModel.findById(req.params.id);
+    if (!comment) return res.status(404).json({ message: "Comment not found" });
+
+    // Remove user from upvotes if present
+    comment.upvotes = comment.upvotes.filter((id) => id.toString() !== req._id);
+
+    // Toggle downvote
+    if (comment.downvotes.includes(req._id)) {
+      comment.downvotes = comment.downvotes.filter(
+        (id) => id.toString() !== req._id
+      );
+    } else {
+      comment.downvotes.push(req._id);
+    }
+
+    await comment.save();
+    res.json(comment);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
+
 // start server
 const port = process.env.PORT || 5000;
 app.listen(port, () => {

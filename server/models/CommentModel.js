@@ -18,6 +18,8 @@ const commentSchema = new Schema(
       ref: "posts", // References PostModel
       required: true,
     },
+    upvotes: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
+    downvotes: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
   },
   { timestamps: true }
 );
