@@ -134,14 +134,16 @@ function Post() {
         {/* <h3>Comments {comments.length > 0 && `(${comments.length})`}</h3> */}
         <div className="comments_header">
           <h3>Comments {comments.length > 0 && `(${comments.length})`}</h3>
-          <select
-            value={sortOrder}
-            onChange={(e) => setSortOrder(e.target.value)}
-            style={{ marginLeft: "10px" }}
-          >
-            <option value="newest">Newest</option>
-            <option value="oldest">Oldest</option>
-          </select>
+          {comments.length > 0 && (
+            <select
+              value={sortOrder}
+              onChange={(e) => setSortOrder(e.target.value)}
+              style={{ marginLeft: "10px" }}
+            >
+              <option value="newest">Newest</option>
+              <option value="oldest">Oldest</option>
+            </select>
+          )}
         </div>
         <div className="comments_scroll">
           {comments.length > 0 ? (
