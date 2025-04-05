@@ -157,7 +157,7 @@ function Post() {
                 <button
                   onClick={() => {
                     if (comment.user !== undefined) {
-                      handleVote(comment.user._id, "upvote");
+                      handleVote(comment._id, "upvote");
                     } else {
                       alert("Please log in to upvote.");
                     }
@@ -169,7 +169,7 @@ function Post() {
                 <button
                   onClick={() => {
                     if (comment.user !== undefined) {
-                      handleVote(comment.user._id, "downvote");
+                      handleVote(comment._id, "downvote");
                     } else {
                       alert("Please log in to downvote.");
                     }
