@@ -155,7 +155,9 @@ function Post() {
               })
               .map((comment) => (
                 <div key={comment._id} className="comment">
-                  <strong>{comment.user.username}:</strong> {comment.text}
+                  <div className="comment_text">
+                    <strong>{comment.user.username}:</strong> {comment.text}
+                  </div>
                   {user._id === comment.user._id && ( // Only show options if user owns comment
                     <div>
                       <button

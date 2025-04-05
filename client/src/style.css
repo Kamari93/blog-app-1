@@ -403,3 +403,10 @@
   align-items: center;
   justify-content: space-between;
 }
+
+.comment_text {
+  border: 1px solid #ccc;
+  padding: 10px;
+  height: 60px;
+  overflow-y: auto;
+}
