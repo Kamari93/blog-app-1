@@ -132,57 +132,59 @@ function Post() {
       </div>
       <div className="comments_section">
         <h3>Comments {comments.length > 0 && `(${comments.length})`}</h3>
-        {comments.length > 0 ? (
-          comments.map((comment) => (
-            <div key={comment._id} className="comment">
-              <strong>{comment.user.username}:</strong> {comment.text}
-              {user._id === comment.user._id && ( // Only show options if user owns comment
+        <div className="comments_scroll">
+          {comments.length > 0 ? (
+            comments.map((comment) => (
+              <div key={comment._id} className="comment">
+                <strong>{comment.user.username}:</strong> {comment.text}
+                {user._id === comment.user._id && ( // Only show options if user owns comment
+                  <div>
+                    <button
+                      onClick={() =>
+                        handleEditComment(
+                          comment._id,
+                          prompt("Edit comment:", comment.text)
+                        )
+                      }
+                    >
+                      Edit
+                    </button>
+                    <button onClick={() => handleDeleteComment(comment._id)}>
+                      Delete
+                    </button>
+                  </div>
+                )}
                 <div>
                   <button
-                    onClick={() =>
-                      handleEditComment(
-                        comment._id,
-                        prompt("Edit comment:", comment.text)
-                      )
-                    }
+                    onClick={() => {
+                      if (user.username) {
+                        handleVote(comment._id, "upvote");
+                      } else {
+                        alert("Please log in to upvote.");
+                      }
+                    }}
                   >
-                    Edit
+                    ⬆ {comment.upvotes.length}
                   </button>
-                  <button onClick={() => handleDeleteComment(comment._id)}>
-                    Delete
+
+                  <button
+                    onClick={() => {
+                      if (user.username) {
+                        handleVote(comment._id, "downvote");
+                      } else {
+                        alert("Please log in to downvote.");
+                      }
+                    }}
+                  >
+                    ⬇ {comment.downvotes.length}
                   </button>
                 </div>
-              )}
-              <div>
-                <button
-                  onClick={() => {
-                    if (user.username) {
-                      handleVote(comment._id, "upvote");
-                    } else {
-                      alert("Please log in to upvote.");
-                    }
-                  }}
-                >
-                  ⬆ {comment.upvotes.length}
-                </button>
-
-                <button
-                  onClick={() => {
-                    if (user.username) {
-                      handleVote(comment._id, "downvote");
-                    } else {
-                      alert("Please log in to downvote.");
-                    }
-                  }}
-                >
-                  ⬇ {comment.downvotes.length}
-                </button>
               </div>
-            </div>
-          ))
-        ) : (
-          <p>No comments yet.</p>
-        )}
+            ))
+          ) : (
+            <p>No comments yet.</p>
+          )}
+        </div>
       </div>
       {user.username ? (
         <div className="add_comment">

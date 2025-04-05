@@ -311,3 +311,71 @@
 
   /* height: 80vh; */
 }
+
+/* comment section */
+.comments_section {
+  width: 80%;
+  margin-top: 20px;
+}
+
+.comments_scroll {
+  max-height: 300px;
+  overflow-y: auto;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background-color: #fafafa;
+}
+
+/* Comment card */
+.comment {
+  padding: 10px;
+  border-bottom: 1px solid #ddd;
+  margin-bottom: 8px;
+}
+
+.comment:last-child {
+  border-bottom: none;
+}
+
+.comment button {
+  margin-right: 5px;
+  background-color: #eee;
+  border: none;
+  padding: 4px 8px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.comment button:hover {
+  background-color: #ccc;
+}
+
+/* Add comment box */
+.add_comment {
+  margin-top: 20px;
+  width: 80%;
+}
+
+.add_comment textarea {
+  width: 100%;
+  height: 80px;
+  resize: none;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  padding: 10px;
+}
+
+.add_comment button {
+  margin-top: 10px;
+  padding: 10px 15px;
+  background-color: #1ea775;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.add_comment button:hover {
+  background-color: #168a5c;
+}
