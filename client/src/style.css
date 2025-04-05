@@ -405,11 +405,12 @@
 }
 
 .comment_text {
-  border: 1px solid rgb(122, 164, 137);
+  border: 1px solid #ddd;
   padding: 10px;
   height: 60px;
   border-radius: 5px;
   overflow-y: auto;
   margin-bottom: 3px;
   background-color: white;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
