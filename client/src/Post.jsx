@@ -3,6 +3,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import { userContext } from "./App";
+import moment from "moment";
 import "./style.css";
 
 function Post() {
@@ -97,6 +98,7 @@ function Post() {
       .put(`https://blog-app-1-server.vercel.app/${type}-comment/${commentId}`)
       .then((res) => {
         setComments(comments.map((c) => (c._id === commentId ? res.data : c)));
+        window.location.reload();
       })
       .catch((err) => console.log("Error voting:", err));
   };
@@ -104,10 +106,6 @@ function Post() {
   return (
     <div className="posts_container">
       <div className="post_post">
-        {/* <img
-          src={`https://blog-app-1-server.vercel.app/Images/${post.file}`}
-          alt=""
-        ></img> */}
         {post.file && <img src={post.file} alt={post.title} />}
         <h1>{post.title}</h1>
         <p>{post.description}</p>
@@ -180,6 +178,9 @@ function Post() {
                     ⬇ {comment.downvotes.length}
                   </button>
                 </div>
+                <p className="timestamp">
+                  {moment(comment.createdAt).fromNow()}
+                </p>
               </div>
             ))
           ) : (
