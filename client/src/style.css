@@ -404,6 +404,10 @@
   justify-content: space-between;
 }
 
+.comment_text {
+  background-color: #c0bebe;
+}
+
 .comment_text,
 .post_description {
   border: 1px solid #ddd;
