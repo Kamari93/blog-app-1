@@ -109,7 +109,7 @@ function Post() {
       <div className="post_post">
         {post.file && <img src={post.file} alt={post.title} />}
         <h1>{post.title}</h1>
-        <p>{post.description}</p>
+        <div className="post_description">{post.description}</div>
         <div className="post_actions">
           {user.email === post.email ? (
             <>

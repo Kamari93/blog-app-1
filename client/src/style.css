@@ -404,7 +404,8 @@
   justify-content: space-between;
 }
 
-.comment_text {
+.comment_text,
+.post_description {
   border: 1px solid #ddd;
   padding: 10px;
   height: 60px;
