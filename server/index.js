@@ -316,6 +316,9 @@ app.delete("/deletepost/:id", async (req, res) => {
       await cloudinary.uploader.destroy(publicId);
     }
 
+    // 🧹 Delete all comments related to this post
+    await CommentModel.deleteMany({ post: req.params.id });
+
     await PostModel.findByIdAndDelete(req.params.id);
     res.json("Post deleted successfully");
   } catch (err) {
