@@ -106,7 +106,8 @@ function Home() {
             {post.file && <img src={post.file} alt={post.title} />}
             <div className="post_text">
               <h2>{post.title}</h2>
-              <p>{post.description}</p>
+              {/* <p>{post.description}</p> */}
+              <div className="post_description">{post.description}</div>
               <p className="posted_by">
                 Posted by{" "}
                 {user?.username === post.username ? "You" : post.username}
