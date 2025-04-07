@@ -419,3 +419,19 @@
   background-color: white;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
+
+.back_button {
+  background-color: #f59919;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 5px;
+  cursor: pointer;
+  align-self: flex-start;
+  margin-bottom: 10px;
+  font-weight: bold;
+}
+
+.back_button:hover {
+  background-color: #e0870f;
+}
