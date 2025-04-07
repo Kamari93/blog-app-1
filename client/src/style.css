@@ -427,7 +427,7 @@
   padding: 8px 16px;
   border-radius: 5px;
   cursor: pointer;
-  align-self: flex-start;
+  align-self: center;
   margin-bottom: 10px;
   font-weight: bold;
 }
