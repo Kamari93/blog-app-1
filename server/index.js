@@ -529,7 +529,12 @@ app.put("/editcomment/:id", verifyUser, async (req, res) => {
 
     comment.text = text;
     await comment.save();
-    res.json(comment);
+    const updatedComment = await CommentModel.findById(req.params.id).populate(
+      "user",
+      "username"
+    );
+    // res.json(comment);
+    res.json(updatedComment);
   } catch (error) {
     res.status(500).json({ error: "Error editing comment" });
   }
