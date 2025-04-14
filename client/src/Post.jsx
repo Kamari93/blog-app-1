@@ -63,7 +63,7 @@ function Post() {
       .then((res) => {
         setComments([...comments, res.data]); // Append new comment
         setCommentText(""); // Clear input field
-        window.location.reload();
+        // window.location.reload();
       })
       .catch((err) => console.log("Error adding comment:", err));
     console.log(commentText, id, user._id, user.username);

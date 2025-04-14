@@ -482,9 +482,18 @@ app.post("/addcomment", async (req, res) => {
     existingPost.comments.push(newComment._id);
     await existingPost.save();
 
+    const updatedComment = await CommentModel.findById(req.params.id).populate(
+      "user",
+      "username"
+    );
+
     res
       .status(201)
-      .json({ message: "Comment added successfully", comment: newComment });
+      .json({
+        message: "Comment added successfully",
+        comment: newComment,
+        updatedComment,
+      });
   } catch (error) {
     console.error("Error adding comment:", error);
     res
