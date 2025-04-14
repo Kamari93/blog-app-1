@@ -573,7 +573,7 @@ app.put("/upvote-comment/:id", verifyUser, async (req, res) => {
 
     await comment.save();
     const updatedComment = await CommentModel.findById(req.params.id).populate(
-      "users",
+      "user",
       "username"
     );
     // res.json(comment);
@@ -603,7 +603,7 @@ app.put("/downvote-comment/:id", verifyUser, async (req, res) => {
     await comment.save();
     // Repopulate the user with username before sending
     const updatedComment = await CommentModel.findById(req.params.id).populate(
-      "users",
+      "user",
       "username"
     );
     // res.json(comment);
