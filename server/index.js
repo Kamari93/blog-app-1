@@ -487,13 +487,10 @@ app.post("/addcomment", async (req, res) => {
       "username"
     );
 
-    res
-      .status(201)
-      .json({
-        message: "Comment added successfully",
-        comment: newComment,
-        updatedComment,
-      });
+    res.status(201).json({
+      message: "Comment added successfully",
+      comment: newComment,
+    });
   } catch (error) {
     console.error("Error adding comment:", error);
     res
