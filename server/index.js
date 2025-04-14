@@ -572,7 +572,12 @@ app.put("/upvote-comment/:id", verifyUser, async (req, res) => {
     }
 
     await comment.save();
-    res.json(comment);
+    const updatedComment = await CommentModel.findById(req.params.id).populate(
+      "users",
+      "username"
+    );
+    // res.json(comment);
+    res.json(updatedComment);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
@@ -596,7 +601,13 @@ app.put("/downvote-comment/:id", verifyUser, async (req, res) => {
     }
 
     await comment.save();
-    res.json(comment);
+    // Repopulate the user with username before sending
+    const updatedComment = await CommentModel.findById(req.params.id).populate(
+      "users",
+      "username"
+    );
+    // res.json(comment);
+    res.json(updatedComment);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }

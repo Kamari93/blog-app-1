@@ -99,7 +99,7 @@ function Post() {
       .put(`https://blog-app-1-server.vercel.app/${type}-comment/${commentId}`)
       .then((res) => {
         setComments(comments.map((c) => (c._id === commentId ? res.data : c)));
-        window.location.reload();
+        // window.location.reload();
       })
       .catch((err) => console.log("Error voting:", err));
   };
