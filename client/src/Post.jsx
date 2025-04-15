@@ -56,15 +56,8 @@ function Post() {
         text: commentText,
         post: id,
         user: user._id,
-        // postId: id, // `id` is from `useParams()`
-        // userId: user._id,
         username: user.username,
       })
-      // .then((res) => {
-      //   setComments([...comments, res.data]); // Append new comment
-      //   setCommentText(""); // Clear input field
-      //   window.location.reload();
-      // })
       .then(() => {
         setCommentText(""); // Clear input field
         return axios.get(
@@ -167,7 +160,7 @@ function Post() {
                   <div className="comment_text">
                     <strong>{comment.user.username}:</strong> {comment.text}
                   </div>
-                  {user._id === comment.user._id && ( // Only show options if user owns comment
+                  {/* {user._id === comment.user._id && ( // Only show options if user owns comment
                     <div>
                       <button
                         onClick={() =>
@@ -183,7 +176,7 @@ function Post() {
                         Delete
                       </button>
                     </div>
-                  )}
+                  )} */}
                   <div>
                     <button
                       onClick={() => {
@@ -212,6 +205,23 @@ function Post() {
                   <p className="timestamp">
                     {moment(comment.createdAt).fromNow()}
                   </p>
+                  {user._id === comment.user._id && ( // Only show options if user owns comment
+                    <div>
+                      <button
+                        onClick={() =>
+                          handleEditComment(
+                            comment._id,
+                            prompt("Edit comment:", comment.text)
+                          )
+                        }
+                      >
+                        Edit
+                      </button>
+                      <button onClick={() => handleDeleteComment(comment._id)}>
+                        Delete
+                      </button>
+                    </div>
+                  )}
                 </div>
               ))
           ) : (
