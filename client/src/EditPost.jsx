@@ -30,8 +30,6 @@ function EditPost() {
 
       if (res.data.message === "Post updated successfully") {
         // navigate("/");
-        // navigate to the post page
-        // navigate(`https://blog-app-1-client.vercel.app/post/${id}`);
         navigate(`/post/${id}`);
       }
     } catch (err) {
