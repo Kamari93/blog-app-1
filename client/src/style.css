@@ -452,20 +452,20 @@
   transition: background-color 0.2s ease, color 0.2s ease;
 }
 
-.edit_btn {
+.c_edit_btn {
   background-color: #1ea775;
   color: white;
 }
 
-.edit_btn:hover {
+.c_edit_btn:hover {
   background-color: #158a61;
 }
 
-.delete_btn {
+.c_delete_btn {
   background-color: #f44336;
   color: white;
 }
 
-.delete_btn:hover {
+.c_delete_btn:hover {
   background-color: #d32f2f;
 }
