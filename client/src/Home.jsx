@@ -22,13 +22,6 @@ function Home() {
       .catch((err) => console.log(err));
   }, [user]); // Re-fetch posts when `user` changes
 
-  // Sort posts by createdAt
-  // const sortedPosts = [...posts].sort((a, b) => {
-  //   return sortOrder === "newest"
-  //     ? new Date(b.createdAt) - new Date(a.createdAt)
-  //     : new Date(a.createdAt) - new Date(b.createdAt);
-  // });
-
   // Sort posts by createdAt or number of likes
   const sortedPosts = [...posts].sort((a, b) => {
     if (sortOrder === "newest") {
