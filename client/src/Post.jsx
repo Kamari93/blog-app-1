@@ -205,25 +205,27 @@ function Post() {
                   <p className="timestamp">
                     {moment(comment.createdAt).fromNow()}
                   </p>
-                  <div className="comment_actions">
-                    <button
-                      className="comment_btn edit_btn"
-                      onClick={() =>
-                        handleEditComment(
-                          comment._id,
-                          prompt("Edit comment:", comment.text)
-                        )
-                      }
-                    >
-                      Edit
-                    </button>
-                    <button
-                      className="comment_btn delete_btn"
-                      onClick={() => handleDeleteComment(comment._id)}
-                    >
-                      Delete
-                    </button>
-                  </div>
+                  {user._id === comment.user._id && (
+                    <div className="comment_actions">
+                      <button
+                        className="comment_btn edit_btn"
+                        onClick={() =>
+                          handleEditComment(
+                            comment._id,
+                            prompt("Edit comment:", comment.text)
+                          )
+                        }
+                      >
+                        Edit
+                      </button>
+                      <button
+                        className="comment_btn delete_btn"
+                        onClick={() => handleDeleteComment(comment._id)}
+                      >
+                        Delete
+                      </button>
+                    </div>
+                  )}
                 </div>
               ))
           ) : (
