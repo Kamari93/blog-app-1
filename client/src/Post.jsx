@@ -208,7 +208,8 @@ function Post() {
                   {user._id === comment.user._id && (
                     <div className="comment_actions">
                       <button
-                        className="comment_btn c_edit_btn"
+                        className="comment_btn"
+                        id="c_edit_btn"
                         onClick={() =>
                           handleEditComment(
                             comment._id,
@@ -219,7 +220,8 @@ function Post() {
                         Edit
                       </button>
                       <button
-                        className="comment_btn c_delete_btn"
+                        className="comment_btn"
+                        id="c_delete_btn"
                         onClick={() => handleDeleteComment(comment._id)}
                       >
                         Delete
