@@ -435,3 +435,37 @@
 .back_button:hover {
   background-color: #e0870f;
 }
+
+.comment_actions {
+  margin-top: 8px;
+  display: flex;
+  gap: 10px;
+}
+
+.comment_btn {
+  padding: 6px 12px;
+  font-size: 0.9rem;
+  border-radius: 5px;
+  border: none;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.edit_btn {
+  background-color: #1ea775;
+  color: white;
+}
+
+.edit_btn:hover {
+  background-color: #158a61;
+}
+
+.delete_btn {
+  background-color: #f44336;
+  color: white;
+}
+
+.delete_btn:hover {
+  background-color: #d32f2f;
+}
