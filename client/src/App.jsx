@@ -9,11 +9,13 @@ import Post from "./Post";
 import EditPost from "./EditPost";
 import Contact from "./Contact";
 import axios from "axios";
+import { Navigate } from "react-router-dom";
 
 export const userContext = createContext(); // create a global state
 
 function App() {
   const [user, setUser] = useState({});
+  const [sessionExpired, setSessionExpired] = useState(false);
 
   axios.defaults.withCredentials = true;
 
@@ -23,11 +25,17 @@ function App() {
       .then((res) => {
         if (res.data.username) {
           setUser(res.data); // Only set the user if username exists
+          setSessionExpired(false); // session is valid
         } else {
           setUser({}); // Reset user if token is invalid
+          setSessionExpired(true); // session has expired or no valid token
         }
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        console.log(err);
+        setUser({});
+        setSessionExpired(true); // assume expired on error
+      });
   }, []);
 
   // useEffect(() => {
@@ -47,6 +55,9 @@ function App() {
     <userContext.Provider value={{ user, setUser }}>
       <BrowserRouter>
         <Navbar />
+        {sessionExpired && Object.keys(user).length !== 0 && (
+          <Navigate to="/login" replace />
+        )}
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/register" element={<Register />} />
