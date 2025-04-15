@@ -24,7 +24,7 @@ function App() {
     axios
       .get("https://blog-app-1-server.vercel.app/")
       .then((res) => {
-        if (res.data.username) {
+        if (res.data.username !== undefined) {
           setUser(res.data); // Only set the user if username exists
           setSessionExpired(false); // session is valid
         } else {
