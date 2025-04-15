@@ -12,22 +12,6 @@ function EditPost() {
 
   axios.defaults.withCredentials = true;
 
-  // const handleSubmit = (e) => {
-  //   e.preventDefault();
-  //   axios
-  //     .put("https://blog-app-1-server.vercel.app/editpost/" + id, {
-  //       title,
-  //       description,
-  //     })
-  //     .then((res) => {
-  //       console.log(res);
-  //       if (res.data === "Post updated successfully") {
-  //         navigate("/");
-  //       }
-  //     })
-  //     .catch((err) => console.log(err));
-  // };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     const formData = new FormData();
@@ -45,23 +29,14 @@ function EditPost() {
       );
 
       if (res.data.message === "Post updated successfully") {
-        navigate("/");
+        // navigate("/");
+        // navigate to the post page
+        navigate(`https://blog-app-1-client.vercel.app/post/${id}`);
       }
     } catch (err) {
       console.error(err);
     }
   };
-
-  // use useEffect to fetch the post record
-  // useEffect(() => {
-  //   axios
-  //     .get("https://blog-app-1-server.vercel.app/getpostbyid/" + id)
-  //     .then((result) => {
-  //       setTitle(result.data.title);
-  //       setDescription(result.data.description);
-  //     })
-  //     .catch((err) => console.log(err));
-  // }, []);
 
   useEffect(() => {
     axios

@@ -327,52 +327,6 @@ app.delete("/deletepost/:id", async (req, res) => {
   }
 });
 
-// like/unlike post functionality
-// app.put("/togglelike/:postId", async (req, res) => {
-//   try {
-//     const { userId } = req.body;
-//     const { postId } = req.params;
-
-//     const post = await PostModel.findById(postId);
-//     if (!post) return res.status(404).json({ message: "Post not found" });
-
-//     const index = post.likes.indexOf(userId);
-//     if (index === -1) {
-//       post.likes.push(userId); // Like the post
-//     } else {
-//       post.likes.splice(index, 1); // Unlike the post
-//     }
-
-//     await post.save();
-//     res.json({ likes: post.likes.length });
-//   } catch (error) {
-//     res.status(500).json({ message: "Internal server error" });
-//   }
-// });
-
-// app.put("/togglelike/:postId", async (req, res) => {
-//   const { userId } = req.body;
-//   try {
-//     const post = await PostModel.findById(req.params.postId);
-//     if (!post) return res.status(404).json({ message: "Post not found" });
-
-//     // Ensure likes array exists
-//     if (!post.likes) post.likes = [];
-
-//     const likedIndex = post.likes.indexOf(userId);
-//     if (likedIndex === -1) {
-//       post.likes.push(userId); // Add like
-//     } else {
-//       post.likes.splice(likedIndex, 1); // Remove like (Unlike)
-//     }
-
-//     await post.save();
-//     res.json({ likes: post.likes });
-//   } catch (error) {
-//     res.status(500).json({ message: "Error toggling like", error });
-//   }
-// });
-
 app.put("/togglelike/:postId", async (req, res) => {
   try {
     const { _id } = req.body;
@@ -397,49 +351,6 @@ app.put("/togglelike/:postId", async (req, res) => {
     res.status(500).json({ message: "Internal Server Error" });
   }
 });
-
-// comment functionality
-
-// app.post("/addcomment", verifyUser, async (req, res) => {
-//   try {
-//     const { text, postId } = req.body;
-//     const newComment = await CommentModel.create({
-//       text,
-//       user: req.email, // Using the email from the verified user
-//       post: postId,
-//     });
-
-//     // Add comment to post's comments array
-//     await PostModel.findByIdAndUpdate(postId, {
-//       $push: { comments: newComment._id },
-//     });
-
-//     res.json({ message: "Comment added", comment: newComment });
-//   } catch (err) {
-//     res.status(500).json({ error: err.message });
-//   }
-// });
-
-// app.post("/addcomment", async (req, res) => {
-//   try {
-//     const { text, postId, userId, username } = req.body;
-
-//     if (!text || !postId || !userId) {
-//       return res.status(400).json({ error: "Missing required fields" });
-//     }
-
-//     const newComment = await CommentModel.create({
-//       text,
-//       postId,
-//       user: { _id: userId, username: username }, // Ensure user details are included
-//     });
-
-//     res.status(201).json(newComment);
-//   } catch (error) {
-//     console.error("Error adding comment:", error);
-//     res.status(500).json({ error: "Internal server error" });
-//   }
-// });
 
 app.post("/addcomment", async (req, res) => {
   try {
