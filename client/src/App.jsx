@@ -55,10 +55,6 @@ function App() {
     <userContext.Provider value={{ user, setUser }}>
       <BrowserRouter>
         <Navbar />
-        {/* {sessionExpired && Object.keys(user).length !== 0 && (
-          <Navigate to="/login" replace />
-        )} */}
-        {sessionExpired && <Navigate to="/login" replace />}
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/register" element={<Register />} />
