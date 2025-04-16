@@ -249,7 +249,7 @@ function Post() {
       ) : (
         <p>Log in to leave a comment.</p>
       )}
-      <button onClick={() => navigate("/")} className="back_button">
+      <button onClick={() => navigate(-1)} className="back_button">
         ← Back to Home
       </button>
     </div>
