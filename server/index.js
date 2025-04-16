@@ -100,11 +100,13 @@ const updatePostsLikes = async () => {
 const verifyUser = (req, res, next) => {
   const token = req.cookies.token;
   if (!token) {
-    return res.json("Token is missing, please login");
+    // return res.json("Token is missing, please login");
+    return res.status(401).json({ error: "Token is missing" });
   } else {
     jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
       if (err) {
-        return res.json("The token is not valid");
+        // return res.json("The token is not valid");
+        return res.status(401).json({ error: "Token is not valid" });
       } else {
         req.email = decoded.email;
         req.username = decoded.username;

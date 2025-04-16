@@ -20,28 +20,56 @@ function App() {
 
   axios.defaults.withCredentials = true;
 
+  // useEffect(() => {
+  //   axios
+  //     .get("https://blog-app-1-server.vercel.app/")
+  //     .then((res) => {
+  //       if (res.data.username !== undefined) {
+  //         setUser(res.data); // Only set the user if username exists
+  //         setSessionExpired(false); // session is valid
+  //       } else {
+  //         setUser({}); // Reset user if token is invalid
+  //         setSessionExpired(true); // session has expired or no valid token
+  //       }
+  //     })
+  //     .catch((err) => {
+  //       console.log(err);
+  //       setUser({});
+  //       setSessionExpired(true); // assume expired on error
+  //     });
+  // }, []);
+
   useEffect(() => {
     axios
       .get("https://blog-app-1-server.vercel.app/")
       .then((res) => {
-        if (res.data.username !== undefined) {
-          setUser(res.data); // Only set the user if username exists
-          setSessionExpired(false); // session is valid
+        if (res.data.username) {
+          setUser(res.data);
+          setSessionExpired(false);
         } else {
-          setUser({}); // Reset user if token is invalid
-          setSessionExpired(true); // session has expired or no valid token
+          setUser({});
+          setSessionExpired(true);
         }
       })
       .catch((err) => {
-        console.log(err);
+        if (err.response && err.response.status === 401) {
+          setSessionExpired(true);
+        }
         setUser({});
-        setSessionExpired(true); // assume expired on error
       });
   }, []);
 
   // Alert & Redirect if session expires for logged-in users
+  // useEffect(() => {
+  //   if (sessionExpired && Object.keys(user).length > 0) {
+  //     alert("Your session has expired. Please log in again.");
+  //     setUser({});
+  //     navigate("/login");
+  //   }
+  // }, [sessionExpired]);
+
   useEffect(() => {
-    if (sessionExpired && Object.keys(user).length > 0) {
+    if (sessionExpired) {
       alert("Your session has expired. Please log in again.");
       setUser({});
       navigate("/login");
