@@ -16,6 +16,8 @@ export const userContext = createContext(); // create a global state
 function App() {
   const [user, setUser] = useState({});
   const [sessionExpired, setSessionExpired] = useState(false);
+  const [initialCheckDone, setInitialCheckDone] = useState(false);
+  const [wasPreviouslyLoggedIn, setWasPreviouslyLoggedIn] = useState(false);
   const navigate = useNavigate(); // for redirection
 
   axios.defaults.withCredentials = true;
@@ -45,17 +47,20 @@ function App() {
       .then((res) => {
         if (res.data.username) {
           setUser(res.data);
+          setWasPreviouslyLoggedIn(true); // user had been logged in before
           setSessionExpired(false);
         } else {
           setUser({});
           setSessionExpired(true);
         }
+        setInitialCheckDone(true);
       })
       .catch((err) => {
         if (err.response && err.response.status === 401) {
           setSessionExpired(true);
         }
         setUser({});
+        setInitialCheckDone(true);
       });
   }, []);
 
@@ -68,13 +73,25 @@ function App() {
   //   }
   // }, [sessionExpired]);
 
+  // useEffect(() => {
+  //   if (sessionExpired) {
+  //     alert("Your session has expired. Please log in again.");
+  //     setUser({});
+  //     navigate("/login");
+  //   }
+  // }, [sessionExpired]);
+
   useEffect(() => {
-    if (sessionExpired) {
+    if (
+      initialCheckDone &&
+      sessionExpired &&
+      wasPreviouslyLoggedIn &&
+      Object.keys(user).length === 0
+    ) {
       alert("Your session has expired. Please log in again.");
-      setUser({});
       navigate("/login");
     }
-  }, [sessionExpired]);
+  }, [sessionExpired, initialCheckDone, wasPreviouslyLoggedIn]);
 
   // return (
   //   <userContext.Provider value={{ user, setUser }}>
