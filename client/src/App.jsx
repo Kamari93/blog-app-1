@@ -82,12 +82,7 @@ function App() {
   // }, [sessionExpired]);
 
   useEffect(() => {
-    if (
-      initialCheckDone &&
-      sessionExpired &&
-      wasPreviouslyLoggedIn &&
-      Object.keys(user).length === 0
-    ) {
+    if (initialCheckDone && sessionExpired && wasPreviouslyLoggedIn) {
       alert("Your session has expired. Please log in again.");
       navigate("/login");
     }
