@@ -77,20 +77,20 @@ function App() {
   //   }
   // }, [sessionExpired]);
 
-  // useEffect(() => {
-  //   if (sessionExpired) {
-  //     alert("Your session has expired. Please log in again.");
-  //     setUser({});
-  //     navigate("/login");
-  //   }
-  // }, [sessionExpired]);
-
   useEffect(() => {
-    if (initialCheckDone && sessionExpired && wasPreviouslyLoggedIn) {
+    if (sessionExpired) {
       alert("Your session has expired. Please log in again.");
+      setUser({});
       navigate("/login");
     }
-  }, [sessionExpired, initialCheckDone, wasPreviouslyLoggedIn]);
+  }, [sessionExpired]);
+
+  // useEffect(() => {
+  //   if (initialCheckDone && sessionExpired && wasPreviouslyLoggedIn) {
+  //     alert("Your session has expired. Please log in again.");
+  //     navigate("/login");
+  //   }
+  // }, [sessionExpired, initialCheckDone, wasPreviouslyLoggedIn]);
 
   // return (
   //   <userContext.Provider value={{ user, setUser }}>
