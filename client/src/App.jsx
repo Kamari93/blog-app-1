@@ -56,7 +56,11 @@ function App() {
         setInitialCheckDone(true);
       })
       .catch((err) => {
-        if (err.response && err.response.status === 401) {
+        if (
+          err.response ||
+          err.response.status === 401 ||
+          err.response.data === "Token is not valid"
+        ) {
           setSessionExpired(true);
         }
         setUser({});
