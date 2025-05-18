@@ -78,7 +78,7 @@ function App() {
   // }, [sessionExpired]);
 
   useEffect(() => {
-    if (sessionExpired && user._id === undefined) {
+    if (sessionExpired && user._id === undefined && initialCheckDone) {
       alert("Your session has expired. Please log in again.");
       setUser({});
       navigate("/login");
