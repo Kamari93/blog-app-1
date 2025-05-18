@@ -87,8 +87,10 @@ function App() {
 
   useEffect(() => {
     if (sessionExpired && user._id === undefined) {
-      confirm("Please login/create an account for full access.");
-      if (confirm("Please login/create an account for full access.")) {
+      let confirm = window.confirm(
+        "Please login/create an account for full access."
+      );
+      if (confirm) {
         navigate("/login");
       } else {
         navigate("/");
