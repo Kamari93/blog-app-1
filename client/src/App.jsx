@@ -83,7 +83,7 @@ function App() {
       setUser({});
       navigate("/login");
     }
-  }, [sessionExpired]);
+  }, [sessionExpired, wasPreviouslyLoggedIn]);
 
   // useEffect(() => {
   //   if (initialCheckDone && sessionExpired && wasPreviouslyLoggedIn) {
