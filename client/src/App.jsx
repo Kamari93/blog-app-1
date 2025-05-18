@@ -77,11 +77,23 @@ function App() {
   //   }
   // }, [sessionExpired]);
 
+  // useEffect(() => {
+  //   if (sessionExpired && user._id === undefined) {
+  //     alert("Your session has expired. Please log in again.");
+  //     setUser({});
+  //     navigate("/login");
+  //   }
+  // }, [sessionExpired]);
+
   useEffect(() => {
-    if (sessionExpired && user._id === undefined && initialCheckDone) {
-      alert("Your session has expired. Please log in again.");
+    if (sessionExpired && user._id === undefined) {
+      confirm("Please login/create an account for full access.");
+      if (confirm("Please login/create an account for full access.")) {
+        navigate("/login");
+      } else {
+        navigate("/");
+      }
       setUser({});
-      navigate("/login");
     }
   }, [sessionExpired]);
 
