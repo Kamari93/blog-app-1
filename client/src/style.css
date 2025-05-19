@@ -482,17 +482,19 @@
 }
 
 .my-swal-confirm {
-  background-color: #4caf50;
+  background-color: #168a5c;
   color: white;
   border-radius: 5px;
 }
 
 .my-swal-deny {
-  background-color: #f39c12;
+  background-color: #e0870f;
   color: white;
+  border-radius: 5px;
 }
 
 .my-swal-cancel {
-  background-color: transparent;
-  color: #777;
+  background-color: gray;
+  color: white;
+  border-radius: 5px;
 }
