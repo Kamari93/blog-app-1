@@ -105,7 +105,7 @@ function App() {
       Swal.fire({
         title: "Welcome!",
         text: "Please log in or create an account for full access.",
-        icon: "info",
+        icon: "warning",
         showDenyButton: true,
         showCancelButton: true,
         confirmButtonText: "Login",
@@ -117,7 +117,6 @@ function App() {
           confirmButton: "my-swal-confirm",
           denyButton: "my-swal-deny",
           cancelButton: "my-swal-cancel",
-          icon: "my-swal-icon",
         },
       }).then((result) => {
         if (result.isConfirmed) {
