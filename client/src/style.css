@@ -488,8 +488,7 @@
 }
 
 .my-swal-confirm:hover {
-  /* background-color: #1ea775; */
-  border-color: white;
+  background-color: #227657;
 }
 
 .my-swal-deny {
@@ -499,8 +498,7 @@
 }
 
 .my-swal-deny:hover {
-  /* background-color: #f59919; */
-  border-color: white;
+  background-color: #f57819;
 }
 
 .my-swal-cancel {
@@ -512,5 +510,7 @@
 .my-swal-cancel:hover {
   /* background-color: #555; */
   /* border-color: white; */
-  background-color: orangered;
+  background-color: white;
+  color: black;
+  border-color: black;
 }
