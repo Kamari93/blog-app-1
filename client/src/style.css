@@ -511,5 +511,6 @@
 
 .my-swal-cancel:hover {
   /* background-color: #555; */
-  border-color: white;
+  /* border-color: white; */
+  background-color: orangered;
 }
