@@ -476,6 +476,9 @@
   font-family: "Inter", sans-serif;
 }
 
+.my-swal-icon {
+  color: #168a5c;
+}
 .my-swal-title {
   color: #222;
   font-size: 1.5rem;

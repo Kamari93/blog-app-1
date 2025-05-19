@@ -117,6 +117,7 @@ function App() {
           confirmButton: "my-swal-confirm",
           denyButton: "my-swal-deny",
           cancelButton: "my-swal-cancel",
+          icon: "my-swal-icon",
         },
       }).then((result) => {
         if (result.isConfirmed) {
