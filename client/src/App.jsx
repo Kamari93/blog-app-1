@@ -9,6 +9,7 @@ import Post from "./Post";
 import EditPost from "./EditPost";
 import Contact from "./Contact";
 import axios from "axios";
+import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
 
 export const userContext = createContext(); // create a global state
@@ -85,16 +86,41 @@ function App() {
   //   }
   // }, [sessionExpired]);
 
+  // useEffect(() => {
+  //   if (sessionExpired && user._id === undefined) {
+  //     let confirm = window.confirm(
+  //       "Please login/create an account for full access."
+  //     );
+  //     if (confirm) {
+  //       navigate("/login");
+  //     } else {
+  //       navigate("/");
+  //     }
+  //     setUser({});
+  //   }
+  // }, [sessionExpired]);
+
   useEffect(() => {
     if (sessionExpired && user._id === undefined) {
-      let confirm = window.confirm(
-        "Please login/create an account for full access."
-      );
-      if (confirm) {
-        navigate("/login");
-      } else {
-        navigate("/");
-      }
+      Swal.fire({
+        title: "Welcome!",
+        text: "Please log in or create an account for full access.",
+        icon: "info",
+        showDenyButton: true,
+        showCancelButton: true,
+        confirmButtonText: "Login",
+        denyButtonText: "Create Account",
+        cancelButtonText: "Continue as Guest",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          navigate("/login");
+        } else if (result.isDenied) {
+          navigate("/register");
+        } else if (result.dismiss === Swal.DismissReason.cancel) {
+          navigate("/");
+        }
+      });
+
       setUser({});
     }
   }, [sessionExpired]);
