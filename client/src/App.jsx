@@ -111,6 +111,13 @@ function App() {
         confirmButtonText: "Login",
         denyButtonText: "Create Account",
         cancelButtonText: "Continue as Guest",
+        customClass: {
+          popup: "my-swal-popup",
+          title: "my-swal-title",
+          confirmButton: "my-swal-confirm",
+          denyButton: "my-swal-deny",
+          cancelButton: "my-swal-cancel",
+        },
       }).then((result) => {
         if (result.isConfirmed) {
           navigate("/login");
