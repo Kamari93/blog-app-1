@@ -487,14 +487,29 @@
   border-radius: 5px;
 }
 
+.my-swal-confirm:hover {
+  /* background-color: #1ea775; */
+  border-color: white;
+}
+
 .my-swal-deny {
   background-color: #e0870f;
   color: white;
   border-radius: 5px;
 }
 
+.my-swal-deny:hover {
+  /* background-color: #f59919; */
+  border-color: white;
+}
+
 .my-swal-cancel {
   background-color: gray;
   color: white;
   border-radius: 5px;
+}
+
+.my-swal-cancel:hover {
+  /* background-color: #555; */
+  border-color: white;
 }
