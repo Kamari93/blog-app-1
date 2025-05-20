@@ -42,31 +42,66 @@ function App() {
   //     });
   // }, []);
 
+  // useEffect(() => {
+  //   axios
+  //     .get("https://blog-app-1-server.vercel.app/")
+  //     .then((res) => {
+  //       if (res.data.username) {
+  //         setUser(res.data);
+  //         setWasPreviouslyLoggedIn(true); // user had been logged in before
+  //         setSessionExpired(false);
+  //       } else {
+  //         setUser({});
+  //         setSessionExpired(true);
+  //       }
+  //       setInitialCheckDone(true);
+  //     })
+  //     .catch((err) => {
+  //       if (
+  //         err.response ||
+  //         err.response.status === 401 ||
+  //         err.response.data === "Token is not valid"
+  //       ) {
+  //         setSessionExpired(true);
+  //       }
+  //       setUser({});
+  //       setInitialCheckDone(true);
+  //     });
+  // }, []);
+
+  // auto check session every 5 minutes
   useEffect(() => {
-    axios
-      .get("https://blog-app-1-server.vercel.app/")
-      .then((res) => {
-        if (res.data.username) {
-          setUser(res.data);
-          setWasPreviouslyLoggedIn(true); // user had been logged in before
-          setSessionExpired(false);
-        } else {
+    const checkSession = () => {
+      axios
+        .get("https://blog-app-1-server.vercel.app/")
+        .then((res) => {
+          if (res.data.username) {
+            setUser(res.data);
+            setSessionExpired(false);
+          } else {
+            setUser({});
+            setSessionExpired(true);
+          }
+        })
+        .catch((err) => {
+          if (
+            err.response?.status === 401 ||
+            err.response?.data === "Token is not valid"
+          ) {
+            setSessionExpired(true);
+          }
           setUser({});
-          setSessionExpired(true);
-        }
-        setInitialCheckDone(true);
-      })
-      .catch((err) => {
-        if (
-          err.response ||
-          err.response.status === 401 ||
-          err.response.data === "Token is not valid"
-        ) {
-          setSessionExpired(true);
-        }
-        setUser({});
-        setInitialCheckDone(true);
-      });
+        });
+    };
+
+    // Run immediately on mount
+    checkSession();
+
+    // Then check every 5 minutes
+    const interval = setInterval(checkSession, 5 * 60 * 1000); // 5 min
+
+    // Clean up interval on unmount
+    return () => clearInterval(interval);
   }, []);
 
   // Alert & Redirect if session expires for logged-in users
