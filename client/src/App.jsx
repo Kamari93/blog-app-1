@@ -139,7 +139,7 @@ function App() {
     if (sessionExpired && user._id === undefined) {
       Swal.fire({
         title: "Welcome 🍊🏁🌊",
-        text: "Please log in or create an account for full access.",
+        text: "Please Login or create an account for full access.",
         icon: "warning",
         showDenyButton: true,
         showCancelButton: true,
