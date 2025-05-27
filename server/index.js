@@ -157,7 +157,7 @@ app.post("/login", (req, res) => {
             // maxAge: 60 * 60 * 1000 // 1 hour in milliseconds
           });
           // return res.json("Login successful");
-          const expiresAt = Date.now() + 10 * 60 * 1000; // 10 minutes in ms from now
+          // const expiresAt = Date.now() + 10 * 60 * 1000; // 10 minutes in ms from now
           return res.json({
             message: "Login successful",
             username: user.username,
