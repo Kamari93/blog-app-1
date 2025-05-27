@@ -163,7 +163,7 @@ app.post("/login", (req, res) => {
             username: user.username,
             email: user.email,
             _id: user._id,
-            expiresAt,
+            // expiresAt,
           });
         } else {
           res.json("Password is incorrect");
