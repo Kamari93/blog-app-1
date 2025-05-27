@@ -136,6 +136,11 @@ function App() {
   // }, [sessionExpired]);
 
   useEffect(() => {
+    const remaining = user.expiresAt - Date.now();
+    if (user._id !== undefined) {
+      console.log(remaining);
+    }
+
     if (sessionExpired && user._id === undefined) {
       Swal.fire({
         title: "Welcome 🍊🏁🌊",
