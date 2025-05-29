@@ -145,7 +145,8 @@ app.post("/login", (req, res) => {
           const token = jwt.sign(
             { email: user.email, username: user.username, _id: user._id },
             process.env.JWT_SECRET,
-            { expiresIn: "1h" }
+            // { expiresIn: "1h" }
+            { expiresIn: "10m" }
           );
           // store cookie with name "token"
           // res.cookie("token", token);
