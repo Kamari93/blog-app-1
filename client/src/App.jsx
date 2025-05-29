@@ -97,8 +97,8 @@ function App() {
     // Run immediately on mount
     checkSession();
 
-    // Then check every 5 minutes
-    const interval = setInterval(checkSession, 5 * 60 * 1000); // 5 min
+    // Then check every 10 minutes
+    const interval = setInterval(checkSession, 10 * 60 * 1000); // 10 min
 
     // Clean up interval on unmount
     return () => clearInterval(interval);
