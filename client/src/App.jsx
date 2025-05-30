@@ -88,53 +88,13 @@ function App() {
   // }, []);
 
   // auto check session every 10 minutes
-  // useEffect(() => {
-  //   const checkSession = () => {
-  //     axios
-  //       .get("https://blog-app-1-server.vercel.app/")
-  //       .then((res) => {
-  //         if (res.data.username) {
-  //           setUser(res.data);
-  //           setSessionExpired(false);
-  //         } else {
-  //           setUser({});
-  //           setSessionExpired(true);
-  //         }
-  //       })
-  //       .catch((err) => {
-  //         if (
-  //           err.response?.status === 401 ||
-  //           err.response?.data === "Token is not valid"
-  //         ) {
-  //           setSessionExpired(true);
-  //         }
-  //         setUser({});
-  //       });
-  //   };
-
-  //   // Run immediately on mount
-  //   checkSession();
-
-  //   // Then check every 10 minutes
-  //   const interval = setInterval(checkSession, 10 * 60 * 1000); // 10 min
-
-  //   // Clean up interval on unmount
-  //   return () => clearInterval(interval);
-  // }, []);
-
-  // auto check session every 10 minutes
   useEffect(() => {
     const checkSession = () => {
       axios
         .get("https://blog-app-1-server.vercel.app/")
         .then((res) => {
           if (res.data.username) {
-            // If sessionExpiresAt is not sent, estimate it (10 min from now)
-            setUser({
-              ...res.data,
-              sessionExpiresAt:
-                res.data.sessionExpiresAt || Date.now() + 10 * 60 * 1000,
-            });
+            setUser(res.data);
             setSessionExpired(false);
           } else {
             setUser({});
@@ -152,10 +112,50 @@ function App() {
         });
     };
 
+    // Run immediately on mount
     checkSession();
+
+    // Then check every 10 minutes
     const interval = setInterval(checkSession, 10 * 60 * 1000); // 10 min
+
+    // Clean up interval on unmount
     return () => clearInterval(interval);
   }, []);
+
+  // auto check session every 10 minutes
+  // useEffect(() => {
+  //   const checkSession = () => {
+  //     axios
+  //       .get("https://blog-app-1-server.vercel.app/")
+  //       .then((res) => {
+  //         if (res.data.username) {
+  //           // If sessionExpiresAt is not sent, estimate it (10 min from now)
+  //           setUser({
+  //             ...res.data,
+  //             sessionExpiresAt:
+  //               res.data.sessionExpiresAt || Date.now() + 10 * 60 * 1000,
+  //           });
+  //           setSessionExpired(false);
+  //         } else {
+  //           setUser({});
+  //           setSessionExpired(true);
+  //         }
+  //       })
+  //       .catch((err) => {
+  //         if (
+  //           err.response?.status === 401 ||
+  //           err.response?.data === "Token is not valid"
+  //         ) {
+  //           setSessionExpired(true);
+  //         }
+  //         setUser({});
+  //       });
+  //   };
+
+  //   checkSession();
+  //   const interval = setInterval(checkSession, 10 * 60 * 1000); // 10 min
+  //   return () => clearInterval(interval);
+  // }, []);
 
   // Alert & Redirect if session expires for logged-in users
   // useEffect(() => {
