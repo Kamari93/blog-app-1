@@ -22,7 +22,11 @@ function Login() {
         if (res.data.message === "Login successful") {
           // window.location.reload(); // Force re-render
           // window.location.href = "/"; // reload the page
-          setUser(res.data); // update the user state after login
+          // setUser(res.data); // update the user state after login
+          setUser({
+            ...res.data,
+            sessionExpiresAt: res.data.sessionExpiresAt, // Store expiry
+          });
           console.log(res.data);
           // console.log(user);
           navigate("/");
