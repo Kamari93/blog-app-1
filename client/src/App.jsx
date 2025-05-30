@@ -241,30 +241,6 @@ function App() {
     return `${minutes}:${seconds.toString().padStart(2, "0")}`;
   }
 
-  // useEffect(() => {
-  //   if (initialCheckDone && sessionExpired && wasPreviouslyLoggedIn) {
-  //     alert("Your session has expired. Please log in again.");
-  //     navigate("/login");
-  //   }
-  // }, [sessionExpired, initialCheckDone, wasPreviouslyLoggedIn]);
-
-  // return (
-  //   <userContext.Provider value={{ user, setUser }}>
-  //     <BrowserRouter>
-  //       <Navbar />
-  //       <Routes>
-  //         <Route path="/" element={<Home />} />
-  //         <Route path="/register" element={<Register />} />
-  //         <Route path="/login" element={<Login />} />
-  //         <Route path="/create" element={<CreatePost />} />
-  //         <Route path="/post/:id" element={<Post />} />
-  //         <Route path="/editpost/:id" element={<EditPost />} />
-  //         <Route path="/contact" element={<Contact />} />
-  //       </Routes>
-  //     </BrowserRouter>
-  //   </userContext.Provider>
-  // );
-
   return (
     <userContext.Provider value={{ user, setUser }}>
       <Navbar />
