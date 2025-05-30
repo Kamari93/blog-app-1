@@ -19,9 +19,27 @@ function App() {
   const [sessionExpired, setSessionExpired] = useState(false);
   const [initialCheckDone, setInitialCheckDone] = useState(false);
   const [wasPreviouslyLoggedIn, setWasPreviouslyLoggedIn] = useState(false);
+  const [remainingTime, setRemainingTime] = useState(null);
   const navigate = useNavigate(); // for redirection
 
   axios.defaults.withCredentials = true;
+
+  // Timer for session expiry
+  useEffect(() => {
+    if (user && user.sessionExpiresAt) {
+      const remaining = user.sessionExpiresAt - Date.now();
+      if (remaining > 0) {
+        const timer = setTimeout(() => {
+          setSessionExpired(true);
+        }, remaining);
+
+        // Clean up timer if user logs out or sessionExpiresAt changes
+        return () => clearTimeout(timer);
+      } else {
+        setSessionExpired(true);
+      }
+    }
+  }, [user.sessionExpiresAt]);
 
   // useEffect(() => {
   //   axios
@@ -69,14 +87,54 @@ function App() {
   //     });
   // }, []);
 
-  // auto check session every 5 minutes
+  // auto check session every 10 minutes
+  // useEffect(() => {
+  //   const checkSession = () => {
+  //     axios
+  //       .get("https://blog-app-1-server.vercel.app/")
+  //       .then((res) => {
+  //         if (res.data.username) {
+  //           setUser(res.data);
+  //           setSessionExpired(false);
+  //         } else {
+  //           setUser({});
+  //           setSessionExpired(true);
+  //         }
+  //       })
+  //       .catch((err) => {
+  //         if (
+  //           err.response?.status === 401 ||
+  //           err.response?.data === "Token is not valid"
+  //         ) {
+  //           setSessionExpired(true);
+  //         }
+  //         setUser({});
+  //       });
+  //   };
+
+  //   // Run immediately on mount
+  //   checkSession();
+
+  //   // Then check every 10 minutes
+  //   const interval = setInterval(checkSession, 10 * 60 * 1000); // 10 min
+
+  //   // Clean up interval on unmount
+  //   return () => clearInterval(interval);
+  // }, []);
+
+  // auto check session every 10 minutes
   useEffect(() => {
     const checkSession = () => {
       axios
         .get("https://blog-app-1-server.vercel.app/")
         .then((res) => {
           if (res.data.username) {
-            setUser(res.data);
+            // If sessionExpiresAt is not sent, estimate it (10 min from now)
+            setUser({
+              ...res.data,
+              sessionExpiresAt:
+                res.data.sessionExpiresAt || Date.now() + 10 * 60 * 1000,
+            });
             setSessionExpired(false);
           } else {
             setUser({});
@@ -94,13 +152,8 @@ function App() {
         });
     };
 
-    // Run immediately on mount
     checkSession();
-
-    // Then check every 10 minutes
     const interval = setInterval(checkSession, 10 * 60 * 1000); // 10 min
-
-    // Clean up interval on unmount
     return () => clearInterval(interval);
   }, []);
 
@@ -172,6 +225,27 @@ function App() {
     }
   }, [sessionExpired]);
 
+  useEffect(() => {
+    let interval;
+    if (user && user.sessionExpiresAt) {
+      interval = setInterval(() => {
+        const remaining = user.sessionExpiresAt - Date.now();
+        setRemainingTime(remaining > 0 ? remaining : 0);
+      }, 1000);
+    } else {
+      setRemainingTime(null);
+    }
+    return () => clearInterval(interval);
+  }, [user.sessionExpiresAt]);
+
+  function formatTime(ms) {
+    if (ms === null) return "";
+    const totalSeconds = Math.floor(ms / 1000);
+    const minutes = Math.floor(totalSeconds / 60);
+    const seconds = totalSeconds % 60;
+    return `${minutes}:${seconds.toString().padStart(2, "0")}`;
+  }
+
   // useEffect(() => {
   //   if (initialCheckDone && sessionExpired && wasPreviouslyLoggedIn) {
   //     alert("Your session has expired. Please log in again.");
@@ -199,6 +273,14 @@ function App() {
   return (
     <userContext.Provider value={{ user, setUser }}>
       <Navbar />
+      {user &&
+        user.sessionExpiresAt &&
+        remainingTime !== null &&
+        remainingTime > 0 && (
+          <div style={{ textAlign: "center", color: "red", margin: "10px" }}>
+            Session expires in: {formatTime(remainingTime)}
+          </div>
+        )}
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/register" element={<Register />} />
