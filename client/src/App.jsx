@@ -189,7 +189,7 @@ function App() {
   // }, [sessionExpired]);
 
   useEffect(() => {
-    if (sessionExpired || user._id === undefined) {
+    if (sessionExpired && user._id === undefined) {
       Swal.fire({
         title: "Welcome 🍊🏁🌊",
         text: "Please Login or create an account for full access.",
