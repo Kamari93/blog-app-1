@@ -118,8 +118,25 @@ const verifyUser = (req, res, next) => {
 };
 
 // Routes/APIs
+// app.get("/", verifyUser, (req, res) => {
+//   return res.json({ email: req.email, username: req.username, _id: req._id });
+// });
+
 app.get("/", verifyUser, (req, res) => {
-  return res.json({ email: req.email, username: req.username, _id: req._id });
+  const token = req.cookies.token;
+  let sessionExpiresAt = null;
+  if (token) {
+    const decoded = jwt.decode(token);
+    if (decoded && decoded.exp) {
+      sessionExpiresAt = decoded.exp * 1000; // JWT exp is in seconds
+    }
+  }
+  return res.json({
+    email: req.email,
+    username: req.username,
+    _id: req._id,
+    sessionExpiresAt,
+  });
 });
 
 app.post("/register", (req, res) => {

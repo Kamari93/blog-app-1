@@ -96,17 +96,50 @@ function App() {
   // }, []);
 
   // auto check session every 10 minutes
+  // useEffect(() => {
+  //   const checkSession = () => {
+  //     axios
+  //       .get("https://blog-app-1-server.vercel.app/")
+  //       .then((res) => {
+  //         if (res.data.username) {
+  //           // If sessionExpiresAt is not sent, estimate it (10 min from now)
+  //           setUser({
+  //             ...res.data,
+  //             sessionExpiresAt:
+  //               // res.data.sessionExpiresAt || Date.now() + 10 * 60 * 1000,
+  //               res.data.sessionExpiresAt, // Only use backend value
+  //           });
+  //           setSessionExpired(false);
+  //         } else {
+  //           setUser({});
+  //           setSessionExpired(true);
+  //         }
+  //       })
+  //       .catch((err) => {
+  //         if (
+  //           err.response?.status === 401 ||
+  //           err.response?.data === "Token is not valid"
+  //         ) {
+  //           setSessionExpired(true);
+  //         }
+  //         setUser({});
+  //       });
+  //   };
+
+  //   checkSession();
+  //   const interval = setInterval(checkSession, 10 * 60 * 1000); // 10 min
+  //   return () => clearInterval(interval);
+  // }, []);
+
   useEffect(() => {
     const checkSession = () => {
       axios
         .get("https://blog-app-1-server.vercel.app/")
         .then((res) => {
           if (res.data.username) {
-            // If sessionExpiresAt is not sent, estimate it (10 min from now)
             setUser({
               ...res.data,
-              sessionExpiresAt:
-                res.data.sessionExpiresAt || Date.now() + 10 * 60 * 1000,
+              sessionExpiresAt: res.data.sessionExpiresAt, // Only use backend value
             });
             setSessionExpired(false);
           } else {
@@ -115,12 +148,7 @@ function App() {
           }
         })
         .catch((err) => {
-          if (
-            err.response?.status === 401 ||
-            err.response?.data === "Token is not valid"
-          ) {
-            setSessionExpired(true);
-          }
+          setSessionExpired(true);
           setUser({});
         });
     };
@@ -198,7 +226,9 @@ function App() {
   }
 
   return (
-    <userContext.Provider value={{ user, setUser }}>
+    <userContext.Provider
+      value={{ user, setUser, sessionExpired, setSessionExpired }}
+    >
       <Navbar />
       {user &&
         user.sessionExpiresAt &&

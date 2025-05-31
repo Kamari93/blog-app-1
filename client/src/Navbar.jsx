@@ -6,25 +6,20 @@ import axios from "axios";
 
 function Navbar() {
   // const user = useContext(userContext); // get user from context
-  const { user, setUser } = useContext(userContext); // Destructure user & setUser at once
+  const { user, setUser, setSessionExpired } = useContext(userContext); // Destructure user & setUser at once
   const navigate = useNavigate();
-
-  // axios.defaults.withCredentials = true;
-
-  // const { setUser } = useContext(userContext); // Get setUser from context
 
   // const handleLogout = () => {
   //   axios
-  //     .get("https://blog-app-1-server.vercel.app/logout")
+  //     .get("https://blog-app-1-server.vercel.app/logout", {
+  //       withCredentials: true,
+  //     })
   //     .then((res) => {
-  //       if (res.data === "Logout successful") {
-  //         // navigate(0); // reload the page
-  //         // window.location.reload(); // Force Navbar to reset
-  //         setUser({}); // Reset user state
-  //         navigate("/");
-  //         console.log(res.data);
-  //         console.log(user);
-  //       }
+  //       localStorage.removeItem("token");
+  //       sessionStorage.removeItem("token");
+  //       setUser({}); // Clear user state
+  //       navigate("/"); // Redirect home
+  //       console.log(res.data);
   //     })
   //     .catch((err) => console.log(err));
   // };
@@ -35,10 +30,9 @@ function Navbar() {
         withCredentials: true,
       })
       .then((res) => {
-        localStorage.removeItem("token");
-        sessionStorage.removeItem("token");
-        setUser({}); // Clear user state
-        navigate("/"); // Redirect home
+        setUser({});
+        setSessionExpired(true); // Mark session as expired/logged out
+        navigate("/");
         console.log(res.data);
       })
       .catch((err) => console.log(err));
