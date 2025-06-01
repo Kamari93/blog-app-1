@@ -30,6 +30,8 @@ function Navbar() {
         withCredentials: true,
       })
       .then((res) => {
+        localStorage.removeItem("token");
+        sessionStorage.removeItem("token");
         setUser({});
         setSessionExpired(true); // Mark session as expired/logged out
         navigate("/");
