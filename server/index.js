@@ -294,6 +294,9 @@ app.get("/logout", (req, res) => {
     httpOnly: true,
     secure: true,
     sameSite: "None",
+    domain: ".blog-app-1-server.vercel.app", // Use your backend domain or parent domain
+    path: "/",
+    maxAge: 0, // Set maxAge to 0 to expire the cookie immediately
     expires: new Date(0), // Expire the cookie immediately
   });
   return res.json("Logout successful");
