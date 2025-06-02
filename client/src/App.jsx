@@ -40,7 +40,7 @@ function App() {
       }
     }
     // }, [user.sessionExpiresAt]);
-  }, [user, user.sessionExpiresAt]);
+  }, []);
 
   // useEffect(() => {
   //   axios
