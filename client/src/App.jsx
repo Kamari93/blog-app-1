@@ -39,7 +39,8 @@ function App() {
         setSessionExpired(true);
       }
     }
-  }, [user.sessionExpiresAt]);
+    // }, [user.sessionExpiresAt]);
+  }, [user, user.sessionExpiresAt]);
 
   // useEffect(() => {
   //   axios
