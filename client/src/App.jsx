@@ -132,6 +132,13 @@ function App() {
   // }, []);
 
   useEffect(() => {
+    // Check for justLoggedOut flag
+    if (localStorage.getItem("justLoggedOut") === "true") {
+      localStorage.removeItem("justLoggedOut"); // Remove flag after use
+      setUser({});
+      setSessionExpired(true);
+      return; // Skip session check this time
+    }
     const checkSession = () => {
       axios
         .get("https://blog-app-1-server.vercel.app/")
