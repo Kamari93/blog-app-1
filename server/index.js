@@ -174,7 +174,7 @@ app.post("/login", (req, res) => {
             maxAge: 10 * 60 * 1000, // 10 minutes in milliseconds
             // maxAge: 60 * 60 * 1000 // 1 hour in milliseconds
             // domain: "blog-app-1-client.vercel.app", // Set your domain here
-            domain: ".vercel.app",
+            // domain: ".vercel.app",
           });
           // return res.json("Login successful");
           const expiresAt = Date.now() + 10 * 60 * 1000; // 10 minutes in ms from now
@@ -299,7 +299,7 @@ app.get("/logout", (req, res) => {
     maxAge: 0, // This will clear the cookie immediately
     expires: new Date(0), // Expire the cookie immediately
     // domain: "blog-app-1-client.vercel.app", // Set your domain here
-    domain: ".vercel.app",
+    // domain: ".vercel.app",
   });
   return res.json("Logout successful");
 });
