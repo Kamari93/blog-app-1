@@ -90,7 +90,10 @@ function Post() {
 
   const handleDeleteComment = (commentId) => {
     axios
-      .delete(`https://blog-app-1-server.vercel.app/deletecomment/${commentId}`)
+      .delete(
+        `https://blog-app-1-server.vercel.app/deletecomment/${commentId}`,
+        { withCredentials: true }
+      )
       .then(() => {
         setComments(comments.filter((c) => c._id !== commentId));
       })
