@@ -303,7 +303,7 @@ app.get("/logout", (req, res) => {
     domain: "blog-app-1-client.vercel.app", // Set your domain here
     // domain: ".vercel.app",
     // domain: "https://blog-app-1-client.vercel.app", // Set your domain here
-    path: "/", // Ensure the cookie is cleared for the root path
+    // path: "/", // Ensure the cookie is cleared for the root path
   });
   return res.json("Logout successful");
 });
