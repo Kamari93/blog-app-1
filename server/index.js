@@ -300,10 +300,10 @@ app.get("/logout", (req, res) => {
     sameSite: "None",
     maxAge: 0, // This will clear the cookie immediately
     expires: new Date(0), // Expire the cookie immediately
-    // domain: "blog-app-1-client.vercel.app", // Set your domain here
+    domain: "blog-app-1-client.vercel.app", // Set your domain here
     // domain: ".vercel.app",
-    domain: "https://blog-app-1-client.vercel.app", // Set your domain here
-    // path: "/", // Ensure the cookie is cleared for the root path
+    // domain: "https://blog-app-1-client.vercel.app", // Set your domain here
+    path: "/", // Ensure the cookie is cleared for the root path
   });
   return res.json("Logout successful");
 });
