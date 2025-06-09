@@ -291,8 +291,8 @@ app.put(
 app.get("/logout", (req, res) => {
   res.clearCookie("token");
   // clear cookie on local storage and session storage
-  localStorage.removeItem("token");
-  sessionStorage.removeItem("token");
+  // localStorage.removeItem("token");
+  // sessionStorage.removeItem("token");
   return res.json("Logout successful");
 });
 
