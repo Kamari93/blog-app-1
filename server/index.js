@@ -288,28 +288,28 @@ app.put(
   }
 );
 
-app.get("/logout", (req, res) => {
-  res.clearCookie("token");
-  // clear cookie on local storage and session storage
-  // localStorage.removeItem("token");
-  // sessionStorage.removeItem("token");
-  return res.json("Logout successful");
-});
-
 // app.get("/logout", (req, res) => {
-//   res.clearCookie("token", {
-//     httpOnly: true,
-//     secure: true,
-//     sameSite: "None",
-//     maxAge: 0, // This will clear the cookie immediately
-//     expires: new Date(0), // Expire the cookie immediately
-//     domain: "blog-app-1-client.vercel.app", // Set your domain here
-//     // domain: ".vercel.app",
-//     // domain: "https://blog-app-1-client.vercel.app", // Set your domain here
-//     // path: "/", // Ensure the cookie is cleared for the root path
-//   });
+//   res.clearCookie("token");
+//   // clear cookie on local storage and session storage
+//   // localStorage.removeItem("token");
+//   // sessionStorage.removeItem("token");
 //   return res.json("Logout successful");
 // });
+
+app.get("/logout", (req, res) => {
+  res.clearCookie("token", {
+    httpOnly: true,
+    secure: true,
+    sameSite: "None",
+    maxAge: 0, // This will clear the cookie immediately
+    expires: new Date(0), // Expire the cookie immediately
+    domain: "blog-app-1-client.vercel.app", // Set your domain here
+    // domain: ".vercel.app",
+    // domain: "https://blog-app-1-client.vercel.app", // Set your domain here
+    // path: "/", // Ensure the cookie is cleared for the root path
+  });
+  return res.json("Logout successful");
+});
 
 app.get("/getposts", async (req, res) => {
   try {
