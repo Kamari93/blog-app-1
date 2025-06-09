@@ -176,7 +176,7 @@ app.post("/login", (req, res) => {
             domain: "blog-app-1-client.vercel.app", // Set your domain here
             // domain: ".vercel.app",
             // domain: "https://blog-app-1-client.vercel.app", // Set your domain here
-            // path: "/", // Ensure the cookie is accessible on all routes
+            path: "/", // Ensure the cookie is accessible on all routes
           });
           // return res.json("Login successful");
           const expiresAt = Date.now() + 10 * 60 * 1000; // 10 minutes in ms from now
@@ -303,7 +303,7 @@ app.get("/logout", (req, res) => {
     domain: "blog-app-1-client.vercel.app", // Set your domain here
     // domain: ".vercel.app",
     // domain: "https://blog-app-1-client.vercel.app", // Set your domain here
-    // path: "/", // Ensure the cookie is cleared for the root path
+    path: "/", // Ensure the cookie is cleared for the root path
   });
   return res.json("Logout successful");
 });
