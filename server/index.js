@@ -173,10 +173,10 @@ app.post("/login", (req, res) => {
             sameSite: "None", // Allows cross-origin cookies
             maxAge: 10 * 60 * 1000, // 10 minutes in milliseconds
             // maxAge: 60 * 60 * 1000 // 1 hour in milliseconds
-            // domain: "blog-app-1-client.vercel.app", // Set your domain here
-            domain: ".vercel.app",
+            domain: "blog-app-1-client.vercel.app", // Set your domain here
+            // domain: ".vercel.app",
             // domain: "https://blog-app-1-client.vercel.app", // Set your domain here
-            path: "/", // Ensure the cookie is accessible on all routes
+            // path: "/", // Ensure the cookie is accessible on all routes
           });
           // return res.json("Login successful");
           const expiresAt = Date.now() + 10 * 60 * 1000; // 10 minutes in ms from now
@@ -300,10 +300,10 @@ app.get("/logout", (req, res) => {
     sameSite: "None",
     maxAge: 0, // This will clear the cookie immediately
     expires: new Date(0), // Expire the cookie immediately
-    // domain: "blog-app-1-client.vercel.app", // Set your domain here
-    domain: ".vercel.app",
+    domain: "blog-app-1-client.vercel.app", // Set your domain here
+    // domain: ".vercel.app",
     // domain: "https://blog-app-1-client.vercel.app", // Set your domain here
-    path: "/", // Ensure the cookie is cleared for the root path
+    // path: "/", // Ensure the cookie is cleared for the root path
   });
   return res.json("Logout successful");
 });
