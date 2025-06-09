@@ -34,7 +34,9 @@ function Post() {
 
   const handleDelete = (id) => {
     axios
-      .delete("https://blog-app-1-server.vercel.app/deletepost/" + id)
+      .delete("https://blog-app-1-server.vercel.app/deletepost/" + id, {
+        withCredentials: true,
+      })
       .then((result) => {
         // window.location.reload();
         navigate("/");
@@ -73,9 +75,13 @@ function Post() {
 
   const handleEditComment = (commentId, newText) => {
     axios
-      .put(`https://blog-app-1-server.vercel.app/editcomment/${commentId}`, {
-        text: newText,
-      })
+      .put(
+        `https://blog-app-1-server.vercel.app/editcomment/${commentId}`,
+        {
+          text: newText,
+        },
+        { withCredentials: true }
+      )
       .then((res) => {
         setComments(comments.map((c) => (c._id === commentId ? res.data : c)));
       })
@@ -98,7 +104,11 @@ function Post() {
     }
 
     axios
-      .put(`https://blog-app-1-server.vercel.app/${type}-comment/${commentId}`)
+      .put(
+        `https://blog-app-1-server.vercel.app/${type}-comment/${commentId}`,
+        {},
+        { withCredentials: true }
+      )
       .then((res) => {
         setComments(comments.map((c) => (c._id === commentId ? res.data : c)));
         // window.location.reload();
