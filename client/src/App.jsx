@@ -135,6 +135,8 @@ function App() {
     // Check for justLoggedOut flag
     if (localStorage.getItem("justLoggedOut") === "true") {
       localStorage.removeItem("justLoggedOut"); // Remove flag after use
+      localStorage.removeItem("token"); // Clear token
+      sessionStorage.removeItem("token"); // Clear session token
       setUser({});
       setSessionExpired(true);
       return; // Skip session check this time
@@ -152,6 +154,7 @@ function App() {
           } else {
             setUser({});
             setSessionExpired(true);
+            window.location.reload(); // Reload to clear any stale state
           }
         })
         .catch((err) => {
