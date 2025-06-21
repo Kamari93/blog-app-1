@@ -8,6 +8,7 @@ import CreatePost from "./CreatePost";
 import Post from "./Post";
 import EditPost from "./EditPost";
 import Contact from "./Contact";
+import ForgotPassword from "./ForgotPassword";
 import axios from "axios";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
@@ -253,6 +254,7 @@ function App() {
         <Route path="/post/:id" element={<Post />} />
         <Route path="/editpost/:id" element={<EditPost />} />
         <Route path="/contact" element={<Contact />} />
+        <Route path="/forgotpassword" element={<ForgotPassword />} />
       </Routes>
     </userContext.Provider>
   );
