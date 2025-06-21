@@ -96,22 +96,23 @@ const updatePostsLikes = async () => {
 //   updateOldPosts();
 // });
 
-mongoose.connect(process.env.MONGO_URL);
+// this is for setting default security question and answer for existing users
+// mongoose.connect(process.env.MONGO_URL);
 
-(async () => {
-  const hash = await bcrypt.hash("Robert L Moore", 10);
-  await UserModel.updateMany(
-    { securityAnswer: { $exists: false } },
-    {
-      $set: {
-        securityQuestion: "Who is your favorite author?",
-        securityAnswer: hash,
-      },
-    }
-  );
-  console.log("Default security answer set for existing users.");
-  mongoose.disconnect();
-})();
+// (async () => {
+//   const hash = await bcrypt.hash("Robert L Moore", 10);
+//   await UserModel.updateMany(
+//     { securityAnswer: { $exists: false } },
+//     {
+//       $set: {
+//         securityQuestion: "Who is your favorite author?",
+//         securityAnswer: hash,
+//       },
+//     }
+//   );
+//   console.log("Default security answer set for existing users.");
+//   mongoose.disconnect();
+// })();
 
 //middleware
 const verifyUser = (req, res, next) => {
