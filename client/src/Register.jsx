@@ -9,6 +9,7 @@ function Register() {
   const [password, setPassword] = useState();
   const [securityAnswer, setSecurityAnswer] = useState();
   const navigate = useNavigate();
+  axios.defaults.withCredentials = true; // Ensure cookies are sent with requests
   const handleSubmit = (e) => {
     e.preventDefault();
     axios
