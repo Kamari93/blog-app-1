@@ -62,6 +62,10 @@ function Login() {
         <Link to="/register">
           <button>Signup</button>
         </Link>
+        <br></br>
+        <Link to="/forgot-password">
+          <button>Forgot Password?</button>
+        </Link>
       </div>
     </div>
   );

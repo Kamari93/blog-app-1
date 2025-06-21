@@ -7,6 +7,7 @@ function Register() {
   const [username, setUsername] = useState();
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
+  const [securityAnswer, setSecurityAnswer] = useState();
   const navigate = useNavigate();
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -15,6 +16,7 @@ function Register() {
         username,
         email,
         password,
+        securityAnswer,
       })
       .then((res) => {
         console.log(res);
@@ -50,6 +52,15 @@ function Register() {
               type="password"
               placeholder="*******"
               onChange={(e) => setPassword(e.target.value)}
+            />
+          </div>
+          <div>
+            <label htmlFor="securityAnswer">Who is your favorite author?</label>
+            <input
+              type="text"
+              placeholder="Enter your answer"
+              onChange={(e) => setSecurityAnswer(e.target.value)}
+              required
             />
           </div>
           <button className="signup_btn">Sign Up</button>

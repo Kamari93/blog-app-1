@@ -96,6 +96,23 @@ const updatePostsLikes = async () => {
 //   updateOldPosts();
 // });
 
+mongoose.connect(process.env.MONGO_URL);
+
+(async () => {
+  const hash = await bcrypt.hash("Robert L Moore", 10);
+  await UserModel.updateMany(
+    { securityAnswer: { $exists: false } },
+    {
+      $set: {
+        securityQuestion: "Who is your favorite author?",
+        securityAnswer: hash,
+      },
+    }
+  );
+  console.log("Default security answer set for existing users.");
+  mongoose.disconnect();
+})();
+
 //middleware
 const verifyUser = (req, res, next) => {
   const token = req.cookies.token;
@@ -139,17 +156,51 @@ app.get("/", verifyUser, (req, res) => {
   });
 });
 
+// app.post("/register", (req, res) => {
+//   // hash pw
+//   const { username, email, password } = req.body;
+//   bcrypt
+//     .hash(password, 10)
+//     .then((hash) => {
+//       UserModel.create({ username, email, password: hash })
+//         .then((user) => res.json(user))
+//         .catch((err) => res.json(err));
+//     })
+//     .catch((err) => console.log(err));
+// });
+
 app.post("/register", (req, res) => {
-  // hash pw
-  const { username, email, password } = req.body;
+  const { username, email, password, securityAnswer } = req.body;
   bcrypt
     .hash(password, 10)
     .then((hash) => {
-      UserModel.create({ username, email, password: hash })
-        .then((user) => res.json(user))
-        .catch((err) => res.json(err));
+      bcrypt.hash(securityAnswer, 10).then((answerHash) => {
+        UserModel.create({
+          username,
+          email,
+          password: hash,
+          securityAnswer: answerHash,
+        })
+          .then((user) => res.json(user))
+          .catch((err) => res.json(err));
+      });
     })
     .catch((err) => console.log(err));
+});
+
+app.post("/forgot-password", async (req, res) => {
+  const { email, securityAnswer, newPassword } = req.body;
+  const user = await UserModel.findOne({ email });
+  if (!user) return res.status(404).json({ message: "User not found" });
+
+  const isMatch = await bcrypt.compare(securityAnswer, user.securityAnswer);
+  if (!isMatch)
+    return res.status(401).json({ message: "Security answer incorrect" });
+
+  const hashedPassword = await bcrypt.hash(newPassword, 10);
+  user.password = hashedPassword;
+  await user.save();
+  res.json({ message: "Password updated successfully" });
 });
 
 app.post("/login", (req, res) => {
