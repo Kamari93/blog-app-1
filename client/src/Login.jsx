@@ -63,7 +63,7 @@ function Login() {
           <button>Signup</button>
         </Link>
         <br></br>
-        <Link to="/forgot-password">
+        <Link to="/forgotpassword">
           <button>Forgot Password?</button>
         </Link>
       </div>
