@@ -50,12 +50,14 @@ function App() {
       if (remaining > 0) {
         const timer = setTimeout(() => {
           setSessionExpired(true);
+          setUser({}); // <-- Immediately clear user state
         }, remaining);
 
         // Clean up timer if user logs out or sessionExpiresAt changes
         return () => clearTimeout(timer);
       } else {
         setSessionExpired(true);
+        setUser({}); // <-- Immediately clear user state
       }
     }
   }, [user.sessionExpiresAt]);
@@ -198,8 +200,40 @@ function App() {
   //   }
   // }, [sessionExpired]);
 
+  // useEffect(() => {
+  //   if ((sessionExpired && user._id === undefined) || remainingTime === null) {
+  //     Swal.fire({
+  //       title: "Welcome 🍊🏁🌊",
+  //       text: "Please Login or create an account for full access.",
+  //       icon: "warning",
+  //       showDenyButton: true,
+  //       showCancelButton: true,
+  //       confirmButtonText: "Login",
+  //       denyButtonText: "Create Account",
+  //       cancelButtonText: "Continue as Guest",
+  //       customClass: {
+  //         popup: "my-swal-popup",
+  //         title: "my-swal-title",
+  //         confirmButton: "my-swal-confirm",
+  //         denyButton: "my-swal-deny",
+  //         cancelButton: "my-swal-cancel",
+  //       },
+  //     }).then((result) => {
+  //       if (result.isConfirmed) {
+  //         navigate("/login");
+  //       } else if (result.isDenied) {
+  //         navigate("/register");
+  //       } else if (result.dismiss === Swal.DismissReason.cancel) {
+  //         navigate("/");
+  //       }
+  //     });
+
+  //     setUser({});
+  //   }
+  // }, [sessionExpired]);
+
   useEffect(() => {
-    if ((sessionExpired && user._id === undefined) || remainingTime === null) {
+    if (sessionExpired || user._id === undefined) {
       Swal.fire({
         title: "Welcome 🍊🏁🌊",
         text: "Please Login or create an account for full access.",
@@ -225,8 +259,6 @@ function App() {
           navigate("/");
         }
       });
-
-      setUser({});
     }
   }, [sessionExpired]);
 
