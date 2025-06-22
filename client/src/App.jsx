@@ -25,6 +25,24 @@ function App() {
 
   axios.defaults.withCredentials = true;
 
+  useEffect(() => {
+    const pollSession = setInterval(() => {
+      axios
+        .get("https://blog-app-1-server.vercel.app/", { withCredentials: true })
+        .catch((err) => {
+          if (
+            err.response?.status === 401 ||
+            err.response?.data?.error === "Token is not valid"
+          ) {
+            setSessionExpired(true);
+            setUser({});
+          }
+        });
+    }, 60 * 1000); // every 1 minute
+
+    return () => clearInterval(pollSession);
+  }, []);
+
   // Timer for session expiry
   useEffect(() => {
     if (user && user.sessionExpiresAt) {
