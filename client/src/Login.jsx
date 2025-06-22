@@ -62,8 +62,7 @@ function Login() {
         <Link to="/register">
           <button>Signup</button>
         </Link>
-        <br></br>
-        <Link to="/forgotpassword">
+        <Link to="/forgotpassword" style={{ marginTop: "20px" }}>
           <button>Forgot Password?</button>
         </Link>
       </div>
