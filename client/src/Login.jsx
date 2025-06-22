@@ -65,7 +65,7 @@ function Login() {
         <br></br>
         <p>Forgot Password?</p>
         <Link to="/forgotpassword">
-          <button style={{ marginTop: "15px" }}>Forgot Password?</button>
+          <button>Forgot Password?</button>
         </Link>
       </div>
     </div>
