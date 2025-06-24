@@ -55,7 +55,11 @@ function Navbar() {
         ) : (
           <></>
         )}
-
+        {user.username && (
+          <Link className="link" to="/myposts">
+            My Posts
+          </Link>
+        )}
         {/* <a className="link" href="">
           Contact
         </a> */}
@@ -63,11 +67,11 @@ function Navbar() {
           Contact
         </Link>
       </div>
-      {user.username && (
+      {/* {user.username && (
         <Link className="link" to="/myposts">
           My Posts
         </Link>
-      )}
+      )} */}
       {user.username ? (
         <div>
           <input
