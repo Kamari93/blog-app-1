@@ -149,19 +149,19 @@ function App() {
   useEffect(() => {
     if (sessionExpired) {
       Swal.fire({
-        title: "You're not logged in, my friend 🍊🏁🌊",
+        title: "You're session expired, my friend 🍊🏁🌊",
         text: "Please Login or create an account for full access.",
         icon: "warning",
-        showDenyButton: true,
+        // showDenyButton: true,
         showCancelButton: true,
         confirmButtonText: "Login",
-        denyButtonText: "Create Account",
+        // denyButtonText: "Create Account",
         cancelButtonText: "Continue as Guest",
         customClass: {
           popup: "my-swal-popup",
           title: "my-swal-title",
           confirmButton: "my-swal-confirm",
-          denyButton: "my-swal-deny",
+          // denyButton: "my-swal-deny",
           cancelButton: "my-swal-cancel",
         },
       }).then((result) => {
