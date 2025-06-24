@@ -30,6 +30,8 @@ function Login() {
           console.log(res.data);
           // console.log(user);
           navigate("/");
+        } else {
+          alert(res.data.message);
         }
       })
       .catch((err) => console.log(err));
