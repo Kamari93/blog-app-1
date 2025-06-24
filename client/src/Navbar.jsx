@@ -63,6 +63,11 @@ function Navbar() {
           Contact
         </Link>
       </div>
+      {user.username && (
+        <Link className="link" to="/myposts">
+          My Posts
+        </Link>
+      )}
       {user.username ? (
         <div>
           <input

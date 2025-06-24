@@ -621,6 +621,18 @@ app.put("/downvote-comment/:id", verifyUser, async (req, res) => {
   }
 });
 
+// Get user's posts
+app.get("/myposts", verifyUser, async (req, res) => {
+  try {
+    const posts = await PostModel.find({ username: req.username }).sort({
+      createdAt: -1,
+    });
+    res.json(posts);
+  } catch (err) {
+    res.status(500).json({ error: "Failed to fetch user's posts" });
+  }
+});
+
 // start server
 const port = process.env.PORT || 5000;
 app.listen(port, () => {

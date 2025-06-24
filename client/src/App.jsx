@@ -8,6 +8,7 @@ import CreatePost from "./CreatePost";
 import Post from "./Post";
 import EditPost from "./EditPost";
 import Contact from "./Contact";
+import MyPosts from "./MyPost";
 import ForgotPassword from "./ForgotPassword";
 import axios from "axios";
 import Swal from "sweetalert2";
@@ -215,6 +216,7 @@ function App() {
         <Route path="/editpost/:id" element={<EditPost />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/forgotpassword" element={<ForgotPassword />} />
+        <Route path="/myposts" element={<MyPosts />} />
       </Routes>
     </userContext.Provider>
   );
