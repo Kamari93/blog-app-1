@@ -149,8 +149,8 @@ function App() {
   useEffect(() => {
     if (sessionExpired) {
       Swal.fire({
-        title: "You're session expired, my friend 🍊🏁🌊",
-        text: "Please Login or create an account for full access.",
+        title: "You're session has expired 🍊🏁🌊",
+        text: "Please Login for full access or continue as a guest.",
         icon: "warning",
         // showDenyButton: true,
         showCancelButton: true,
