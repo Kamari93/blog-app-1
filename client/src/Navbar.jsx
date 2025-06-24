@@ -1,5 +1,5 @@
 import { React, useContext } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, NavLink } from "react-router-dom";
 import "./style.css";
 import { userContext } from "./App";
 import axios from "axios";
@@ -45,27 +45,27 @@ function Navbar() {
         <h3>Blog App</h3>
       </div>
       <div>
-        <Link className="link" to="/">
+        <NavLink className="link" to="/" end>
           Home
-        </Link>
+        </NavLink>
         {user.username ? (
-          <Link className="link" to="/create">
+          <NavLink className="link" to="/create">
             Create
-          </Link>
+          </NavLink>
         ) : (
           <></>
         )}
         {user.username && (
-          <Link className="link" to="/myposts">
+          <NavLink className="link" to="/myposts">
             My Posts
-          </Link>
+          </NavLink>
         )}
         {/* <a className="link" href="">
           Contact
         </a> */}
-        <Link className="link" to="/contact">
+        <NavLink className="link" to="/contact">
           Contact
-        </Link>
+        </NavLink>
       </div>
       {/* {user.username && (
         <Link className="link" to="/myposts">
@@ -83,12 +83,12 @@ function Navbar() {
         </div>
       ) : (
         <div className="login_register">
-          <Link to="/register" className="link">
+          <NavLink to="/register" className="link">
             <h5>Register</h5>
-          </Link>
-          <Link to="/login" className="link">
+          </NavLink>
+          <NavLink to="/login" className="link">
             <h5>Login</h5>
-          </Link>
+          </NavLink>
         </div>
       )}
     </div>

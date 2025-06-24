@@ -510,3 +510,9 @@
 .my-swal-cancel:hover {
   background-color: #373535;
 }
+
+.link.active {
+  font-weight: bold;
+  border-bottom: 2px solid #fff;
+  color: #f59919;
+}
