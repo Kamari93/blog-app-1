@@ -240,11 +240,11 @@ app.post("/login", (req, res) => {
             sessionExpiresAt: expiresAt,
           });
         } else {
-          res.json("Password is incorrect");
+          res.json({ message: "Password is incorrect" });
         }
       });
     } else {
-      res.json("User not found");
+      res.json({ message: "User not found" });
     }
   });
 });
