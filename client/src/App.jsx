@@ -167,8 +167,6 @@ function App() {
       }).then((result) => {
         if (result.isConfirmed) {
           navigate("/login");
-        } else if (result.isDenied) {
-          navigate("/register");
         } else if (result.dismiss === Swal.DismissReason.cancel) {
           navigate("/");
         }
