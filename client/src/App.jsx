@@ -19,9 +19,10 @@ export const userContext = createContext(); // create a global state
 function App() {
   const [user, setUser] = useState({});
   const [sessionExpired, setSessionExpired] = useState(false);
-  const [initialCheckDone, setInitialCheckDone] = useState(false);
-  const [wasPreviouslyLoggedIn, setWasPreviouslyLoggedIn] = useState(false);
+  // const [initialCheckDone, setInitialCheckDone] = useState(false);
+  // const [wasPreviouslyLoggedIn, setWasPreviouslyLoggedIn] = useState(false);
   const [remainingTime, setRemainingTime] = useState(null);
+  const [showWelcomeAlert, setShowWelcomeAlert] = useState(false);
   const navigate = useNavigate(); // for redirection
 
   axios.defaults.withCredentials = true;
@@ -84,11 +85,13 @@ function App() {
           } else {
             setUser({});
             setSessionExpired(true);
+            setShowWelcomeAlert(true); // Show welcome alert if not logged in
           }
         })
         .catch((err) => {
           setSessionExpired(true);
           setUser({});
+          setShowWelcomeAlert(true); // Show welcome alert if not logged in
         });
     };
 
@@ -144,9 +147,9 @@ function App() {
   // }, [sessionExpired]);
 
   useEffect(() => {
-    if (sessionExpired || user._id === undefined) {
+    if (sessionExpired) {
       Swal.fire({
-        title: "Welcome 🍊🏁🌊",
+        title: "You're not logged in, my friend 🍊🏁🌊",
         text: "Please Login or create an account for full access.",
         icon: "warning",
         showDenyButton: true,
@@ -172,6 +175,37 @@ function App() {
       });
     }
   }, [sessionExpired]);
+
+  useEffect(() => {
+    if (showWelcomeAlert) {
+      Swal.fire({
+        title: "Welcome 🍊🏁🌊",
+        text: "Please Login or create an account for full access.",
+        icon: "warning",
+        showDenyButton: true,
+        showCancelButton: true,
+        confirmButtonText: "Login",
+        denyButtonText: "Create Account",
+        cancelButtonText: "Continue as Guest",
+        customClass: {
+          popup: "my-swal-popup",
+          title: "my-swal-title",
+          confirmButton: "my-swal-confirm",
+          denyButton: "my-swal-deny",
+          cancelButton: "my-swal-cancel",
+        },
+      }).then((result) => {
+        setShowWelcomeAlert(false); // Prevent repeated alerts
+        if (result.isConfirmed) {
+          navigate("/login");
+        } else if (result.isDenied) {
+          navigate("/register");
+        } else if (result.dismiss === Swal.DismissReason.cancel) {
+          navigate("/");
+        }
+      });
+    }
+  }, [showWelcomeAlert]);
 
   useEffect(() => {
     let interval;
