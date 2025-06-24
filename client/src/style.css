@@ -162,7 +162,8 @@
 
 /* Styling for like/unlike button */
 .upvote {
-  background-color: #008cba;
+  /* background-color: #008cba; */
+  background-color: #f59919;
   color: white;
   border: none;
   padding: 8px 12px;
@@ -172,7 +173,8 @@
 }
 
 .upvote:hover {
-  background-color: #005f73;
+  /* background-color: #005f73; */
+  background-color: #e0870f;
 }
 
 .upvote:disabled {
