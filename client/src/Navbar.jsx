@@ -83,10 +83,20 @@ function Navbar() {
         </div>
       ) : (
         <div className="login_register">
-          <NavLink to="/register" className="link">
+          <NavLink
+            to="/register"
+            className={({ isActive }) =>
+              isActive ? "link register-active" : "link"
+            }
+          >
             <h5>Register</h5>
           </NavLink>
-          <NavLink to="/login" className="link">
+          <NavLink
+            to="/login"
+            className={({ isActive }) =>
+              isActive ? "link login-active" : "link"
+            }
+          >
             <h5>Login</h5>
           </NavLink>
         </div>

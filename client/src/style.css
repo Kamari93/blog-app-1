@@ -518,3 +518,10 @@
   border-bottom: 2px solid #fff;
   color: #f59919;
 }
+
+.link.register-active,
+.link.login-active {
+  font-weight: bold;
+  border-bottom: 2px solid #fff;
+  color: #1ea775;
+}
