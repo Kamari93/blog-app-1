@@ -198,9 +198,12 @@ function App() {
           navigate("/login");
         } else if (result.isDenied) {
           navigate("/register");
-        } else if (result.dismiss === Swal.DismissReason.cancel) {
-          navigate("/");
         }
+        // Do nothing on cancel or dismiss: user stays on current page
+
+        // else if (result.dismiss === Swal.DismissReason.cancel) {
+        //   navigate("/");
+        // }
       });
     }
   }, [showWelcomeAlert]);
