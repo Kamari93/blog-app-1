@@ -249,6 +249,30 @@ app.post("/login", (req, res) => {
   });
 });
 
+app.get("/refresh-session", verifyUser, (req, res) => {
+  // Issue a new token with a fresh expiry
+  const token = jwt.sign(
+    {
+      email: req.email,
+      username: req.username,
+      _id: req._id,
+    },
+    process.env.JWT_SECRET,
+    { expiresIn: "10m" } // or whatever your session length is
+  );
+  res.cookie("token", token, {
+    httpOnly: true,
+    secure: true,
+    sameSite: "None",
+    domain: ".vercel.app", // or omit for localhost
+    path: "/",
+    maxAge: 10 * 60 * 1000,
+  });
+  // Send new expiry to frontend
+  const decoded = jwt.decode(token);
+  res.json({ sessionExpiresAt: decoded.exp * 1000 });
+});
+
 // storage file
 const storage = new CloudinaryStorage({
   cloudinary: cloudinary,

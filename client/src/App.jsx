@@ -23,6 +23,7 @@ function App() {
   // const [wasPreviouslyLoggedIn, setWasPreviouslyLoggedIn] = useState(false);
   const [remainingTime, setRemainingTime] = useState(null);
   const [showWelcomeAlert, setShowWelcomeAlert] = useState(false);
+  const [stayLoggedInPrompted, setStayLoggedInPrompted] = useState(false);
   const navigate = useNavigate(); // for redirection
 
   axios.defaults.withCredentials = true;
@@ -228,6 +229,59 @@ function App() {
     const seconds = totalSeconds % 60;
     return `${minutes}:${seconds.toString().padStart(2, "0")}`;
   }
+
+  useEffect(() => {
+    if (
+      user &&
+      user.sessionExpiresAt &&
+      remainingTime !== null &&
+      remainingTime <= 2 * 60 * 1000 && // 2 minutes in ms
+      remainingTime > 0 &&
+      !stayLoggedInPrompted
+    ) {
+      setStayLoggedInPrompted(true);
+      Swal.fire({
+        title: "Session Expiring Soon",
+        text: "You have 2 minutes left. Would you like to stay logged in?",
+        icon: "info",
+        showCancelButton: true,
+        confirmButtonText: "Yes, keep me logged in",
+        cancelButtonText: "No, log me out",
+        customClass: {
+          popup: "my-swal-popup",
+          title: "my-swal-title",
+          confirmButton: "my-swal-confirm",
+          cancelButton: "my-swal-cancel",
+        },
+      }).then((result) => {
+        if (result.isConfirmed) {
+          // Call backend to refresh session
+          axios
+            .get("https://blog-app-1-server.vercel.app/refresh-session", {
+              withCredentials: true,
+            })
+            .then((res) => {
+              setUser((prev) => ({
+                ...prev,
+                sessionExpiresAt: res.data.sessionExpiresAt,
+              }));
+              setStayLoggedInPrompted(false); // Allow future prompts
+            })
+            .catch(() => {
+              // If refresh fails, let session expire as normal
+            });
+        }
+        // If cancelled or dismissed, do nothing; session will expire as normal
+      });
+    }
+    // Reset prompt if user logs out or gets a new session
+    if (
+      (!user || !user.sessionExpiresAt || remainingTime > 2 * 60 * 1000) &&
+      stayLoggedInPrompted
+    ) {
+      setStayLoggedInPrompted(false);
+    }
+  }, [remainingTime, user, stayLoggedInPrompted]);
 
   return (
     <userContext.Provider
