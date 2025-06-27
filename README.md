@@ -33,7 +33,7 @@ Live App: [Blog App](https://blog-app-1-client.vercel.app/)
 - Axios
 - SweetAlert2
 - Moment.js
-- Bulma CSS (optional)
+- Bulma CSS
 - Custom CSS
 
 ### Backend
