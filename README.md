@@ -131,7 +131,7 @@ npm run dev
 | POST   | /forgot-password      | Reset Password via Security Answer |
 | GET    | /refresh-session      | Extend Session (Stay Logged In)    |
 | PUT    | /upvote-comment/:id   | Upvote a Comment                   |
-| PUT    | /downvote-comment/:id | Downvote a                         |
+| PUT    | /downvote-comment/:id | Downvote a Comment                 |
 
 ---
 
